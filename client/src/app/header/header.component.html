@@ -1,0 +1,27 @@
+<header>
+  <nav>
+    <div class="nav-title-container">
+      <h2>Retailers.com</h2>
+    </div>
+
+    <div class="searchBar-container" [class.searchBar-active]="searchBarGetFocus">
+      <div class="category-dropdown-container">
+        <button id="category-dropdown" (focus)="searchBarOnFocus()" (blur)="searchBarOnBlur()">{{currentCategory}} <span class="dropdown-icon"></span></button>
+      </div>
+      <div class="searchBar-box">
+        <input type="text" (focus)="searchBarOnFocus()" (blur)="searchBarOnBlur()">
+      </div>
+
+      <div class="searchIcon-box">
+        <button id="search">
+          <img src="/src/assets/images/search.svg" alt="search">
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-right-container">
+
+    </div>
+
+  </nav>
+</header>
