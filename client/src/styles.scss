@@ -3,13 +3,18 @@ body {
   margin:0;
 }
 
-.dropdown-icon {
+i.dropdown-icon {
   border:5px solid black;
   display: inline-block;
-  position: relative;
-  top:2px;
+  position: absolute;
+  top:15px;
+  right:8px;
   background-color: transparent;
   border-bottom-color: transparent;
   border-right-color: transparent;
   border-left-color: transparent;
+}
+
+ul {
+  list-style: none;
 }

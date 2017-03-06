@@ -5,6 +5,7 @@ nav {
   background-color: #232f3e;
   color: white;
   vertical-align: middle;
+  min-width: 1000px;
 
   > div {
     display: inline-flex;
@@ -15,6 +16,7 @@ nav {
     //display: inline-flex;
     text-align: center;
     width: 200px;
+    padding: 0 15px;
 
     h2 {
       width: 100%;
@@ -24,37 +26,67 @@ nav {
     }
   }
 
-
-
   .searchBar-container {
     height: 35px;
-    margin:auto 0;
+    margin: auto 20px;
     border-radius: 5px;
+    width: calc(100% - 650px);
 
-    &.searchBar-active{
+    * {
+
+    }
+
+    &.searchBar-active {
       //border: 1px solid #ff6b51;
       //border-radius: 5px;
-      box-shadow:0 0 3px #ff9260, 0 1px 0 rgba(0,0,0,.07) inset;
+      box-shadow: 0 0 3px #ff9260, 0 1px 0 rgba(0, 0, 0, .07) inset;
     }
 
     > div {
       display: inline-flex;
       height: 100%;
-      margin: auto;
+      margin: auto 0;
+      position: relative;
     }
 
     .category-dropdown-container {
-      width: 55px;
+      float: left;
+      width: auto;
+      max-width: 110px;
       text-align: center;
-    }
+      overflow: hidden;
 
+      &:focus {
+        background-color: grey;
+      }
+
+      .category-dropdown-list {
+        position: absolute;
+        left: 2px;
+        width: 110px;
+        overflow-x: auto;
+        max-height: 200px;
+        height: 35px;
+        color: black;
+        //top: 55px;
+        margin: 0;
+        display: block;
+        opacity: 0;
+        cursor: pointer;
+      }
+    }
 
     .searchBar-box {
       padding-top: 0;
+      width: 100%;
+      display: block;
+      white-space: nowrap;
+      position: relative;
 
       input {
+        //position: absolute;
         outline: none;
-        width: 300px;
+        width: 100%;
         height: 100%;
         border: 0;
         padding: 0;
@@ -64,6 +96,50 @@ nav {
     }
 
     .searchIcon-box {
+      float: right;
+    }
+  }
+
+  .nav-right-container {
+    padding: 0 20px;
+    width: 300px;
+    margin-left: auto;
+
+    .btn-cart-container {
+
+      #cart {
+        padding-bottom: 5px;
+        padding-top: 5px;
+        height: 50px;
+
+        #header-cart-amount {
+          color: red;
+          font-size: 1.1em;
+          font-weight: bold;
+          position: relative;
+          display: block;
+          width: 23px;
+          top: -3px;
+          text-align: right;
+        }
+
+        span:last-child {
+          position: relative;
+          display: block;
+          margin-left: 33px;
+          font-size: 1.1em;
+          font-weight: bold;
+        }
+
+        img {
+          position: absolute;
+          top: 14px;
+          width: 30px;
+          height: 30px;
+          left: 5px;
+          right: 0;
+        }
+      }
 
     }
   }
@@ -79,6 +155,10 @@ nav {
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 
+  &:active {
+    background-color: grey;
+  }
+
   img {
     width: 25px;
     height: 25px;
@@ -90,6 +170,33 @@ nav {
   outline: none;
   border: none;
   cursor: pointer;
+  padding: 5px 10px;
+  //margin-right: 15px;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
+  white-space: nowrap;
+}
+
+.btn-header-auth-container {
+  margin: auto 0 auto auto;
+  padding: 0 5px;
+
+  .btn-header-auth {
+    outline: none;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    color: white;
+    height: 35px;
+    min-width: 50px;
+    text-align: center;
+    margin: auto;
+    position: relative;
+
+    &:hover {
+      border-color: white;
+    }
+
+  }
 }
