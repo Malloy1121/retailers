@@ -1,0 +1,87 @@
+<div class="content">
+  <div class="address-container">
+    <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+      <h2>Add a New Address</h2>
+      <table>
+        <tr>
+          <td>Address Tag</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="text" formControlName="name" placeholder="Example:Home, Office">
+          </td>
+        </tr>
+
+        <tr class="form-validator">
+          <td colspan="2" *ngIf="addressName.hasError('maxlength')&&addressName.touched">Tag must have up to 20 characters</td>
+          <td *ngIf="addressName.valid||!addressName.touched">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>Street Address</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="text" formControlName="street">
+          </td>
+        </tr>
+        <tr class="form-validator">
+          <td colspan="2" *ngIf="street.hasError('required')&&street.touched">Street address required</td>
+          <td *ngIf="street.valid||!street.touched">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>Address Continued</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="text" formControlName="suite" placeholder="Apartment, Suite, Building, etc">
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>City</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="text" formControlName="city">
+          </td>
+        </tr>
+        <tr class="form-validator">
+          <td *ngIf="city.hasError('required')&&city.touched">City required</td>
+          <td *ngIf="city.valid||!city.touched">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>State</td>
+          <td><span class="address-update-rightCol">Zip Code</span></td>
+        </tr>
+        <tr>
+          <td>
+            <select formControlName="state" style="width: 60px;max-width: 100%">
+              <option *ngFor="let item of states" [value]="item">{{item}}</option>
+            </select>
+          </td>
+          <td>
+            <input type="text" formControlName="zipcode" class="address-update-rightCol">
+          </td>
+        </tr>
+        <tr class="form-validator">
+          <td *ngIf="state.hasError('required')&&state.touched">State required</td>
+          <td *ngIf="state.valid||!state.touched">&nbsp;</td>
+          <td *ngIf="zipcode.hasError('required')&&zipcode.touched"><span class="address-update-rightCol">Zip code required</span>
+          </td>
+          <td *ngIf="zipcode.valid||!zipcode.touched">&nbsp;</td>
+        </tr>
+
+      </table>
+      <div class="btn-address-submit-container">
+        <button type="submit" [disabled]="!addressForm.valid||addressForm.pending">Add Address</button>
+      </div>
+    </form>
+  </div>
+</div>

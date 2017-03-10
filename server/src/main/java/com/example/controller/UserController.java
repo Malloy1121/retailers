@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/getUserAddresses")
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public List<AddressDTO> getUserAddresses(HttpServletRequest request){
         long userID=(long)request.getSession().getAttribute("userID");
         return this.addressService.findAddressByUser(userID);
@@ -45,14 +45,14 @@ public class UserController {
 //    }
 
     @PostMapping("/addNewAddress")
-//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     public Boolean addNewAddress(@RequestBody Address address,HttpServletRequest request){
         long userID=(long)request.getSession().getAttribute("userID");
         return new Boolean(this.addressService.addNewAddress(address,userID));
     }
 
     @PostMapping("/deleteAddress")
-//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     public Boolean deleteAddress(@RequestBody UserDTO user){
         long id=user.getId();
         return new Boolean(this.addressService.deleteAddress(id));

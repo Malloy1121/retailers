@@ -10,8 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class RouteController {
 
-    @RequestMapping({"/","/login"})
+    @RequestMapping({
+            "/",
+            "/login",
+            "auth/*"
+    })
     public String home(){
         return "forward:/index.html";
     }
+
+//    @RequestMapping({"/error"})
+//    public String error(){
+//        return "forward:/index.html";
+//    }
 }

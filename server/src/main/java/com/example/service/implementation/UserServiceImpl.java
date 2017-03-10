@@ -7,6 +7,8 @@ import com.example.model.user.User;
 import com.example.repository.UserRepo;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -52,22 +54,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public boolean isEmailTaken(String email) {
+        User user =this.userRepo.findByEmail(email).orElse(null);
+        System.out.println(user);
         return this.userRepo.findByEmail(email).isPresent();
     }
 
     @Override
     public List<UserDTO> findAllUsers() {
-        List<UserDTO> mappedUsers=new ArrayList<>();
-        List<User> users=this.userRepo.findAll();
-        for(User user:users){
-            UserDTO userDTO=new UserDTO();
+        List<UserDTO> mappedUsers = new ArrayList<>();
+        List<User> users = this.userRepo.findAll();
+        for (User user : users) {
+            UserDTO userDTO = new UserDTO();
             userDTO.setEmail(user.getEmail());
             userDTO.setId(user.getId());
             userDTO.setFirstname(user.getFirstname());
             userDTO.setLastname(user.getLastname());
 
-            Set<String> mappedRoles=new HashSet<>();
-            for(Role role:user.getRoles()){
+            Set<String> mappedRoles = new HashSet<>();
+            for (Role role : user.getRoles()) {
                 mappedRoles.add(role.getName());
             }
             userDTO.setRoles(mappedRoles);
@@ -76,8 +80,40 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User findUserByEmail(String email) {
-        return this.userRepo.findByEmail(email).orElse(null);
+    public UserDTO findUserByEmail(String email) {
+        User user = this.userRepo.findByEmail(email).orElse(null);
+        if(user==null){
+            return null;
+        }
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(user.getEmail());
+        userDTO.setId(user.getId());
+        userDTO.setFirstname(user.getFirstname());
+        userDTO.setLastname(user.getLastname());
+
+        Set<String> mappedRoles = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            mappedRoles.add(role.getName());
+        }
+        userDTO.setRoles(mappedRoles);
+        return userDTO;
+    }
+
+    @Override
+    public UserDTO getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = auth.getPrincipal();
+
+        if (auth == null) {
+            return null;
+        }
+
+        if (!(principal instanceof UserDetails)) {
+            return null;
+        }
+
+        UserDetails userDetails = (UserDetails) principal;
+        return this.findUserByEmail(userDetails.getUsername());
     }
 
     @Override

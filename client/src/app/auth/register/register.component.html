@@ -1,3 +1,158 @@
-<p>
-  register works!
-</p>
+<div class="content">
+  <div class="register-container">
+    <div class="register-title-container">
+      <img src="/assets/images/signup.svg" alt="sign up">
+    </div>
+
+    <form (ngSubmit)="onSignup()" [formGroup]="registerForm">
+      <table>
+        <tr>
+          <td colspan="2"><label for="register-email">Email:</label></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="text"
+                   id="register-email"
+                   formControlName="email"
+                   placeholder="Example: abc@abc.com"
+                   autocomplete="off">
+          </td>
+        </tr>
+        <tr class="form-validator">
+          <!--<td colspan="2"-->
+          <!--*ngIf="(registerForm.get('email').hasError('pattern')||registerForm.get('email').hasError('required'))&&registerForm.get('email').touched">Invalid email-->
+          <!--address-->
+          <!--</td>-->
+          <!--<td colspan="2"-->
+          <!--*ngIf="registerForm.get('email').hasError('isTaken')&&registerForm.get('email').touched">This email is-->
+          <!--already taken-->
+          <!--</td>-->
+          <td colspan="2">{{getEmailError()}} &nbsp;</td>
+        </tr>
+
+        <tr>
+          <td colspan="2"><label for="password1">Password:</label></td>
+        </tr>
+        <tr formGroupName="password">
+          <td colspan="2">
+            <input type="password"
+                   id="password1"
+                   formControlName="password1"
+                   placeholder="6-15 characters">
+          </td>
+        </tr>
+        <tr class="form-validator">
+          <td colspan="2"
+              *ngIf="registerForm.get('password').get('password1').invalid&&registerForm.get('password').get('password1').touched">
+            Invalid password
+          </td>
+          <td colspan="2"
+              *ngIf="registerForm.get('password').get('password1').valid||!registerForm.get('password').get('password1').touched">
+            &nbsp;</td>
+        </tr>
+
+        <tr>
+          <td colspan="2"><label for="password2">Confirm Password:</label></td>
+        </tr>
+        <tr formGroupName="password">
+          <td colspan="2">
+            <input type="password"
+                   id="password2"
+                   formControlName="password2"
+                   placeholder="Enter password again">
+          </td>
+        </tr>
+        <tr class="form-validator">
+          <td colspan="2"
+              *ngIf="registerForm.get('password').hasError('samePassword')&&registerForm.get('password').get('password2').touched">
+            Two passwords do not match
+          </td>
+          <td colspan="2"
+              *ngIf="!registerForm.get('password').hasError('samePassword')||!registerForm.get('password').get('password2').touched">
+            &nbsp;</td>
+        </tr>
+
+        <tr class="col-span-1">
+          <td><label for="register-firstname">First Name:</label></td>
+          <td><label for="register-lastname">Last Name:</label></td>
+        </tr>
+        <tr class="col-span-1">
+          <td>
+            <input type="text"
+                   id="register-firstname"
+                   formControlName="firstname"
+                   placeholder="1-25 characters"
+                   autocomplete="off">
+          </td>
+          <td>
+            <input type="text"
+                   id="register-lastname"
+                   formControlName="lastname"
+                   placeholder="1-25 characters"
+                   autocomplete="off">
+          </td>
+        </tr>
+        <tr class="form-validator">
+          <td *ngIf="registerForm.get('firstname').invalid&&registerForm.get('firstname').touched">Invalid First Name
+          </td>
+          <td *ngIf="registerForm.get('firstname').valid||!registerForm.get('firstname').touched">&nbsp;</td>
+          <td *ngIf="registerForm.get('lastname').invalid&&registerForm.get('lastname').touched">Invalid Last Name</td>
+          <td *ngIf="registerForm.get('lastname').valid||!registerForm.get('lastname').touched">&nbsp;</td>
+        </tr>
+
+        <tr>
+
+        </tr>
+        <tr>
+
+        </tr>
+
+        <!--<tr>-->
+        <!--<td><label for="register-street">Street:</label></td>-->
+        <!--<td><input type="text"-->
+        <!--id="register-street"-->
+        <!--formControlName="street"></td>-->
+        <!--</tr>-->
+
+        <!--<tr>-->
+        <!--<td><label for="register-suite">Suite:</label></td>-->
+        <!--<td><input type="text"-->
+        <!--id="register-suite"-->
+        <!--formControlName="suite"></td>-->
+        <!--</tr>-->
+
+        <!--<tr>-->
+        <!--<td><label for="register-city">City:</label></td>-->
+        <!--<td><input type="text"-->
+        <!--id="register-city"-->
+        <!--formControlName="city"></td>-->
+        <!--</tr>-->
+
+        <!--<tr>-->
+        <!--<td><label for="register-state">State:</label></td>-->
+        <!--<td>-->
+        <!--<select id="register-state"-->
+        <!--formControlName="state">-->
+        <!--<option value="VA">VA</option>-->
+        <!--<option value="PA">PA</option>-->
+        <!--<option value="NY">NY</option>-->
+        <!--</select>-->
+        <!--</td>-->
+        <!--</tr>-->
+
+        <!--<tr>-->
+        <!--<td><label for="register-zip">Zip Code:</label></td>-->
+        <!--<td><input type="text"-->
+        <!--id="register-zip"-->
+        <!--formControlName="zipcode"></td>-->
+        <!--</tr>-->
+      </table>
+      <div class="btn-register-container">
+        <button type="submit"
+                id="btn-register"
+                [disabled]="registerForm.invalid||registerForm.pending">Sign Up
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

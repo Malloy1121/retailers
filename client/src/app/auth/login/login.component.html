@@ -1,3 +1,64 @@
-<p>
-  login works!
-</p>
+<div class="content">
+  <div class="login-form-container">
+    <div class="login-title-container">
+      <img src="/assets/images/icon-home-login.svg" alt="login">
+    </div>
+    <form [formGroup]="loginForm" (submit)="onSubmit()">
+      <table>
+        <tr>
+          <td>
+            <label for="login-email">Email:</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text"
+                   id="login-email"
+                   formControlName="email">
+          </td>
+        </tr>
+        <tr>
+          <td *ngIf="loginForm.get('email').hasError('required')&&loginForm.get('email').touched"
+              class="form-validator">Please enter email
+          </td>
+          <td *ngIf="loginForm.get('email').valid||!loginForm.get('email').touched">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="login-password">Password:</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="password"
+                   id="login-password"
+                   formControlName="password">
+          </td>
+        </tr>
+        <tr>
+          <td *ngIf="loginForm.get('password').hasError('required')&&loginForm.get('password').touched"
+              class="form-validator">Please enter password
+          </td>
+          <td *ngIf="loginForm.get('password').valid||!loginForm.get('password').touched">&nbsp;</td>
+        </tr>
+      </table>
+
+      <div class="btn-login-container">
+        <button id="login"
+                type="submit"
+                [disabled]="!loginForm.valid">Login
+        </button>
+      </div>
+
+      <div class="separator">
+        <h4>New to Retailers?</h4>
+      </div>
+      <div class="btn-login-container">
+        <button id="login-to-signup"
+                (click)="goToSignup()">Create a New Account
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

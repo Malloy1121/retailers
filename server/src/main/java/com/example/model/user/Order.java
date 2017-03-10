@@ -43,7 +43,6 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userID")
-    @JsonManagedReference
     private User user;
 
 

@@ -5,7 +5,7 @@ package com.example.dto;
  */
 public class ResponseMessage {
     private int status;
-    private boolean isSuccessful;
+    private boolean result;
     private String info;
     private Object object;
 
@@ -17,12 +17,12 @@ public class ResponseMessage {
         this.status = status;
     }
 
-    public boolean isSuccessful() {
-        return isSuccessful;
+    public boolean getResult() {
+        return result;
     }
 
-    public void setSuccessful(boolean successful) {
-        isSuccessful = successful;
+    public void setResult(boolean result) {
+        this.result = result;
     }
 
     public String getInfo() {

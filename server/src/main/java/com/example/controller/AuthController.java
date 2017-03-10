@@ -26,20 +26,35 @@ public class AuthController {
     public ResponseMessage signup(@Validated(value = FormValidator.class)@RequestBody User user,
                                   BindingResult bindingResult){
         ResponseMessage message= new ResponseMessage();
-        System.out.println("signUp: "+user.getPassword()+"; "+user.getConfirmedPassword());
+        System.out.println(user);
         if(bindingResult.hasErrors()){
-            message.setSuccessful(false);
+            message.setResult(false);
         }
         else {
             boolean result = this.userService.signup(user);
-            message.setSuccessful(result);
+            message.setResult(result);
         }
+
+        System.out.println(message.toString());
         return message;
     }
 
 
     @PostMapping("/isEmailTaken")
-    public Boolean isEmailTaken(@RequestBody String email){
-        return new Boolean(this.userService.isEmailTaken(email));
+    public ResponseMessage isEmailTaken(@RequestBody String email){
+        boolean result=this.userService.isEmailTaken(email);
+        System.out.println("is email taken: "+result);
+        ResponseMessage message= new ResponseMessage();
+        message.setResult(result);
+        return message;
+    }
+
+    @GetMapping("/getCurrentUser")
+    public ResponseMessage getCurrentUser(){
+        UserDTO user=this.userService.getCurrentUser();
+        ResponseMessage message= new ResponseMessage();
+        message.setResult(user!=null);
+        message.setObject(user);
+        return message;
     }
 }

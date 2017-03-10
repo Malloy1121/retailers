@@ -23,6 +23,8 @@ public interface UserService {
 
     List<UserDTO> findAllUsers();
 
-    User findUserByEmail(String email);
+    UserDTO findUserByEmail(String email);
+
+    UserDTO getCurrentUser();
 
 }

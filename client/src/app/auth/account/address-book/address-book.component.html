@@ -1,3 +1,22 @@
-<p>
-  address-book works!
-</p>
+<div class="content">
+  <div class="address-book-container">
+    <div class="address-book-item address-book-add">
+      <button (click)="onEdit(null)">Add Address</button>
+    </div>
+    <div class="address-book-item" *ngFor="let address of addresses">
+
+      <div>
+      <h3 *ngIf="address.isPrimary">Default Address</h3>
+      <p style="font-weight: bold">{{address.tag}}; id:{{address.id}}</p>
+      <p>{{address.street}} {{address.suite}}</p>
+      <p>{{address.city}}, {{address.state}} {{address.zipcode}}</p>
+      </div>
+
+      <div class="btn-group-address-book">
+        <button (click)="onEdit(address)">Edit</button>
+        &nbsp;
+        <button>Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

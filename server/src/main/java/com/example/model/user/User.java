@@ -22,7 +22,7 @@ import java.util.*;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "app_user")
-@SamePassword(groups = {FormValidator.class})
+//@SamePassword(groups = {FormValidator.class})
 public class User {
 
     @Id
@@ -36,7 +36,7 @@ public class User {
     private String email;
 
     @NotNull
-    @Size(min = 6, max = 15,groups = {FormValidator.class})
+    @Size(min = 6, max = 15, groups = {FormValidator.class})
     @Column(name = "password")
     private String password;
 
@@ -69,21 +69,20 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
-            joinColumns = {@JoinColumn(name = "userID",referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "roleID",referencedColumnName = "id")}
+            joinColumns = {@JoinColumn(name = "userID", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "roleID", referencedColumnName = "id")}
     )
-    @JsonManagedReference
-//    @JsonBackReference
+
     private Set<Role> roles = new HashSet<Role>();
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 //    @JsonBackReference
-    private List<Order> orders=new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     @PrePersist
     private void prePersist() {
         this.createTime = new Timestamp(System.currentTimeMillis());
-        System.out.println("current time: "+this.createTime);
+        System.out.println("current time: " + this.createTime);
 //        this.lastLoginTime = new Timestamp(System.currentTimeMillis());
     }
 
@@ -192,21 +191,20 @@ public class User {
         this.lastLoginTime = lastLoginTime;
     }
 
-
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "id=" + id +
-//                ", email='" + email + '\'' +
-//                ", password='" + password + '\'' +
-//                ", confirmedPassword='" + confirmedPassword + '\'' +
-//                ", firstname='" + firstname + '\'' +
-//                ", lastname='" + lastname + '\'' +
-//                ", isEnabled=" + isEnabled +
-//                ", createTime=" + createTime +
-//                ", lastLoginTime=" + lastLoginTime +
-//                ", roles=" + roles +
-//                ", orders=" + orders +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", confirmedPassword='" + confirmedPassword + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", isEnabled=" + isEnabled +
+                ", createTime=" + createTime +
+                ", lastLoginTime=" + lastLoginTime +
+                ", roles=" + roles +
+                ", orders=" + orders +
+                '}';
+    }
 }

@@ -18,6 +18,8 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+        System.out.println("Login failed");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        System.out.println(exception.toString());
     }
 }

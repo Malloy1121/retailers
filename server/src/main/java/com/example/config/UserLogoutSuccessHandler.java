@@ -18,6 +18,7 @@ public class UserLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        System.out.println("Logout successful");
         request.getSession().removeAttribute("userID");
         response.setStatus(HttpServletResponse.SC_OK);
     }

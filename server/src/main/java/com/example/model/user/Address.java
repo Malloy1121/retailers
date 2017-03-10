@@ -16,6 +16,8 @@ public class Address {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "tag")
+    private String tag;
 
     @Column(name = "is_primary")
     private int isPrimary;
@@ -40,7 +42,6 @@ public class Address {
     @Column(name = "zip")
     private int zipcode;
 
-    @JsonIgnore
     public User getUser() {
         return user;
     }
@@ -103,5 +104,13 @@ public class Address {
 
     public void setZipcode(int zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

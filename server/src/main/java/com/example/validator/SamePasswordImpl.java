@@ -12,6 +12,8 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class SamePasswordImpl implements ConstraintValidator<SamePassword, User> {
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public void initialize(SamePassword constraintAnnotation) {

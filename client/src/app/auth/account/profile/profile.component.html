@@ -1,3 +1,95 @@
-<p>
-  profile works!
-</p>
+<div class="content">
+  <div class="account-conatiner">
+    <div class="account-list-item">
+      <div class="account-list-item-title-container">
+        <img src="/assets/images/box.svg" alt="orders">
+      </div>
+      <div class="account-list-item-content-container">
+        <h3>My Orders</h3>
+        <table>
+          <tr>
+            <td>
+              <button>All Orders</button>
+            </td>
+            <td>
+              <button>Orders In Process</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button>Delivered Orders</button>
+            </td>
+            <td>
+              <button>Canceled Orders</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="account-list-item">
+      <div class="account-list-item-title-container">
+        <img src="/src/assets/images/id-card.svg" alt="profile">
+      </div>
+      <div class="account-list-item-content-container">
+        <h3>My Profile</h3>
+        <table>
+          <tr>
+            <td>
+              <button>Update Profile</button>
+            </td>
+            <td>
+              <button>Change Password</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button>My Favorites</button>
+            </td>
+            <td>
+              <!--<button>Canceled Process</button>-->
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="account-list-item">
+      <div class="account-list-item-title-container">
+        <img src="/assets/images/agenda.svg" alt="profile">
+      </div>
+      <div class="account-list-item-content-container">
+        <h3>Address Book</h3>
+        <table>
+          <tr>
+            <td>
+              <button (click)="navigate('/auth/account/my_addresses')">Manage Address</button>
+            </td>
+            <td>
+              <button (click)="navigate('/auth/account/update_address')">Add a New Address</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="account-list-item">
+      <div class="account-list-item-title-container">
+        <img src="/assets/images/smartphone.svg" alt="profile">
+      </div>
+      <div class="account-list-item-content-container">
+        <h3>Payment Book</h3>
+        <table>
+          <tr>
+            <td>
+              <button>Manage Payment</button>
+            </td>
+            <td>
+              <button>Add a New Payment</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
