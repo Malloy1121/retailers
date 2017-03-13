@@ -9,18 +9,18 @@
         <table>
           <tr>
             <td>
-              <button>All Orders</button>
+              <button class="btn-profile">All Orders</button>
             </td>
             <td>
-              <button>Orders In Process</button>
+              <button class="btn-profile">Orders In Process</button>
             </td>
           </tr>
           <tr>
             <td>
-              <button>Delivered Orders</button>
+              <button class="btn-profile">Delivered Orders</button>
             </td>
             <td>
-              <button>Canceled Orders</button>
+              <button class="btn-profile">Canceled Orders</button>
             </td>
           </tr>
         </table>
@@ -36,15 +36,15 @@
         <table>
           <tr>
             <td>
-              <button>Update Profile</button>
+              <button (click)="navigate('/auth/account/update_profile',{index:1})" class="btn-profile">Update Profile</button>
             </td>
             <td>
-              <button>Change Password</button>
+              <button (click)="navigate('/auth/account/update_profile',{index:2})" class="btn-profile">Change Password</button>
             </td>
           </tr>
           <tr>
             <td>
-              <button>My Favorites</button>
+              <button class="btn-profile">My Favorites</button>
             </td>
             <td>
               <!--<button>Canceled Process</button>-->
@@ -63,10 +63,10 @@
         <table>
           <tr>
             <td>
-              <button (click)="navigate('/auth/account/my_addresses')">Manage Address</button>
+              <button (click)="navigateByUrl('/auth/account/my_addresses')" class="btn-profile">Manage Address</button>
             </td>
             <td>
-              <button (click)="navigate('/auth/account/update_address')">Add a New Address</button>
+              <button (click)="navigateByUrl('/auth/account/update_address')" class="btn-profile">Add a New Address</button>
             </td>
           </tr>
         </table>
@@ -82,10 +82,10 @@
         <table>
           <tr>
             <td>
-              <button>Manage Payment</button>
+              <button class="btn-profile">Manage Payment</button>
             </td>
             <td>
-              <button>Add a New Payment</button>
+              <button class="btn-profile">Add a New Payment</button>
             </td>
           </tr>
         </table>

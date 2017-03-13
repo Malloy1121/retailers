@@ -13,9 +13,9 @@
       </div>
 
       <div class="btn-group-address-book">
-        <button (click)="onEdit(address)">Edit</button>
+        <button (click)="onEdit(address)" class="btn-profile">Edit</button>
         &nbsp;
-        <button>Delete</button>
+        <button class="btn-profile" (click)="onDelete(address.id)">Delete</button>
       </div>
     </div>
   </div>

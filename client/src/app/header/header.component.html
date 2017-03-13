@@ -56,16 +56,14 @@
 
       <div class="btn-cart-container  btn-header-auth-container dropdown-conatainer">
         <button class="btn-header-auth"
-                id="cart">
+                id="cart"
+                (click)="navigate('/shp/cart')">
           <span id="header-cart-amount">0</span>
           <img src="/assets/images/shopping-cart.svg" alt="cart">
           <span>Cart</span>
         </button>
         <ul class="dropdown-list">
-          <li>My Account</li>
-          <li>My Orders</li>
-          <li>My List</li>
-          <li>Address Book</li>
+          <li>Cart is empty</li>
         </ul>
       </div>
 

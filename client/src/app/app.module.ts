@@ -8,10 +8,11 @@ import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {AuthService} from "./service/auth.service";
 import {HomeComponent} from './page/home.component';
-import {CartComponent} from './page/cart/cart.component';
+import {CartComponent} from './page/products/cart/cart.component';
 import {DropdownDirective} from './directive/dropdown.directive';
 import {RouterModule} from "@angular/router";
 import {APP_ROUTE} from "./app.route";
+import {ProfileService} from "./service/profile.service";
 
 
 @NgModule({
@@ -20,8 +21,6 @@ import {APP_ROUTE} from "./app.route";
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    CartComponent,
-    DropdownDirective
   ],
   imports: [
     BrowserModule,
@@ -31,6 +30,7 @@ import {APP_ROUTE} from "./app.route";
   ],
   providers: [
     AuthService,
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })

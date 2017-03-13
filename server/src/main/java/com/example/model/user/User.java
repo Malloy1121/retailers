@@ -44,6 +44,9 @@ public class User {
     @Transient
     private String confirmedPassword;
 
+    @Transient
+    private String currentPassword;
+
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "firstname")
@@ -157,6 +160,14 @@ public class User {
 
     public void setConfirmedPassword(String confirmedPassword) {
         this.confirmedPassword = confirmedPassword;
+    }
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
     }
 
     public String getFirstname() {

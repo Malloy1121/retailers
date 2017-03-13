@@ -8,6 +8,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {ACCOUNT_ROUTE} from "./account.route";
 import {AddressComponent} from './address-book/address.component';
+import {ProfileUpdateComponent} from './profile/profile-update/profile-update.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import {AddressComponent} from './address-book/address.component';
     ReactiveFormsModule,
     RouterModule.forChild(ACCOUNT_ROUTE)
   ],
-  declarations: [OrderListComponent, ProfileComponent, AddressBookComponent, PaymentBookComponent, AddressComponent]
+  declarations: [OrderListComponent, ProfileComponent, AddressBookComponent, PaymentBookComponent, AddressComponent, ProfileUpdateComponent]
 })
 export class AccountModule {
 }

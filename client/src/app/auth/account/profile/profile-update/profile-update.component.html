@@ -1,0 +1,89 @@
+<div class="content">
+  <div class="profile-update-container">
+    <ul>
+      <li [ngClass]="{'active': index==1}">
+        <button (click)="updateOnSwitch(1)">Update Profile</button>
+      </li>
+      <li [ngClass]="{'active': index==2}">
+        <button (click)="updateOnSwitch(2)">Change Password</button>
+      </li>
+    </ul>
+    <div class="profile-update-content-container">
+      <div class="update-info-container" [ngClass]="{'display-none': index!=1}">
+        <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+          <table>
+            <tr>
+              <td>First Name</td>
+            </tr>
+            <tr>
+              <td><input type="text" formControlName="firstname"></td>
+            </tr>
+            <tr class="form-validator">
+              <td *ngIf="firstname.valid||!firstname.touched">&nbsp;</td>
+              <td *ngIf="firstname.hasError('maxlength')&&firstname.touched">Should have up to 25 characters</td>
+              <td *ngIf="firstname.hasError('required')&&firstname.touched">First name required</td>
+            </tr>
+
+            <tr>
+              <td>Last Name</td>
+            </tr>
+            <tr>
+              <td><input type="text" formControlName="lastname"></td>
+            </tr>
+            <tr class="form-validator">
+              <td *ngIf="lastname.valid||!lastname.touched">&nbsp;</td>
+              <td *ngIf="lastname.hasError('maxlength')&&lastname.touched">Should have up to 25 characters</td>
+              <td *ngIf="lastname.hasError('required')&&lastname.touched">Last name required</td>
+            </tr>
+
+          </table>
+          <div class="btn-update-submit-container">
+            <button type="submit" class="btn-profile" [disabled]="profileForm.invalid">Update Profile</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="update-password-container profile-update-content-container" [ngClass]="{'display-none': index!=2}">
+      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+        <table>
+          <tr>
+            <td>Current Password</td>
+          </tr>
+          <tr>
+            <td><input type="password" formControlName="currentPassword"></td>
+          </tr>
+          <tr class="form-validator">
+            <td *ngIf="currentPassword.valid||!currentPassword.touched">&nbsp;</td>
+            <td *ngIf="currentPassword.hasError('required')&&currentPassword.touched">Current password required</td>
+          </tr>
+
+          <tr>
+            <td>New Password</td>
+          </tr>
+          <tr>
+            <td><input type="password" formControlName="password" placeholder="6-15 characters"></td>
+          </tr>
+          <tr class="form-validator">
+            <td *ngIf="newPassword.valid||!newPassword.touched">&nbsp;</td>
+            <td *ngIf="newPassword.invalid&&newPassword.touched">Invalid password</td>
+          </tr>
+
+          <tr>
+            <td>Confirm New Password</td>
+          </tr>
+          <tr>
+            <td><input type="password" formControlName="confirmedPassword"></td>
+          </tr>
+          <tr class="form-validator">
+            <td *ngIf="!passwordForm.hasError('samePassword')||!newPasswordConfirm.touched">&nbsp;</td>
+            <td *ngIf="passwordForm.hasError('samePassword')&&newPasswordConfirm.touched">Two passwords do not match</td>
+          </tr>
+        </table>
+
+        <div class="btn-update-submit-container">
+          <button type="submit" class="btn-profile" [disabled]="passwordForm.invalid">Change Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

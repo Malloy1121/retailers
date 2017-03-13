@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Address} from "../../../model/address";
 import {Router} from "@angular/router";
+import {ProfileService} from "../../../service/profile.service";
 
 @Component({
   selector: 'app-address-book',
@@ -10,7 +11,7 @@ import {Router} from "@angular/router";
 export class AddressBookComponent implements OnInit {
   private addresses: Address[] = [];
 
-  constructor(private router: Router) {
+  constructor(private router: Router,private profileService:ProfileService) {
   }
 
   ngOnInit() {
@@ -46,6 +47,10 @@ export class AddressBookComponent implements OnInit {
     else {
       this.router.navigate(["/auth/account/update_address", params]);
     }
+  }
+
+  onDelete(value){
+    this.profileService.deleteAddress(value);
   }
 
 }

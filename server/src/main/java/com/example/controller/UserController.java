@@ -1,8 +1,10 @@
 package com.example.controller;
 
 import com.example.dto.AddressDTO;
+import com.example.dto.ResponseMessage;
 import com.example.dto.UserDTO;
 import com.example.model.user.Address;
+import com.example.model.user.User;
 import com.example.service.AddressService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -44,18 +47,41 @@ public class UserController {
 //        return this.addressService.findAddressByUser(id);
 //    }
 
+    @PostMapping("/updateProfile")
+    @PreAuthorize("isFullyAuthenticated()")
+    public ResponseMessage updateProfile(@RequestBody User user, HttpSession session){
+        ResponseMessage message=new ResponseMessage();
+        return message;
+    }
+
+    @PostMapping("/changePassword")
+    @PreAuthorize("isFullyAuthenticated()")
+    public ResponseMessage changePassword(@RequestBody User user, HttpSession session){
+        ResponseMessage message=new ResponseMessage();
+        return message;
+    }
+
     @PostMapping("/addNewAddress")
-    @PreAuthorize("isAuthenticated()")
-    public Boolean addNewAddress(@RequestBody Address address,HttpServletRequest request){
-        long userID=(long)request.getSession().getAttribute("userID");
-        return new Boolean(this.addressService.addNewAddress(address,userID));
+    @PreAuthorize("isFullyAuthenticated()")
+    public ResponseMessage addNewAddress(@RequestBody Address address,HttpSession session){
+        long userID=(long)session.getAttribute("userID");
+        ResponseMessage message=new ResponseMessage();
+        return message;
+    }
+
+    @PostMapping("/editAddress")
+    @PreAuthorize("isFullyAuthenticated()")
+    public ResponseMessage editAddress(@RequestBody Address address,HttpSession session){
+        ResponseMessage message=new ResponseMessage();
+        return message;
     }
 
     @PostMapping("/deleteAddress")
-    @PreAuthorize("isAuthenticated()")
-    public Boolean deleteAddress(@RequestBody UserDTO user){
-        long id=user.getId();
-        return new Boolean(this.addressService.deleteAddress(id));
+    @PreAuthorize("isFullyAuthenticated()")
+    public ResponseMessage deleteAddress(@RequestBody Address address){
+//        long id=user.getId();
+        ResponseMessage message=new ResponseMessage();
+        return message;
     }
 
 }

@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Address} from "../../../model/address";
 import "rxjs/Rx";
 import {Subscription} from "rxjs";
+import {ProfileService} from "../../../service/profile.service";
 
 @Component({
   selector: 'app-address',
@@ -21,19 +22,24 @@ export class AddressComponent implements OnInit,OnDestroy {
   private states = ["VA", "NY", "PA"];
   private currentAddress: Address = null;
   private routerParamsSubscription: Subscription;
+  private title: string = "Add";
+  private id: number = -1;
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute, private profileService: ProfileService) {
   }
 
   ngOnInit() {
     this.routerParamsSubscription = this.activatedRoute.params
       .subscribe((data: Address) => {
         console.log(data);
-        if (data != null) {
+        if (data["id"] != null) {
           this.currentAddress = data;
+          this.title = "Update";
+          this.id = data["id"];
           console.log(this.currentAddress);
         }
         else {
+          this.title = "Add";
           this.currentAddress = null;
         }
         // this.currentAddress = data;
@@ -43,12 +49,21 @@ export class AddressComponent implements OnInit,OnDestroy {
   }
 
   onSubmit() {
+    const value = this.addressForm.value;
+    if (this.id >= 0) {
+      value.id = this.id;
+      this.profileService.updateProfile(value);
+    }
+    else {
+      this.profileService.addAddress(value);
+    }
 
   }
 
   buildForm() {
     this.addressName = new FormControl(
       this.currentAddress == null ? "" : this.currentAddress.tag, Validators.compose([
+        Validators.required,
         Validators.maxLength(20)
       ]));
 

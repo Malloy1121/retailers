@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 
 @Component({
@@ -8,13 +8,18 @@ import {Router} from "@angular/router";
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
   }
 
-  navigate(uri){
-    this.router.navigateByUrl(uri);
+  navigate(uri, params) {
+    this.router.navigate([uri, params]);
+  }
+
+  navigateByUrl(url){
+    this.router.navigateByUrl(url);
   }
 
 }

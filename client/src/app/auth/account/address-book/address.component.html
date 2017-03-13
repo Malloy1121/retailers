@@ -1,7 +1,7 @@
 <div class="content">
   <div class="address-container">
     <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
-      <h2>Add a New Address</h2>
+      <h2>{{title}} a New Address</h2>
       <table>
         <tr>
           <td>Address Tag</td>
@@ -13,7 +13,10 @@
         </tr>
 
         <tr class="form-validator">
-          <td colspan="2" *ngIf="addressName.hasError('maxlength')&&addressName.touched">Tag must have up to 20 characters</td>
+          <td colspan="2" *ngIf="addressName.hasError('maxlength')&&addressName.touched">Tag must have up to 20
+            characters
+          </td>
+          <td colspan="2" *ngIf="addressName.hasError('required')&&addressName.touched">Tag required</td>
           <td *ngIf="addressName.valid||!addressName.touched">&nbsp;</td>
         </tr>
 
@@ -80,7 +83,8 @@
 
       </table>
       <div class="btn-address-submit-container">
-        <button type="submit" [disabled]="!addressForm.valid||addressForm.pending">Add Address</button>
+        <button type="submit" [disabled]="!addressForm.valid||addressForm.pending" class="btn-profile">{{title}} Address
+        </button>
       </div>
     </form>
   </div>
