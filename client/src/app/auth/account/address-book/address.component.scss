@@ -33,9 +33,16 @@
             width: 100%;
           }
 
-          input, select {
+          input {
             height: 30px;
           }
+
+          select {
+            min-height: 30px;
+            max-height: 200px;
+            overflow-y: scroll;
+          }
+
         }
       }
     }

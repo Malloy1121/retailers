@@ -1,10 +1,12 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Address} from "../../../model/address";
 import "rxjs/Rx";
 import {Subscription} from "rxjs";
 import {ProfileService} from "../../../service/profile.service";
+
+declare var alert: any;
 
 @Component({
   selector: 'app-address',
@@ -25,17 +27,29 @@ export class AddressComponent implements OnInit,OnDestroy {
   private title: string = "Add";
   private id: number = -1;
 
-  constructor(private activatedRoute: ActivatedRoute, private profileService: ProfileService) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private profileService: ProfileService,
+              private router: Router) {
   }
 
   ngOnInit() {
+    this.profileService.getStateList()
+      .toPromise()
+      .then(data => {
+        const states = data.object;
+        this.states = states;
+      });
+
     this.routerParamsSubscription = this.activatedRoute.params
       .subscribe((data: Address) => {
         console.log(data);
         if (data["id"] != null) {
           this.currentAddress = data;
           this.title = "Update";
-          this.id = data["id"];
+          if (this.currentAddress.tag == null) {
+            this.currentAddress.tag == "";
+          }
+          this.id = this.currentAddress.id;
           console.log(this.currentAddress);
         }
         else {
@@ -45,17 +59,35 @@ export class AddressComponent implements OnInit,OnDestroy {
         // this.currentAddress = data;
         this.buildForm();
       });
-
+      console.log("Address ID : "+this.id);
   }
 
   onSubmit() {
     const value = this.addressForm.value;
     if (this.id >= 0) {
       value.id = this.id;
-      this.profileService.updateProfile(value);
+      this.profileService.updateProfile(value)
+        .toPromise()
+        .then(data => {
+          if (data.result == true) {
+            this.router.navigateByUrl("/auth/account/my_addresses");
+          }
+          else {
+            alert("Add address failed");
+          }
+        });
     }
     else {
-      this.profileService.addAddress(value);
+      this.profileService.addAddress(value)
+        .toPromise()
+        .then(data => {
+          if (data.result == true) {
+            this.router.navigateByUrl("/auth/account/my_addresses");
+          }
+          else {
+            alert("Address update failed");
+          }
+        });
     }
 
   }
@@ -90,11 +122,11 @@ export class AddressComponent implements OnInit,OnDestroy {
     this.suite = new FormControl(this.currentAddress == null ? "" : this.currentAddress.suite);
 
     this.addressForm = new FormGroup({
-      name: this.addressName,
+      tag: this.addressName,
       zipcode: this.zipcode,
       street: this.street,
       city: this.city,
-      state: this.state,
+      stateID: this.state,
       suite: this.suite
     });
   }

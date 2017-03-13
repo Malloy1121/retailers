@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.currentCategory = this.select.nativeElement.options[this.select.nativeElement.selectedIndex].text;
 
     this.currentUser = this.authService.getCurrentUser()
+      .toPromise()
       .then(data => {
         console.log(data);
         if (data.result == true) {
@@ -89,7 +90,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isCartShown = false;
   }
 
-  navigate(uri){
+  navigate(uri) {
     this.router.navigateByUrl(uri);
   }
 

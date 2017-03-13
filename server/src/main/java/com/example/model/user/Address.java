@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Address {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -42,6 +42,20 @@ public class Address {
     @Column(name = "zip")
     private int zipcode;
 
+    public Address() {
+    }
+
+    public Address(String tag, int isPrimary, String street, String suite, String city, State state, User user, int zipcode) {
+        this.tag = tag;
+        this.isPrimary = isPrimary;
+        this.street = street;
+        this.suite = suite;
+        this.city = city;
+        this.state = state;
+        this.user = user;
+        this.zipcode = zipcode;
+    }
+
     public User getUser() {
         return user;
     }
@@ -50,7 +64,7 @@ public class Address {
         this.user = user;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

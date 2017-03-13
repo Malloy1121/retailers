@@ -9,11 +9,12 @@ import {User} from "../model/user";
 export class AuthService {
   private currentUser;
   private subject: Subject<any> = new Subject();
-  private url="";
+  private url = "";
   // private url="http://localhost:8080";
 
   constructor(private http: Http, private router: Router) {
     this.getCurrentUser()
+      .toPromise()
       .then(data => {
         console.log(data);
         if (data.result == true) {
@@ -32,7 +33,7 @@ export class AuthService {
     const header = new Headers();
     header.set("Content-Type", "application/x-www-form-urlencoded");
     body.set("password", value.password);
-    return this.http.post(this.url+"/login", body.toString(), {headers: header})
+    return this.http.post(this.url + "/login", body.toString(), {headers: header})
       .map((response: Response) => {
         if (response.status >= 400) {
           throw new Error("Login Failed");
@@ -52,7 +53,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.request(this.url+"/logout")
+    return this.http.request(this.url + "/logout")
       .map((response: Response) => {
         const result = response.status;
         return result;
@@ -70,9 +71,9 @@ export class AuthService {
       });
   }
 
-  signUp(value:User) {
+  signUp(value: User) {
     console.log(value);
-    return this.http.post(this.url+"/auth/signup", value)
+    return this.http.post(this.url + "/auth/signup", value)
       .map((response: Response) => response.json());
   }
 
@@ -82,16 +83,15 @@ export class AuthService {
   }
 
   isEmailTaken(email) {
-    return this.http.post(this.url+"/auth/isEmailTaken", email)
+    return this.http.post(this.url + "/auth/isEmailTaken", email)
       .map((response: Response) => response.json());
   }
 
   getCurrentUser() {
-    return this.http.get(this.url+"/auth/getCurrentUser")
+    return this.http.get(this.url + "/auth/getCurrentUser")
       .map((response: Response) => {
         return response.json();
-      })
-      .toPromise();
+      });
   }
 
   getUser() {

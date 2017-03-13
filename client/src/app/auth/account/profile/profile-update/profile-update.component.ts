@@ -1,8 +1,12 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {FormBuilder, FormGroup, FormControl, Validators} from "@angular/forms";
 import {ProfileService} from "../../../../service/profile.service";
+import "rxjs/Rx";
+import {AuthService} from "../../../../service/auth.service";
+
+declare var alert: any;
 
 @Component({
   selector: 'app-profile-update',
@@ -20,9 +24,13 @@ export class ProfileUpdateComponent implements OnInit,OnDestroy {
   private firstname: FormControl;
   private lastname: FormControl;
   private currentFirstname = "";
-  private curreentLastname = "";
+  private currentLastname = "";
 
-  constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder,private profileService:ProfileService) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private fb: FormBuilder,
+              private profileService: ProfileService,
+              private router: Router,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -32,6 +40,13 @@ export class ProfileUpdateComponent implements OnInit,OnDestroy {
     console.log(this.index);
     this.buildProfileForm();
     this.buildPasswordForm();
+    this.authService.getCurrentUser()
+      .toPromise()
+      .then(data => {
+        const user = data.object;
+        this.currentFirstname = user.firstname;
+        this.lastname = user.lastname;
+      });
   }
 
   updateOnSwitch(index) {
@@ -39,11 +54,29 @@ export class ProfileUpdateComponent implements OnInit,OnDestroy {
   }
 
   changePassword() {
-    this.profileService.changePassword(this.passwordForm.value);
+    this.profileService.changePassword(this.passwordForm.value)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.router.navigateByUrl("/auth/account");
+        }
+        else {
+          alert("Request failed due to: " + data.info);
+        }
+      });
   }
 
   updateProfile() {
-    this.profileService.updateProfile(this.profileForm.value);
+    this.profileService.updateProfile(this.profileForm.value)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.router.navigateByUrl("/auth/account");
+        }
+        else {
+          alert("Request failed");
+        }
+      });
   }
 
   ngOnDestroy() {
@@ -55,7 +88,7 @@ export class ProfileUpdateComponent implements OnInit,OnDestroy {
       Validators.required,
       Validators.maxLength(25)
     ]));
-    this.lastname = new FormControl(this.curreentLastname, Validators.compose([
+    this.lastname = new FormControl(this.currentLastname, Validators.compose([
       Validators.required,
       Validators.maxLength(25)
     ]));

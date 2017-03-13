@@ -4,6 +4,7 @@ import com.example.dto.AddressDTO;
 import com.example.dto.ResponseMessage;
 import com.example.dto.UserDTO;
 import com.example.model.user.Address;
+import com.example.model.user.State;
 import com.example.model.user.User;
 import com.example.service.AddressService;
 import com.example.service.UserService;
@@ -28,14 +29,14 @@ public class UserController {
     private AddressService addressService;
 
     @GetMapping("/getAllUsers")
-    public List<UserDTO> getAllUsers(){
+    public List<UserDTO> getAllUsers() {
         return this.userService.findAllUsers();
     }
 
     @GetMapping("/getUserAddresses")
 //    @PreAuthorize("isAuthenticated()")
-    public List<AddressDTO> getUserAddresses(HttpServletRequest request){
-        long userID=(long)request.getSession().getAttribute("userID");
+    public List<AddressDTO> getUserAddresses(HttpServletRequest request) {
+        long userID = (long) request.getSession().getAttribute("userID");
         return this.addressService.findAddressByUser(userID);
     }
 
@@ -49,38 +50,63 @@ public class UserController {
 
     @PostMapping("/updateProfile")
     @PreAuthorize("isFullyAuthenticated()")
-    public ResponseMessage updateProfile(@RequestBody User user, HttpSession session){
-        ResponseMessage message=new ResponseMessage();
+    public ResponseMessage updateProfile(@RequestBody User user, HttpSession session) {
+        ResponseMessage message = new ResponseMessage();
         return message;
     }
 
     @PostMapping("/changePassword")
     @PreAuthorize("isFullyAuthenticated()")
-    public ResponseMessage changePassword(@RequestBody User user, HttpSession session){
-        ResponseMessage message=new ResponseMessage();
+    public ResponseMessage changePassword(@RequestBody User user, HttpSession session) {
+        ResponseMessage message = new ResponseMessage();
         return message;
     }
 
     @PostMapping("/addNewAddress")
     @PreAuthorize("isFullyAuthenticated()")
-    public ResponseMessage addNewAddress(@RequestBody Address address,HttpSession session){
-        long userID=(long)session.getAttribute("userID");
-        ResponseMessage message=new ResponseMessage();
+    public ResponseMessage addNewAddress(@RequestBody AddressDTO address, HttpSession session) {
+        long userID = (long) session.getAttribute("userID");
+        ResponseMessage message = new ResponseMessage();
+        boolean result=this.addressService.addNewAddress(address,userID);
+        message.setResult(result);
         return message;
     }
 
     @PostMapping("/editAddress")
     @PreAuthorize("isFullyAuthenticated()")
-    public ResponseMessage editAddress(@RequestBody Address address,HttpSession session){
-        ResponseMessage message=new ResponseMessage();
+    public ResponseMessage editAddress(@RequestBody AddressDTO address, HttpSession session) {
+        ResponseMessage message = new ResponseMessage();
+        boolean result=this.addressService.updateAddress(address);
+        message.setResult(result);
         return message;
     }
 
     @PostMapping("/deleteAddress")
     @PreAuthorize("isFullyAuthenticated()")
-    public ResponseMessage deleteAddress(@RequestBody Address address){
+    public ResponseMessage deleteAddress(@RequestBody AddressDTO address) {
 //        long id=user.getId();
-        ResponseMessage message=new ResponseMessage();
+        ResponseMessage message = new ResponseMessage();
+        boolean result=this.addressService.deleteAddress(address.getId());
+        message.setResult(result);
+        return message;
+    }
+
+    @GetMapping("/getCurrentAddresses")
+    @PreAuthorize("isFullyAuthenticated()")
+    public ResponseMessage getCurrentAddresses(HttpSession session) {
+        ResponseMessage message = new ResponseMessage();
+        List<AddressDTO> result = this.addressService.findAddressByUser((long) session.getAttribute("userID"));
+        message.setObject(result);
+        message.setResult(true);
+        return message;
+    }
+
+    @GetMapping("/getStateList")
+    public ResponseMessage getStateList() {
+        ResponseMessage message = new ResponseMessage();
+        List<State> result=this.addressService.findAllStates();
+        message.setResult(true);
+        message.setObject(result);
         return message;
     }
 

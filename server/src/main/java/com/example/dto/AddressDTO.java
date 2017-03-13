@@ -7,6 +7,8 @@ public class AddressDTO {
 
     private long id;
 
+    private String tag;
+
     private String street;
 
     private String suite;
@@ -15,7 +17,9 @@ public class AddressDTO {
 
     private String state;
 
-    private int zip;
+    private int stateID;
+
+    private int zipcode;
 
     private boolean isPrimary;
 
@@ -51,6 +55,14 @@ public class AddressDTO {
         this.city = city;
     }
 
+    public int getStateID() {
+        return stateID;
+    }
+
+    public void setStateID(int stateID) {
+        this.stateID = stateID;
+    }
+
     public String getState() {
         return state;
     }
@@ -60,19 +72,27 @@ public class AddressDTO {
     }
 
     public int getZip() {
-        return zip;
+        return zipcode;
     }
 
     public void setZip(int zip) {
-        this.zip = zip;
+        this.zipcode = zip;
     }
 
-    public boolean isPrimary() {
+    public boolean getIsPrimary() {
         return isPrimary;
     }
 
-    public void setPrimary(boolean primary) {
-        isPrimary = primary;
+    public void setIsPrimary(boolean isPrimary) {
+        isPrimary = isPrimary;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     @Override
@@ -83,7 +103,7 @@ public class AddressDTO {
                 ", suite='" + suite + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
-                ", zip=" + zip +
+                ", zip=" + zipcode +
                 ", isPrimary=" + isPrimary +
                 '}';
     }

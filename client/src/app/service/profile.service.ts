@@ -20,6 +20,11 @@ export class ProfileService {
       .map((response: Response) => response.json());
   }
 
+  getCurrentAddresses() {
+    return this.http.get("/user/getCurrentAddresses")
+      .map((response: Response) => response.json());
+  }
+
   addAddress(value) {
     console.log(value);
     return this.http.post("/user/addNewAddress", value)
@@ -32,9 +37,14 @@ export class ProfileService {
       .map((response: Response) => response.json());
   }
 
-  deleteAddress(value){
+  deleteAddress(value) {
     console.log(value);
     return this.http.post("/user/deleteAddress", value)
+      .map((response: Response) => response.json());
+  }
+
+  getStateList() {
+    return this.http.get("/user/getStateList")
       .map((response: Response) => response.json());
   }
 

@@ -11,24 +11,25 @@ import {ProfileService} from "../../../service/profile.service";
 export class AddressBookComponent implements OnInit {
   private addresses: Address[] = [];
 
-  constructor(private router: Router,private profileService:ProfileService) {
+  constructor(private router: Router,
+              private profileService: ProfileService) {
   }
 
   ngOnInit() {
-    for (let i = 0; i < 5; i++) {
-      const address: Address = {
-        city: "Manassas",
-        street: "10529 Crestwood Dr",
-        suite: "203",
-        state: "VA",
-        stateID: 1,
-        tag: "Office",
-        isPrimary: i == 2,
-        id: i,
-        zipcode: 20155
-      };
-      this.addresses.push(address);
-    }
+    // for (let i = 0; i < 5; i++) {
+    //   const address: Address = {
+    //     city: "Manassas",
+    //     street: "10529 Crestwood Dr",
+    //     suite: "203",
+    //     state: "VA",
+    //     stateID: 1,
+    //     tag: "Office",
+    //     isPrimary: i == 2,
+    //     id: i,
+    //     zipcode: 20155
+    //   };
+    //   this.addresses.push(address);
+    // }
 
     for (let address of this.addresses) {
       if (address.isPrimary) {
@@ -38,6 +39,14 @@ export class AddressBookComponent implements OnInit {
         break;
       }
     }
+
+    this.profileService.getCurrentAddresses()
+      .toPromise()
+      .then(data => {
+        console.log(data.object);
+        const object = data.object;
+        this.addresses = object;
+      });
   }
 
   onEdit(params: Address) {
@@ -49,7 +58,7 @@ export class AddressBookComponent implements OnInit {
     }
   }
 
-  onDelete(value){
+  onDelete(value) {
     this.profileService.deleteAddress(value);
   }
 
