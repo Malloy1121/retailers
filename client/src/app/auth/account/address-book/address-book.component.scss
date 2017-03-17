@@ -1,7 +1,8 @@
 .address-book-container {
   width: 100%;
   max-width: 1000px;
-  margin: 25px calc((100% - 310px * 3) / 2);
+  //margin: 25px calc((100% - 310px * 3) / 2);
+  margin: 25px auto;
   display: flex;
   flex-wrap: wrap;
 

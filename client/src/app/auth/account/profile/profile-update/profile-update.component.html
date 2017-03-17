@@ -64,8 +64,8 @@
             <td><input type="password" formControlName="password" placeholder="6-15 characters"></td>
           </tr>
           <tr class="form-validator">
-            <td *ngIf="newPassword.valid||!newPassword.touched">&nbsp;</td>
-            <td *ngIf="newPassword.invalid&&newPassword.touched">Invalid password</td>
+            <td *ngIf="password.valid||!password.touched">&nbsp;</td>
+            <td *ngIf="password.invalid&&password.touched">Invalid password</td>
           </tr>
 
           <tr>
@@ -75,8 +75,8 @@
             <td><input type="password" formControlName="confirmedPassword"></td>
           </tr>
           <tr class="form-validator">
-            <td *ngIf="!passwordForm.hasError('samePassword')||!newPasswordConfirm.touched">&nbsp;</td>
-            <td *ngIf="passwordForm.hasError('samePassword')&&newPasswordConfirm.touched">Two passwords do not match</td>
+            <td *ngIf="!passwordForm.hasError('samePassword')||!confirmedPassword.touched">&nbsp;</td>
+            <td *ngIf="passwordForm.hasError('samePassword')&&confirmedPassword.touched">Two passwords do not match</td>
           </tr>
         </table>
 

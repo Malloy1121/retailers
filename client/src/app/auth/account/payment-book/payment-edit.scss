@@ -1,0 +1,79 @@
+.payment-edit-container-outer {
+  position: absolute;
+  width: 100%;
+  min-width: 1000px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  display: table;
+
+  .as-table-cell {
+    vertical-align: middle;
+
+    .payment-edit-container {
+      width: 600px;
+      margin: auto;
+      //background-color: white;
+      display: block;
+
+      .payment-edit-title-container {
+        background-color: lightgrey;
+        border-bottom: 1px solid grey;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        position: relative;
+
+        button {
+          outline: none;
+          border: none;
+          background-color: transparent;
+          padding: 5px;
+          height: 25px;
+          position: absolute;
+          right: 10px;
+          top: 8px;
+
+          &:active {
+            background-color: grey;
+          }
+
+          img {
+            width: 15px;
+          }
+        }
+
+        h3 {
+          font-size: 1.1em;
+          text-indent: 8px;
+          margin: auto;
+          padding: 10px 0;
+        }
+      }
+
+      .payment-edit-card-container {
+        background-color: white;
+        height: 250px;
+        animation-name: higher;
+        animation-duration: 1s;
+        overflow-y: hidden;
+      }
+
+      @keyframes higher {
+        from {
+          height: 0;
+        }
+        to {
+          height: 250px;
+        }
+      }
+
+      .edit-card-info-container {
+
+        h3 {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+}

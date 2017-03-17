@@ -32,16 +32,16 @@
         <button (click)="login()" class="btn-header-auth">Login</button>
       </div>
 
-      <div class="btn-account-container  btn-header-auth-container dropdown-conatainer">
+      <div class="btn-account-container  btn-header-auth-container dropdown-container">
         <button class="btn-header-auth" (click)="navigate('/auth/account')">
           <span style="margin-right: 20px;width: 100%;">My Account</span>
           <i class="dropdown-icon" style="border-top-color: white" #category></i>
         </button>
         <ul class="dropdown-list">
-          <li (click)="navigate('/auth/account')">Account Management</li>
-          <li (click)="navigate('/auth/account/my_orders')">My Orders</li>
-          <li (click)="navigate('/auth/account')">My List</li>
-          <li (click)="navigate('/auth/account/my_addresses')">Address Book</li>
+          <li class="dropdown-list-item" (click)="navigate('/auth/account')">Account Management</li>
+          <li class="dropdown-list-item" (click)="navigate('/auth/account/my_orders')">My Orders</li>
+          <li class="dropdown-list-item" (click)="navigate('/auth/account')">My List</li>
+          <li class="dropdown-list-item" (click)="navigate('/auth/account/my_addresses')">Address Book</li>
         </ul>
       </div>
 
@@ -54,7 +54,7 @@
         <button (click)="logout()" class="btn-header-auth">Logout</button>
       </div>
 
-      <div class="btn-cart-container  btn-header-auth-container dropdown-conatainer">
+      <div class="btn-cart-container  btn-header-auth-container dropdown-container">
         <button class="btn-header-auth"
                 id="cart"
                 (click)="navigate('/shp/cart')">
@@ -63,7 +63,7 @@
           <span>Cart</span>
         </button>
         <ul class="dropdown-list">
-          <li>Cart is empty</li>
+          <li style="cursor: default">Cart is empty</li>
         </ul>
       </div>
 

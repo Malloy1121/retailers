@@ -67,8 +67,7 @@
           <td>
             <select formControlName="stateID" style="width: 60px;max-width: 100%">
               <option *ngFor="let item of states"
-                      [value]="item.id"
-                      [selected]="item.id==state.value?'selected':null">
+                      [value]="item.id">
                 {{item.state}}
               </option>
             </select>

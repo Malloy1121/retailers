@@ -1,3 +1,148 @@
-<p>
-  payment-book works!
-</p>
+<div class="content">
+  <div class="payment-container">
+    <div class="payment-header-container">
+
+      <div class="payment-header-left">
+        <h3>Your credit and debit cards</h3>
+      </div>
+      <div class="payment-header-right">
+        <h3>Expires</h3>
+      </div>
+
+    </div>
+
+    <div class="payment-card" [ngClass]="{'payment-card-open':cards[1]}">
+
+      <div class="payment-title-container" (click)="toggleCard(1)">
+        <div class="payment-card-icon-container">
+          <img src="/src/assets/images/chevron-arrow-down.svg" alt="down">
+        </div>
+        <div class="payment-card-title-left">
+          <span>Payment card ending in 1234</span>
+        </div>
+        <div class="payment-card-title-right">
+          <span>11/22</span>
+        </div>
+      </div>
+
+      <div class="payment-content-box">
+        <div class="payment-content-container">
+          <div class="payment-content-left">
+            <h4>Name on card</h4>
+            <p>Abcasdf Asdf</p>
+          </div>
+          <div class="payment-content-right">
+            <h4>Billing address</h4>
+            <p>
+              <span>street</span>
+              <span>city state zip </span>
+            </p>
+          </div>
+
+        </div>
+
+        <div class="btn-payment-card-container">
+          <button (click)="onEdit()">Edit</button>
+          <button (click)="onRemove(1)">Delete</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="add-payment-container">
+      <h2>Add a New Payment Method</h2>
+      <hr>
+      <h3>Credit or Debit Cards</h3>
+      <div class="add-card-container" [ngClass]="{'add-card-open':isAddCardOpen}" #newCard>
+        <a (click)="toggleAddCard()"
+        ><span style="padding: 0 2px;"
+        ><img src="/src/assets/images/chevron-arrow-down.svg" alt="arrow"
+        ></span
+        >Add a Card</a>
+        <div class="add-card-form-container">
+          <h5>Enter your card information</h5>
+          <form (ngSubmit)="addCard()" [formGroup]="cardForm">
+            <div class="add-card-info-container" style="width: 120px;">
+              <label for="name-on-card">Name on card</label>
+              <input type="text" id="name-on-card" formControlName="name">
+              <span class="form-validator"
+                    *ngIf="cardForm.get('name').hasError('required')&&cardForm.get('name').touched">Name required</span>
+              <span class="form-validator"
+                    *ngIf="cardForm.get('name').hasError('maxlength')&&cardForm.get('name').touched">Name must have up to 25 characters</span>
+            </div>
+            <div class="add-card-info-container" style="width: 175px;">
+              <label for="card-number">Card number</label>
+              <input type="text" id="card-number" formControlName="number">
+              <span class="form-validator"
+                    *ngIf="cardForm.get('number').hasError('required')&&cardForm.get('number').touched">Card number required</span>
+              <span class="form-validator"
+                    *ngIf="cardForm.get('number').hasError('numberLength')&&cardForm.get('number').touched">Card number must have 16 digits</span>
+            </div>
+            <div class="add-card-info-container" style="width: 120px;">
+              <label for="month">Expiration Date</label>
+              <select id="month" formControlName="month" style="margin-right: 10px">
+                <option [value]="month" *ngFor="let month of months">{{month}}</option>
+              </select>
+              <select formControlName="year">
+                <option [value]="year" *ngFor="let year of years">{{year}}</option>
+              </select>
+              <span class="form-validator"
+                    *ngIf="cardForm.hasError('expired')&&(cardForm.get('month').touched||cardForm.get('year').touched)">This card has expired</span>
+            </div>
+            <div class="add-card-info-container">
+              <label for="addCard">&nbsp;</label>
+              <button type="submit" id="addCard" [disabled]="cardForm.invalid">Add your card</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="payment-edit-container-outer">
+  <div class="as-table-cell">
+    <div class="payment-edit-container">
+      <div class="payment-edit-title-container">
+        <h3>Edit payment method</h3>
+        <button>
+          <img src="/src/assets/images/delete.svg" alt="close">
+        </button>
+      </div>
+      <div class="payment-edit-card-container">
+        <div class="edit-card-info-container">
+          <h3>Payment method</h3>
+          <span>Card ending in 1234</span>
+        </div>
+        <div class="edit-card-info-container">
+          <h3>Name on card</h3>
+          <input type="text">
+        </div>
+        <div class="edit-card-info-container">
+          <h3>Expiration Data</h3>
+          <select id="month-edit"  style="margin-right: 10px">
+            <option [value]="month" *ngFor="let month of months">{{month}}</option>
+          </select>
+          <select>
+            <option [value]="year" *ngFor="let year of years">{{year}}</option>
+          </select>
+        </div>
+
+        <div class="edit-card-info-container">
+          <h3>Billing Address</h3>
+          <span>street</span>
+          <span>street</span>
+          <span>city state zip </span>
+        </div>
+      </div>
+
+      <div class="btn-payment-edit-container">
+        <button>Save</button>
+        <button>Cancel</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

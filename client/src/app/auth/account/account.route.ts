@@ -12,6 +12,7 @@ export const ACCOUNT_ROUTE:Routes=[
   {path:"",component:ProfileComponent,pathMatch:"full"},
   {path:"my_orders",component:OrderListComponent},
   {path:"my_payments",component:PaymentBookComponent},
+  {path:"my_payments/:id",component:PaymentBookComponent},
   {path:"my_addresses",component:AddressBookComponent},
   {path:"update_address",component:AddressComponent},
   {path:"update_profile",component:ProfileUpdateComponent},

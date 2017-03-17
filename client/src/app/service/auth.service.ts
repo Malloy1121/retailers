@@ -58,15 +58,10 @@ export class AuthService {
         const result = response.status;
         return result;
       })
-      .toPromise()
-      .then(data => {
+      .do((data) => {
         if (data == 200) {
           this.currentUser = null;
           this.subject.next(null);
-          return true;
-        }
-        else {
-          return false;
         }
       });
   }

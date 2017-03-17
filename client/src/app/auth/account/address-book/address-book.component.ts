@@ -30,6 +30,18 @@ export class AddressBookComponent implements OnInit {
     //   };
     //   this.addresses.push(address);
     // }
+    this.onLoad()
+
+  }
+
+  onLoad() {
+    this.profileService.getCurrentAddresses()
+      .toPromise()
+      .then(data => {
+        console.log(data.object);
+        const object = data.object;
+        this.addresses = object;
+      });
 
     for (let address of this.addresses) {
       if (address.isPrimary) {
@@ -39,14 +51,6 @@ export class AddressBookComponent implements OnInit {
         break;
       }
     }
-
-    this.profileService.getCurrentAddresses()
-      .toPromise()
-      .then(data => {
-        console.log(data.object);
-        const object = data.object;
-        this.addresses = object;
-      });
   }
 
   onEdit(params: Address) {
@@ -59,7 +63,14 @@ export class AddressBookComponent implements OnInit {
   }
 
   onDelete(value) {
-    this.profileService.deleteAddress(value);
+    this.profileService.deleteAddress(value)
+      .toPromise()
+      .then(data => {
+        this.onLoad();
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
 }

@@ -19,12 +19,10 @@ export class ProfileUpdateComponent implements OnInit,OnDestroy {
   private profileForm: FormGroup;
   private passwordForm: FormGroup;
   private currentPassword: FormControl;
-  private newPassword: FormControl;
-  private newPasswordConfirm: FormControl;
+  private password: FormControl;
+  private confirmedPassword: FormControl;
   private firstname: FormControl;
   private lastname: FormControl;
-  private currentFirstname = "";
-  private currentLastname = "";
 
   constructor(private activatedRoute: ActivatedRoute,
               private fb: FormBuilder,
@@ -44,8 +42,8 @@ export class ProfileUpdateComponent implements OnInit,OnDestroy {
       .toPromise()
       .then(data => {
         const user = data.object;
-        this.currentFirstname = user.firstname;
-        this.lastname = user.lastname;
+        this.lastname.setValue(user.lastname);
+        this.firstname.setValue(user.firstname);
       });
   }
 
@@ -67,7 +65,11 @@ export class ProfileUpdateComponent implements OnInit,OnDestroy {
   }
 
   updateProfile() {
-    this.profileService.updateProfile(this.profileForm.value)
+    const value=this.profileForm.value;
+    value.firstname = value.firstname.slice(0, 1).toUpperCase() + value.firstname.toLowerCase().slice(1, value.firstname.length);
+    value.lastname = value.lastname.slice(0, 1).toUpperCase() + value.lastname.toLowerCase().slice(1, value.lastname.length);
+
+    this.profileService.updateProfile(value)
       .toPromise()
       .then(data => {
         if (data.result == true) {
@@ -84,11 +86,11 @@ export class ProfileUpdateComponent implements OnInit,OnDestroy {
   }
 
   buildProfileForm() {
-    this.firstname = new FormControl(this.currentFirstname, Validators.compose([
+    this.firstname = new FormControl("", Validators.compose([
       Validators.required,
       Validators.maxLength(25)
     ]));
-    this.lastname = new FormControl(this.currentLastname, Validators.compose([
+    this.lastname = new FormControl("", Validators.compose([
       Validators.required,
       Validators.maxLength(25)
     ]));
@@ -100,22 +102,22 @@ export class ProfileUpdateComponent implements OnInit,OnDestroy {
 
   buildPasswordForm() {
     this.currentPassword = new FormControl("", Validators.compose([Validators.required]));
-    this.newPassword = new FormControl(
+    this.password = new FormControl(
       "",
       Validators.compose([
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(15)
       ]));
-    this.newPasswordConfirm = new FormControl(
+    this.confirmedPassword = new FormControl(
       "",
       Validators.compose([
         Validators.required
       ]));
     this.passwordForm = this.fb.group({
       currentPassword: this.currentPassword,
-      password: this.newPassword,
-      confirmedPassword: this.newPasswordConfirm
+      password: this.password,
+      confirmedPassword: this.confirmedPassword
     }, {validator: this.comparePasswords.bind(this)});
   }
 

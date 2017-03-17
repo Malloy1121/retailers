@@ -82,10 +82,10 @@
         <table>
           <tr>
             <td>
-              <button class="btn-profile">Manage Payment</button>
+              <button class="btn-profile" routerLinkActive [routerLink]="['/auth/account/my_payments']">Manage Payment</button>
             </td>
             <td>
-              <button class="btn-profile">Add a New Payment</button>
+              <button class="btn-profile" [routerLink]="['/auth/account/my_payments/new']">Add a New Payment</button>
             </td>
           </tr>
         </table>

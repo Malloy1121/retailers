@@ -21,7 +21,7 @@ export class AddressComponent implements OnInit,OnDestroy {
   private state: FormControl;
   private zipcode: FormControl;
   private suite: FormControl;
-  private states = ["VA", "NY", "PA"];
+  private states = [];
   private currentAddress: Address = null;
   private routerParamsSubscription: Subscription;
   private title: string = "Add";
@@ -50,7 +50,7 @@ export class AddressComponent implements OnInit,OnDestroy {
             this.currentAddress.tag == "";
           }
           this.id = this.currentAddress.id;
-          console.log(this.currentAddress);
+          // console.log(this.currentAddress);
         }
         else {
           this.title = "Add";
@@ -59,14 +59,14 @@ export class AddressComponent implements OnInit,OnDestroy {
         // this.currentAddress = data;
         this.buildForm();
       });
-      console.log("Address ID : "+this.id);
+    // console.log("Address ID : " + this.id);
   }
 
   onSubmit() {
     const value = this.addressForm.value;
-    if (this.id >= 0) {
+    if (this.id < 0) {
       value.id = this.id;
-      this.profileService.updateProfile(value)
+      this.profileService.addAddress(value)
         .toPromise()
         .then(data => {
           if (data.result == true) {
@@ -78,7 +78,8 @@ export class AddressComponent implements OnInit,OnDestroy {
         });
     }
     else {
-      this.profileService.addAddress(value)
+      value.id=this.id;
+      this.profileService.editAddress(value)
         .toPromise()
         .then(data => {
           if (data.result == true) {
@@ -110,7 +111,7 @@ export class AddressComponent implements OnInit,OnDestroy {
       ]));
 
     this.state = new FormControl(
-      this.currentAddress == null ? "" : this.currentAddress.state, Validators.compose([
+      this.currentAddress == null ? "" : this.currentAddress.stateID, Validators.compose([
         Validators.required
       ]));
 

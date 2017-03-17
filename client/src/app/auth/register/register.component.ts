@@ -100,10 +100,14 @@ export class RegisterComponent implements OnInit {
   getEmailError() {
     const email = this.registerForm.get("email");
 
-    if (email.valid)
+    if (email.valid || !email.touched) {
       return " ";
+    }
     if (email.hasError("pattern")) {
       return "Invalid email address";
+    }
+    if (email.hasError("required")) {
+      return "Email address required";
     }
     if (email.hasError("isTaken")) {
       return "This email is already taken";

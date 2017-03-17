@@ -66,17 +66,21 @@ button {
   display: none;
 }
 
-.dropdown-conatainer {
+.dropdown-container {
   position: relative;
 
-  &:hover .dropdown-list {
-    display: block;
+  &:hover {
+
+    .dropdown-list {
+      display: block;
+    }
   }
 
   .dropdown-list {
     display: none;
     list-style: none;
     position: absolute;
+    z-index: 1;
     background-color: white;
     color: black;
     border: 1px solid black;
@@ -109,10 +113,14 @@ button {
       //border-radius: 3px;
       white-space: nowrap;
 
-      &:hover {
+      &.dropdown-list-item:hover {
         background-color: lightgrey;
       }
     }
   }
 
+}
+
+.as-table-cell {
+  display: table-cell;
 }

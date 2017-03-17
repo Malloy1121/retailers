@@ -13,6 +13,7 @@ import {DropdownDirective} from './directive/dropdown.directive';
 import {RouterModule} from "@angular/router";
 import {APP_ROUTE} from "./app.route";
 import {ProfileService} from "./service/profile.service";
+import {AuthGuard} from "./service/auth.guard";
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {ProfileService} from "./service/profile.service";
   ],
   providers: [
     AuthService,
-    ProfileService
+    ProfileService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
