@@ -8,9 +8,10 @@ import {CheckoutComponent} from "./checkout/checkout.component";
  */
 export const PRODUCTS_ROUTE: Routes = [
   {path: "cart", component: CartComponent},
-  {path: "product_list", component: ItemListComponent},
+  {path: "product-list", component: ItemListComponent},
+  {path: "product", component: ItemDetailComponent},
   {path: "product/:id", component: ItemDetailComponent},
   {path: "checkout", component: CheckoutComponent},
   {path: "", redirectTo: "/", pathMatch: "full"},
-  {path: "*", redirectTo: "", pathMatch: "full"}
+  {path: "**", redirectTo: "", pathMatch: "full"}
 ];

@@ -1,0 +1,43 @@
+.cart-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+
+  .price {
+    color: red;
+    font-weight: bold;
+  }
+
+  .cart-list {
+    width: 100%;
+    box-sizing: border-box;
+
+    .cart-list-item {
+      word-wrap: break-word;
+      border-bottom: 1px lightgrey solid;
+      padding-bottom: 5px;
+
+      &:first-child {
+        margin: 20px auto;
+      }
+
+      .price {
+        line-height: 35px;
+      }
+
+      input {
+        text-indent: 8px;
+        max-width: 75px;
+        height: 35px;
+        box-sizing: border-box;
+        line-height: 35px;
+      }
+
+      .btn-cart-remove {
+        width: 100%;
+        max-width: 75px;
+      }
+    }
+  }
+
+}

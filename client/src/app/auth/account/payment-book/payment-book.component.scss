@@ -13,6 +13,7 @@
     -ms-transition: transform 0.5s;
     -o-transition: transform 0.5s;
     transition: transform 0.5s;
+    will-change: transform;
   }
 
   .payment-header-container {
@@ -96,6 +97,7 @@
       -ms-transition: height 0.5s;
       -o-transition: height 0.5s;
       transition: height 0.5s;
+      will-change: height;
 
       .payment-content-container {
         display: flex;
@@ -145,6 +147,31 @@
 
   .add-payment-container {
 
+    .row {
+      margin-left: 10px;
+      margin-right: 10px;
+      width: calc(100% - 20px);
+      padding: 3px 0;
+    }
+
+    input {
+      height: 31px;
+      text-indent: 8px;
+      width: calc(100% - 15px);
+      box-sizing: border-box;
+      outline: none;
+      border-radius: 2px;
+      border: 1px solid grey;
+
+      &:focus {
+        box-shadow: 0 0 10px 3px #ef742d, 0 0 5px white inset;
+      }
+    }
+
+    select {
+      height: 31px;
+    }
+
     hr {
       border: none;
       border-bottom: 1px lightgrey solid;
@@ -163,6 +190,7 @@
 
         img {
           transform: rotateZ(-90deg);
+          will-change: transform;
         }
       }
 
@@ -175,7 +203,7 @@
         }
 
         .add-card-form-container {
-          height: 125px;
+          height: 400px;
         }
       }
 
@@ -183,6 +211,7 @@
         height: 0;
         margin: auto;
         transition: height 0.5s;
+        will-change: height;
         overflow-y: hidden;
 
         h5 {
@@ -193,58 +222,24 @@
         form {
           display: block;
 
-          .add-card-info-container {
-            margin-right: 15px;
-            flex-wrap: wrap;
-            float: left;
-            box-sizing: border-box;
+          span {
+            display: block;
+          }
 
-            &:first-child {
-              margin-left: 10px;
-            }
+          button {
+            height: 35px;
+            width: 100%;
+            margin: auto;
+            color: white;
+            background-color: $btn-background-color;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            padding: 0 15px;
+            white-space: nowrap;
 
-            .form-validator {
-              white-space: pre-wrap;
-              display: block;
-            }
-
-            label {
-              display: block;
-              width: inherit;
-              margin: 2px 0;
-            }
-
-            input {
-              height: 31px;
-              text-indent: 8px;
-              width: 100%;
-              box-sizing: border-box;
-              outline: none;
-              border-radius: 2px;
-              border: 1px solid grey;
-
-              &:focus {
-                box-shadow: 0 0 10px #ef742d, 0 0 5px white inset;
-              }
-            }
-
-            select {
-              height: 31px;
-            }
-
-            button {
-              height: 31px;
-              color: white;
-              background-color: $btn-background-color;
-              border: none;
-              outline: none;
-              border-radius: 5px;
-              padding: 0 15px;
-              white-space: nowrap;
-
-              &:active {
-                background-color: $btn-background-color-active;
-              }
+            &:active {
+              background-color: $btn-background-color-active;
             }
           }
         }

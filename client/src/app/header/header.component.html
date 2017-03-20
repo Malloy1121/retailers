@@ -1,7 +1,7 @@
 <header>
   <nav>
     <div class="nav-title-container">
-      <h2><a [routerLink]="['/']">Retailers.com</a></h2>
+      <h2><a [routerLink]="['/products/product']">Retailers.com</a></h2>
     </div>
 
     <div class="searchBar-container" [class.searchBar-active]="searchBarGetFocus">
@@ -57,7 +57,7 @@
       <div class="btn-cart-container  btn-header-auth-container dropdown-container">
         <button class="btn-header-auth"
                 id="cart"
-                (click)="navigate('/shp/cart')">
+                (click)="navigate('/products/cart')">
           <span id="header-cart-amount">0</span>
           <img src="/assets/images/shopping-cart.svg" alt="cart">
           <span>Cart</span>

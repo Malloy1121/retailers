@@ -1,3 +1,5 @@
+@import "../../../../assets/style/theme";
+
 .payment-edit-container-outer {
   position: absolute;
   width: 100%;
@@ -14,6 +16,7 @@
       width: 600px;
       margin: auto;
       //background-color: white;
+      height: 350px;
       display: block;
 
       .payment-edit-title-container {
@@ -50,27 +53,77 @@
         }
       }
 
-      .payment-edit-card-container {
-        background-color: white;
-        height: 250px;
-        animation-name: higher;
-        animation-duration: 1s;
-        overflow-y: hidden;
-      }
-
       @keyframes higher {
         from {
           height: 0;
         }
         to {
-          height: 250px;
+          height: 325px;
         }
       }
 
-      .edit-card-info-container {
+      .payment-edit-card-container {
+        background-color: white;
+        height: 325px;
+        animation-name: higher;
+        animation-duration: 0.5s;
+        overflow-y: hidden;
+        position: relative;
+        will-change: height;
+
+        .row {
+          margin-left: 10px;
+          margin-right: 10px;
+          width: calc(100% - 20px);
+        }
 
         h3 {
-          margin: 0;
+          margin: 5px 0;
+        }
+
+        input {
+          height: 31px;
+          text-indent: 8px;
+          width: calc(100% - 15px);
+          box-sizing: border-box;
+          outline: none;
+          border-radius: 2px;
+          border: 1px solid grey;
+
+          &:focus {
+            box-shadow: 0 0 10px 3px #ef742d, 0 0 5px white inset;
+          }
+        }
+
+        select {
+          height: 31px;
+        }
+
+        .edit-billing-form-container {
+          clear: both;
+          padding: 15px 0;
+        }
+
+        .btn-payment-edit-container {
+          background-color: white;
+          clear: both;
+          padding: 10px;
+          text-align: right;
+
+          button {
+            color: white;
+            padding: 0 15px;
+            height: 35px;
+            margin: auto 5px;
+            background-color: $btn-background-color;
+            outline: none;
+            border-radius: 5px;
+            border: none;
+
+            &:active {
+              background-color: $btn-background-color-active;
+            }
+          }
         }
       }
     }

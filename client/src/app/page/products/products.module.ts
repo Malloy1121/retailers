@@ -6,10 +6,13 @@ import {ItemDetailComponent} from "./item/item-detail/item-detail.component";
 import {RouterModule} from "@angular/router";
 import {PRODUCTS_ROUTE} from "./products.route";
 import {CheckoutComponent} from './checkout/checkout.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(PRODUCTS_ROUTE)
   ],
   declarations: [

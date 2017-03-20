@@ -1,3 +1,134 @@
-<p>
-  item-detail works!
-</p>
+<div class="content">
+  <div class="detail-container">
+    <div class="row" style="border-bottom: 1px solid lightgrey;">
+      <div class="col-6 preview-container col-offset-1">
+        <div class="row">
+          <div class="col-12">
+            <div class="preview-image-container">
+              <img
+                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                alt="preview">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8 col-offset-2 preview-gallery-container">
+            <div class="preview-gallery-image-container">
+              <img
+                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                alt="preview">
+            </div>
+            <div class="preview-gallery-image-container">
+              <img src="http://i164.photobucket.com/albums/u8/hemi1hemi/COLOR/COL9-6.jpg" alt="preview">
+            </div>
+            <div class="preview-gallery-image-container">
+              <img src="http://i.telegraph.co.uk/multimedia/archive/03598/lightning-10_3598416k.jpg" alt="preview">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="purchaseForm" class="col-4 col-offset-1 purchase-container" (ngSubmit)="onAddToChart()">
+        <div class="row">
+          <div class="col-10 col-offset-2">
+            <h1 style="margin-top: 0;">Product Title Here</h1>
+          </div>
+        </div>
+        <div class="row purchase-category-container">
+          <div class="col-3 label">
+            <span>Categories:</span>
+          </div>
+          <div class="col-9 ">
+            <div class="product-option-container">
+              <a>White</a>
+            </div>
+            <div class="product-option-container">
+              <a>Black</a>
+            </div>
+            <div class="product-option-container">
+              <a>Red</a>
+            </div>
+            <div class="product-option-container">
+              <a>Navy</a>
+            </div>
+            <div class="product-option-container">
+              <a>Navy</a>
+            </div>
+            <div class="product-option-container">
+              <a>Navy</a>
+            </div>
+            <div class="product-option-container">
+              <a>Navy</a>
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3 label" style="line-height: 1.5em;">
+            <span>Price:</span>
+          </div>
+          <div class="col-9 price-container">$
+            <span *ngIf="currentCategory<0">{{lowestPrice.toFixed(2)}} - {{highestPrice.toFixed(2)}}</span>
+            <span *ngIf="currentCategory>=0">{{currentCategory.price}}</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-3 label" style="line-height: 35px;">
+            <label for="amount">Amount:</label>
+          </div>
+          <div class="col-3">
+            <input type="number" id="amount" min="1" max="99" (blur)="amountOnBlur()"
+                   formControlName="amount">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3 label">
+            &nbsp;
+          </div>
+          <div class="col-9 form-validator">
+            <span *ngIf="amount.invalid">Invalid amount</span>
+          </div>
+        </div>
+
+        <div class="row" style="border-bottom: 1px solid lightgrey;">
+        </div>
+
+        <div class="btn-purchase-container">
+          <div class="row">
+            <div class="col-8 col-offset-2">
+              <button type="submit" [disabled]="purchaseForm.invalid||currentCategory<0">Add to Cart</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8 col-offset-2">
+              <button>Add to Shopping List</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="row">
+      <div class="col-8 col-offset-2 detail-description-container">
+        <h2>Description</h2>
+        <p>
+          laksjfdlksajflasjflsafjksladfffffffffffflksanflanwefaklfhlashfashfkjahsfkahfkjhaskjlhfdkashfksafhkaslfhakslfhkaslfhksalfhskaljhfkslajhflkasjfhdslkafhsakljfhsklajfdhaskljdfhaksjldfhkasljhfaslkfjas
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8 col-offset-2 detail-description-container">
+        <h2>Features & Details</h2>
+        <ul>
+          <li>lafjlajf</li>
+          <li>asfasfasfasf</li>
+          <li>adfabgwdbg</li>
+          <li>ag4t3fewfs</li>
+          <li>2342fefvsff</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

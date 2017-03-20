@@ -1,10 +1,43 @@
 <div class="content">
   <div class="cart-container">
-    <h1>Shopping Cart</h1>
+    <div class="row">
+      <div class="col-4">
+        <h1 style="margin:auto">Shopping Cart</h1>
+      </div>
+      <div class="col-4 flex-vertical-center">
+        <span>Cart subtotal(1 item): <span class="price">$ 20.99</span></span>
+      </div>
+      <div class="col-4 flex-vertical-center">
+        <button class="btn-profile">Proceed to checkout</button>
+      </div>
+    </div>
     <hr>
     <div class="cart-list">
-      <div class="cart-list-item">
+      <div class="cart-list-item row">
+        <div class="col-6">
+          <h3 style="margin: 0">Product Name</h3>
+        </div>
+        <div class="col-2">
+          <h3 style="margin: 0">Unit Price</h3>
+        </div>
+        <div class="col-2">
+          <h3 style="margin: 0">Quantity</h3>
+        </div>
+      </div>
 
+      <div class="cart-list-item row">
+        <div class="col-6">
+          <span>lasdkjflasjflkasjflasjflsajflksajfljaslfjlsakfjlkasjflkasjflkasjflksajflkasjdflkjsalfkjsalkfjasdfasfsafsafdsafsafsafsafsadgfafbfdbdstrtbhgfhsdafgadfasfafasfasdflsakjflkdsflksajdfklsjflksaflksajflskafjlkj</span>
+        </div>
+        <div class="col-2 price">
+          <span>$ 19.99</span>
+        </div>
+        <div class="col-2">
+          <input type="number" min="1" max="99">
+        </div>
+        <div class="col-2">
+          <button class="btn-danger btn-cart-remove">Delete</button>
+        </div>
       </div>
     </div>
   </div>

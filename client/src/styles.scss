@@ -56,6 +56,7 @@ a:active {
   min-width: 1000px;
   margin: 50px 0;
   box-sizing: border-box;
+  padding: 0 15px;
 }
 
 button {
@@ -63,7 +64,7 @@ button {
 }
 
 .display-none {
-  display: none;
+  display: none !important;
 }
 
 .dropdown-container {
@@ -121,6 +122,102 @@ button {
 
 }
 
+.flex-vertical-center {
+  display: flex !important;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.as-tabel {
+  display: table !important;
+}
+
 .as-table-cell {
   display: table-cell;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+
+  > * {
+    display: block;
+  }
+}
+
+.col-2 {
+  width: 14.66%;
+  margin-right: 2%;
+}
+
+.col-3 {
+  width: 23%;
+  margin-right: 2%;
+}
+
+.col-4 {
+  width: 31.33%;
+  margin-right: 2%;
+}
+
+.col-6 {
+  width: 48%;
+  margin-right: 2%;
+}
+
+.col-8 {
+  width: 64.67%;
+  margin-right: 2%;
+}
+
+.col-9 {
+  width: 73%;
+  margin-right: 2%;
+}
+
+.col-10 {
+  width: 81.33%;
+  margin-right: 2%;
+}
+
+.col-12 {
+  width: 100%;
+}
+
+.col-offset-1 {
+  margin-left: 8.33%;
+}
+
+.col-offset-2 {
+  margin-left: 16.66%
+}
+
+.col-offset-3 {
+  margin-left: 25%;
+}
+
+.col-offset-4 {
+  margin-left: 33.33%;
+}
+
+.col-offset-6 {
+  margin-left: 50%;
+}
+
+.btn-danger {
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  height: 35px;
+  background-color: red !important;
+
+  &:active {
+    background-color: #ad0600 !important;
+  }
+}
+
+.label {
+  text-align: right;
+  padding-right: 8px;
 }
