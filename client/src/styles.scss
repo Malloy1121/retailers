@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "assets/style/theme";
 
+html, body {
+  width: 100%;
+  min-width: 1000px;
+}
+
 body {
   margin: 0;
 }
@@ -123,12 +128,12 @@ button {
 }
 
 .flex-vertical-center {
-  display: flex !important;
+  display: flex;
   justify-content: center;
   flex-direction: column;
 }
 
-.as-tabel {
+.as-table {
   display: table !important;
 }
 
@@ -137,12 +142,38 @@ button {
 }
 
 .row {
-  display: flex;
+  display: block;
   width: 100%;
+
+  &:before {
+    display: table;
+    content: " ";
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
 
   > * {
     display: block;
+    float: left;
+    position: relative;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
+}
+
+.col-1 {
+  width: 6.333333%;
+  margin-right: 2%;
+}
+
+.col-1-clear {
+  width: 8.333333%;
 }
 
 .col-2 {
@@ -150,9 +181,17 @@ button {
   margin-right: 2%;
 }
 
+.col-2-clear {
+  width: 16.66%;
+}
+
 .col-3 {
   width: 23%;
   margin-right: 2%;
+}
+
+.col-3-clear {
+  width: 25%;
 }
 
 .col-4 {
@@ -160,9 +199,26 @@ button {
   margin-right: 2%;
 }
 
+.col-4-clear {
+  width: 33.33%;
+}
+
+.col-5 {
+  width: 39.666%;
+  margin-right: 2%;
+}
+
+.col-5-clear {
+  width: 41.666%;
+}
+
 .col-6 {
   width: 48%;
   margin-right: 2%;
+}
+
+.col-6-clear {
+  width: 50%;
 }
 
 .col-8 {
@@ -170,14 +226,30 @@ button {
   margin-right: 2%;
 }
 
+.col-8-clear {
+  width: 66.67%;
+}
+
 .col-9 {
   width: 73%;
   margin-right: 2%;
 }
 
+.col-9-clear {
+  width: 75%;
+}
+
 .col-10 {
   width: 81.33%;
   margin-right: 2%;
+}
+
+.col-10-clear {
+  width: 83.333%;
+}
+
+.col-11 {
+  width: 91.666%;
 }
 
 .col-12 {
@@ -219,5 +291,16 @@ button {
 
 .label {
   text-align: right;
-  padding-right: 8px;
+  //padding-right: 8px;
+}
+
+.full-screen-modal {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  min-width: 750px;
+  background-color: rgba(0, 0, 0, 0.3);
+  top:0;
+  left: 0;
+  bottom: 0;
 }

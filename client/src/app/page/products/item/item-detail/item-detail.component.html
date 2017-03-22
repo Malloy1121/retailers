@@ -28,17 +28,17 @@
         </div>
       </div>
 
-      <form [formGroup]="purchaseForm" class="col-4 col-offset-1 purchase-container" (ngSubmit)="onAddToChart()">
+      <form [formGroup]="purchaseForm" class="col-5 purchase-container" (ngSubmit)="onAddToChart()">
         <div class="row">
-          <div class="col-10 col-offset-2">
+          <div class="col-11 col-offset-1">
             <h1 style="margin-top: 0;">Product Title Here</h1>
           </div>
         </div>
         <div class="row purchase-category-container">
-          <div class="col-3 label">
+          <div class="col-4 label">
             <span>Categories:</span>
           </div>
-          <div class="col-9 ">
+          <div class="col-8 ">
             <div class="product-option-container">
               <a>White</a>
             </div>
@@ -64,17 +64,17 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-3 label" style="line-height: 1.5em;">
+          <div class="col-4 label" style="line-height: 1.5em;">
             <span>Price:</span>
           </div>
-          <div class="col-9 price-container">$
+          <div class="col-8 price-container">$
             <span *ngIf="currentCategory<0">{{lowestPrice.toFixed(2)}} - {{highestPrice.toFixed(2)}}</span>
             <span *ngIf="currentCategory>=0">{{currentCategory.price}}</span>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-3 label" style="line-height: 35px;">
+          <div class="col-4 label" style="line-height: 35px;">
             <label for="amount">Amount:</label>
           </div>
           <div class="col-3">

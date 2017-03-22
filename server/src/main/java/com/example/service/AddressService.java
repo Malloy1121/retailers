@@ -11,13 +11,13 @@ import java.util.List;
  */
 public interface AddressService {
 
-    List<AddressDTO> findAddressByUser(long id);
+    List<AddressDTO> findAddressByUser(Long id);
 
-    boolean addNewAddress(AddressDTO address,long userID);
+    boolean addNewAddress(AddressDTO address,Long userID);
 
-    boolean updateAddress(AddressDTO address);
+    boolean updateAddress(AddressDTO address,Long userID);
 
-    boolean deleteAddress(long id);
+    boolean deleteAddress(Long id);
 
     List<State> findAllStates();
 }

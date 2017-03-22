@@ -7,6 +7,7 @@ import {RouterModule} from "@angular/router";
 import {PRODUCTS_ROUTE} from "./products.route";
 import {CheckoutComponent} from './checkout/checkout.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FixBoxDirective} from "../../directive/fix-box.directive";
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     CartComponent,
     ItemListComponent,
     ItemDetailComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    FixBoxDirective
   ]
 })
 export class ProductsModule {

@@ -15,9 +15,9 @@ public interface UserService {
 
     boolean signup(User user);
 
-    boolean changePassword(String oldPassword, String newPassword);
+    boolean changePassword(String oldPassword, String newPassword, Long id);
 
-    boolean updateProfile(UserDTO user);
+    boolean updateProfile(UserDTO user, Long id);
 
     boolean isEmailTaken(String email);
 

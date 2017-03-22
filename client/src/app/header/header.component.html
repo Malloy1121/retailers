@@ -1,7 +1,7 @@
 <header>
   <nav>
     <div class="nav-title-container">
-      <h2><a [routerLink]="['/products/product']">Retailers.com</a></h2>
+      <h2><a [routerLink]="['/']">Retailers.com</a></h2>
     </div>
 
     <div class="searchBar-container" [class.searchBar-active]="searchBarGetFocus">
@@ -21,7 +21,7 @@
       </div>
 
       <div class="searchIcon-box">
-        <button id="search">
+        <button id="search" (click)="navigate('/products/product-list')">
           <img src="/assets/images/search.svg" alt="search">
         </button>
       </div>

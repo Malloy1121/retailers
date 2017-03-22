@@ -127,4 +127,19 @@ public class Address {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", tag='" + tag + '\'' +
+                ", isPrimary=" + isPrimary +
+                ", street='" + street + '\'' +
+                ", suite='" + suite + '\'' +
+                ", city='" + city + '\'' +
+                ", state=" + state +
+                ", user=" + user +
+                ", zipcode=" + zipcode +
+                '}';
+    }
 }

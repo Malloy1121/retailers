@@ -63,20 +63,20 @@ public class AddressDTO {
         this.stateID = stateID;
     }
 
+    public int getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(int zipcode) {
+        this.zipcode = zipcode;
+    }
+
     public String getState() {
         return state;
     }
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public int getZip() {
-        return zipcode;
-    }
-
-    public void setZip(int zip) {
-        this.zipcode = zip;
     }
 
     public boolean getIsPrimary() {
@@ -99,11 +99,13 @@ public class AddressDTO {
     public String toString() {
         return "AddressDTO{" +
                 "id=" + id +
+                ", tag='" + tag + '\'' +
                 ", street='" + street + '\'' +
                 ", suite='" + suite + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
-                ", zip=" + zipcode +
+                ", stateID=" + stateID +
+                ", zipcode=" + zipcode +
                 ", isPrimary=" + isPrimary +
                 '}';
     }

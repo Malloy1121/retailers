@@ -1,3 +1,257 @@
-<p>
-  item-list works!
-</p>
+<div class="content">
+  <div class="product-list-container">
+    <div class="category-select-container">
+      <h3>Related categories</h3>
+      <ul>
+        <li><a>Electronics</a></li>
+        <li><a>Office/School</a></li>
+        <li><a>Office/School</a></li>
+        <li><a>Office/School</a></li>
+        <li><a>Office/School</a></li>
+        <li><a>Office/School</a></li>
+      </ul>
+    </div>
+
+    <div class="item-list-container">
+      <div class="row">
+        <div class="product-list-navbar-container row">
+          <div class="col-3-clear">
+            <button>Order by price<img src="/src/assets/images/arrow-up.svg" alt="ascending"></button>
+          </div>
+          <div class="col-3-clear">
+            <button>Order by price<img src="/src/assets/images/arrow-pointing-down.svg" alt="descending"></button>
+          </div>
+          <div class="col-5-clear price-range-container">
+            <div class="col-2-clear"><span>Price: </span></div>
+            <div class="col-10-clear price-range-input-container">
+              <span class="col-5-clear">$
+              <input type="text" class="col-9">
+                </span>
+              <span class="col-1-clear">--</span>
+              <span class="col-5-clear">$
+              <input type="text" class="col-9">
+                </span>
+            </div>
+          </div>
+
+          <div class="col-1">
+               <span class="col-12">
+                <button id="price-submit">
+                  <img src="/src/assets/images/search.svg" alt="search" style="padding-left: 0;">
+                </button>
+              </span>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 15px;">
+
+          <div class="col-4 item-container">
+            <div class="row item-image-container flex-vertical-center">
+              <img
+                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                alt="item"
+                (click)="goToDetail(1)">
+            </div>
+
+            <div class="row item-info-container">
+              <div class="row two-text-rows">
+                <div class="col-12 product-name-container" (click)="goToDetail(1)">
+                  <h4>Product name here</h4>
+                </div>
+              </div>
+              <div class="row two-text-rows">
+                <div class="col-6"><span class="price">$5.99</span></div>
+                <div class="col-6 retailer-name">
+                  <span>
+                    by retailer name here adfasfaasdasdfasfasfasfasfasfasfasfasfasfasfasfasfasfasf
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 item-brief-desc">
+                  <span>some info here  fasfasfasfaasdfasfasfasfasfasdfasfasfassfasfasfs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4 item-container">
+            <div class="row item-image-container flex-vertical-center" (click)="goToDetail(1)">
+              <img
+                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                alt="item">
+            </div>
+
+            <div class="row item-info-container">
+              <div class="row two-text-rows">
+                <div class="col-12 product-name-container">
+                  <h4>Product name here</h4>
+                </div>
+              </div>
+              <div class="row two-text-rows">
+                <div class="col-6"><span class="price">$5.99</span></div>
+                <div class="col-6 retailer-name">
+                  <span>
+                    by retailer name here adfasfaasdasdfasfasfasfasfasfasfasfasfasfasfasfasfasfasf
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 item-brief-desc">
+                  <span>some info here  fasfasfasfaasdfasfasfasfasfasdfasfasfassfasfasfs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4 item-container">
+            <div class="row item-image-container flex-vertical-center">
+              <img
+                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                alt="item">
+            </div>
+
+            <div class="row item-info-container">
+              <div class="row two-text-rows">
+                <div class="col-12 product-name-container">
+                  <h4>Product name here</h4>
+                </div>
+              </div>
+              <div class="row two-text-rows">
+                <div class="col-6"><span class="price">$5.99</span></div>
+                <div class="col-6 retailer-name">
+                  <span>
+                    by retailer name here adfasfaasdasdfasfasfasfasfasfasfasfasfasfasfasfasfasfasf
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 item-brief-desc">
+                  <span>some info here  fasfasfasfaasdfasfasfasfasfasdfasfasfassfasfasfs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4 item-container">
+            <div class="row item-image-container flex-vertical-center">
+              <img
+                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                alt="item">
+            </div>
+
+            <div class="row item-info-container">
+              <div class="row two-text-rows">
+                <div class="col-12 product-name-container">
+                  <h4>Product name here</h4>
+                </div>
+              </div>
+              <div class="row two-text-rows">
+                <div class="col-6"><span class="price">$5.99</span></div>
+                <div class="col-6 retailer-name">
+                  <span>
+                    by retailer name here adfasfaasdasdfasfasfasfasfasfasfasfasfasfasfasfasfasfasf
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 item-brief-desc">
+                  <span>some info here  fasfasfasfaasdfasfasfasfasfasdfasfasfassfasfasfs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4 item-container">
+            <div class="row item-image-container flex-vertical-center">
+              <img
+                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                alt="item">
+            </div>
+
+            <div class="row item-info-container">
+              <div class="row two-text-rows">
+                <div class="col-12 product-name-container">
+                  <h4>Product name here</h4>
+                </div>
+              </div>
+              <div class="row two-text-rows">
+                <div class="col-6"><span class="price">$5.99</span></div>
+                <div class="col-6 retailer-name">
+                  <span>
+                    by retailer name here adfasfaasdasdfasfasfasfasfasfasfasfasfasfasfasfasfasfasf
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 item-brief-desc">
+                  <span>some info here  fasfasfasfaasdfasfasfasfasfasdfasfasfassfasfasfs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4 item-container">
+            <div class="row item-image-container flex-vertical-center">
+              <img
+                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                alt="item">
+            </div>
+
+            <div class="row item-info-container">
+              <div class="row two-text-rows">
+                <div class="col-12 product-name-container">
+                  <h4>Product name here</h4>
+                </div>
+              </div>
+              <div class="row two-text-rows">
+                <div class="col-6"><span class="price">$5.99</span></div>
+                <div class="col-6 retailer-name">
+                  <span>
+                    by retailer name here adfasfaasdasdfasfasfasfasfasfasfasfasfasfasfasfasfasfasf
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 item-brief-desc">
+                  <span>some info here  fasfasfasfaasdfasfasfasfasfasdfasfasfassfasfasfs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4 item-container">
+            <div class="row item-image-container flex-vertical-center">
+              <img
+                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                alt="item">
+            </div>
+
+            <div class="row item-info-container">
+              <div class="row two-text-rows">
+                <div class="col-12 product-name-container">
+                  <h4>Product name here</h4>
+                </div>
+              </div>
+              <div class="row two-text-rows">
+                <div class="col-6"><span class="price">$5.99</span></div>
+                <div class="col-6 retailer-name">
+                  <span>
+                    by retailer name here adfasfaasdasdfasfasfasfasfasfasfasfasfasfasfasfasfasfasf
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 item-brief-desc">
+                  <span>some info here  fasfasfasfaasdfasfasfasfasfasdfasfasfassfasfasfs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row"></div>
+      </div>
+
+    </div>
+  </div>
+</div>

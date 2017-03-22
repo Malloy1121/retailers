@@ -181,8 +181,7 @@
 </div>
 
 
-<div class="payment-edit-container-outer" [ngClass]="{'display-none':!editMode}">
-  <div class="as-table-cell">
+<div class="payment-edit-container-outer full-screen-modal flex-vertical-center" [ngClass]="{'display-none':!editMode}">
     <div class="payment-edit-container">
       <div class="payment-edit-title-container">
         <h3>Edit payment method</h3>
@@ -240,67 +239,68 @@
 
 
           <div class="edit-billing-form-container">
-            <div class="row">
-              <div class="col-6">Street Address</div>
-              <div class="col-6">Address Continued</div>
 
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <input type="text" formControlName="street">
+              <div class="row">
+                <div class="col-6">Street Address</div>
+                <div class="col-6">Address Continued</div>
+
               </div>
-              <div class="col-6">
-                <input type="text" formControlName="suite" placeholder="Apartment, Suite, Building, etc">
+              <div class="row">
+                <div class="col-6">
+                  <input type="text" formControlName="street">
+                </div>
+                <div class="col-6">
+                  <input type="text" formControlName="suite" placeholder="Apartment, Suite, Building, etc">
+                </div>
               </div>
-            </div>
-            <div class="form-validator row">
-              <div *ngIf="streetEdit.hasError('required')&&streetEdit.touched">Street address required</div>
-              <div *ngIf="streetEdit.valid||!streetEdit.touched">&nbsp;</div>
+              <div class="form-validator row">
+                <div *ngIf="streetEdit.hasError('required')&&streetEdit.touched">Street address required</div>
+                <div *ngIf="streetEdit.valid||!streetEdit.touched">&nbsp;</div>
+              </div>
+
+              <div class="row">
+                <div class="col-3">City</div>
+                <div class="col-3">State</div>
+                <div class="col-3"><span class="address-update-rightCol">Zip Code</span></div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <input type="text" formControlName="city">
+                </div>
+                <div class="col-3">
+                  <select formControlName="stateID" style="width: 60px;max-width: 100%">
+                    <option *ngFor="let item of states"
+                            [value]="item.id">
+                      {{item.state}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <input type="text" formControlName="zipcode" class="address-update-rightCol">
+                </div>
+              </div>
+              <div class="form-validator row">
+                <div *ngIf="cityEdit.hasError('required')&&cityEdit.touched" class="col-3">City required</div>
+                <div *ngIf="cityEdit.valid||!cityEdit.touched" class="col-3">&nbsp;</div>
+                <div *ngIf="stateEdit.hasError('required')&&stateEdit.touched" class="col-3">State required</div>
+                <div *ngIf="stateEdit.valid||!stateEdit.touched" class="col-3">&nbsp;</div>
+                <div *ngIf="zipcodeEdit.hasError('required')&&zipcodeEdit.touched" class="col-3"><span
+                  class="address-update-rightCol">Zip code required</span>
+                </div>
+                <div *ngIf="zipcodeEdit.valid||!zipcodeEdit.touched">&nbsp;</div>
+              </div>
             </div>
 
-            <div class="row">
-              <div class="col-3">City</div>
-              <div class="col-3">State</div>
-              <div class="col-3"><span class="address-update-rightCol">Zip Code</span></div>
+            <div class="btn-payment-edit-container">
+              <button type="submit" [disabled]="paymentForm.invalid">Save</button>
+              <button class="btn-danger" type="button" (click)="closeEdit()">Cancel</button>
             </div>
-            <div class="row">
-              <div class="col-3">
-                <input type="text" formControlName="city">
-              </div>
-              <div class="col-3">
-                <select formControlName="stateID" style="width: 60px;max-width: 100%">
-                  <option *ngFor="let item of states"
-                          [value]="item.id">
-                    {{item.state}}
-                  </option>
-                </select>
-              </div>
-              <div class="col-3">
-                <input type="text" formControlName="zipcode" class="address-update-rightCol">
-              </div>
-            </div>
-            <div class="form-validator row">
-              <div *ngIf="cityEdit.hasError('required')&&cityEdit.touched" class="col-3">City required</div>
-              <div *ngIf="cityEdit.valid||!cityEdit.touched" class="col-3">&nbsp;</div>
-              <div *ngIf="stateEdit.hasError('required')&&stateEdit.touched" class="col-3">State required</div>
-              <div *ngIf="stateEdit.valid||!stateEdit.touched" class="col-3">&nbsp;</div>
-              <div *ngIf="zipcodeEdit.hasError('required')&&zipcodeEdit.touched" class="col-3"><span
-                class="address-update-rightCol">Zip code required</span>
-              </div>
-              <div *ngIf="zipcodeEdit.valid||!zipcodeEdit.touched">&nbsp;</div>
-            </div>
-          </div>
-
-          <div class="btn-payment-edit-container">
-            <button type="submit" [disabled]="paymentForm.invalid">Save</button>
-            <button class="btn-danger" type="button" (click)="closeEdit()">Cancel</button>
-          </div>
         </form>
+
       </div>
 
     </div>
   </div>
 
-</div>
 
 

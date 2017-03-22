@@ -1,0 +1,134 @@
+.checkout-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+
+  .price {
+    color: red;
+    font-weight: bold;
+
+  }
+
+  .checkout-option-divider {
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    margin: 10px auto;
+  }
+
+  .checkout-title-container {
+    margin-bottom: 10px;
+
+    h1 {
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+
+  .checkout-option-container {
+
+    h3 {
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .checkout-option-box {
+
+    }
+
+    .checkout-item-container {
+      padding: 5px;
+      margin: 5px 0;
+      width: calc(100% - 10px);
+      border: 1px solid lightgrey;
+      border-radius: 5px;
+
+      .checkout-image-container {
+        text-align: center;
+
+        img {
+          width: 100%;
+          max-width: 200px;
+          max-height: 200px;
+          display: block;
+          margin: auto;
+          cursor: pointer;
+        }
+      }
+
+      .product-name {
+        cursor: pointer;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+          color: #ef742d;
+          text-decoration: underline;
+        }
+      }
+
+      .product-retailer-name {
+        color: grey;
+        text-decoration: underline;
+        overflow: hidden;
+        text-align: right;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        margin-bottom: 5px;
+        white-space: nowrap;
+
+        &:hover {
+          color: #ef742d;
+        }
+      }
+    }
+  }
+
+  .submit-fixed {
+
+    @media screen and (min-width: 1000px) {
+      position: fixed !important;
+      top: 10px;
+      margin-right: 2%;
+      animation-duration: 0.5s;
+      animation-name: moveDown;
+    }
+
+    @keyframes moveDown {
+      from {
+        transform: translateY(-50px);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .checkout-submit-container {
+    //float: left;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px lightgrey solid;
+    padding: 10px;
+    position: relative;
+
+    hr {
+      border: none;
+      width: 100%;
+      border-bottom: 1px solid lightgrey;
+    }
+
+    h2 {
+      margin: 5px auto 10px;
+    }
+
+    .summary-price {
+      text-align: right;
+    }
+
+    .total {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  }
+}

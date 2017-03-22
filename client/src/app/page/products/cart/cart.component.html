@@ -1,6 +1,6 @@
 <div class="content">
-  <div class="cart-container">
-    <div class="row">
+  <form class="cart-container" (ngSubmit)="proceedToCheckout()" [formGroup]="cartForm">
+    <div class="row cart-title-container">
       <div class="col-4">
         <h1 style="margin:auto">Shopping Cart</h1>
       </div>
@@ -8,13 +8,18 @@
         <span>Cart subtotal(1 item): <span class="price">$ 20.99</span></span>
       </div>
       <div class="col-4 flex-vertical-center">
-        <button class="btn-profile">Proceed to checkout</button>
+        <button class="btn-profile"
+                type="submit"
+                [disabled]="cartForm.invalid"
+                (click)="proceedToCheckout()">
+          Proceed to checkout
+        </button>
       </div>
     </div>
     <hr>
-    <div class="cart-list">
+    <div class="cart-list" formArrayName="items">
       <div class="cart-list-item row">
-        <div class="col-6">
+        <div class="col-4 col-offset-2">
           <h3 style="margin: 0">Product Name</h3>
         </div>
         <div class="col-2">
@@ -26,19 +31,27 @@
       </div>
 
       <div class="cart-list-item row">
-        <div class="col-6">
+        <div class="col-2">
+          <div class="cart-image-container flex-vertical-center">
+            <img
+              src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+              alt="item"
+              (click)="goToDetail(1)">
+          </div>
+        </div>
+        <div class="col-4">
           <span>lasdkjflasjflkasjflasjflsajflksajfljaslfjlsakfjlkasjflkasjflkasjflksajflkasjdflkjsalfkjsalkfjasdfasfsafsafdsafsafsafsafsadgfafbfdbdstrtbhgfhsdafgadfasfafasfasdflsakjflkdsflksajdfklsjflksaflksajflskafjlkj</span>
         </div>
         <div class="col-2 price">
           <span>$ 19.99</span>
         </div>
         <div class="col-2">
-          <input type="number" min="1" max="99">
+          <input type="number" min="1" max="99" formControlName="0">
         </div>
         <div class="col-2">
-          <button class="btn-danger btn-cart-remove">Delete</button>
+          <button class="btn-danger btn-cart-remove" type="button">Delete</button>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>

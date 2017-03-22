@@ -3,6 +3,13 @@
   max-width: 1000px;
   margin: auto;
 
+  .cart-title-container {
+
+    > * {
+      height: 37px;
+    }
+  }
+
   .price {
     color: red;
     font-weight: bold;
@@ -19,6 +26,18 @@
 
       &:first-child {
         margin: 20px auto;
+      }
+
+      .cart-image-container {
+        text-align: center;
+
+        img {
+          max-width: 150px;
+          max-height: 150px;
+          width: 100%;
+          display: block;
+          margin: auto;
+        }
       }
 
       .price {

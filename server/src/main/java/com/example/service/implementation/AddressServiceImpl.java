@@ -25,7 +25,7 @@ public class AddressServiceImpl implements AddressService {
     private StateRepo stateRepo;
 
     @Override
-    public List<AddressDTO> findAddressByUser(long id) {
+    public List<AddressDTO> findAddressByUser(Long id) {
         List<Address> addresses = this.addressRepo.findAllByUserId(id);
         List<AddressDTO> mappedAddresses = new ArrayList<>();
         for (Address address : addresses) {
@@ -35,8 +35,10 @@ public class AddressServiceImpl implements AddressService {
             addressDTO.setCity(address.getCity());
             addressDTO.setState(address.getState().getState());
             addressDTO.setSuite(address.getSuite());
-            addressDTO.setZip(address.getZipcode());
+            addressDTO.setZipcode(address.getZipcode());
             addressDTO.setIsPrimary(address.getIsPrimary() == 1);
+            addressDTO.setTag(address.getTag());
+            addressDTO.setStateID(address.getState().getId());
             mappedAddresses.add(addressDTO);
             System.out.println(addressDTO);
         }
@@ -44,7 +46,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public boolean addNewAddress(AddressDTO addressDTO, long userID) {
+    public boolean addNewAddress(AddressDTO addressDTO, Long userID) {
+//        System.out.println(addressDTO);
         User user = new User();
         Address address = new Address();
         State state = new State();
@@ -57,13 +60,16 @@ public class AddressServiceImpl implements AddressService {
         address.setStreet(addressDTO.getStreet());
         address.setSuite(addressDTO.getSuite());
         address.setTag(addressDTO.getTag());
-        address.setZipcode(addressDTO.getZip());
+        address.setZipcode(addressDTO.getZipcode());
         return this.addressRepo.save(address) != null;
     }
 
     @Override
-    public boolean updateAddress(AddressDTO addressDTO) {
+    public boolean updateAddress(AddressDTO addressDTO, Long userID) {
         Address address = new Address();
+        User user = new User();
+        user.setId(userID);
+        address.setUser(user);
         State state = new State();
         state.setId(addressDTO.getStateID());
         address.setCity(addressDTO.getCity());
@@ -73,12 +79,13 @@ public class AddressServiceImpl implements AddressService {
         address.setStreet(addressDTO.getStreet());
         address.setSuite(addressDTO.getSuite());
         address.setTag(addressDTO.getTag());
-        address.setZipcode(addressDTO.getZip());
+        address.setZipcode(addressDTO.getZipcode());
+        System.out.println(address);
         return this.addressRepo.save(address) != null;
     }
 
     @Override
-    public boolean deleteAddress(long id) {
+    public boolean deleteAddress(Long id) {
         this.addressRepo.delete(id);
         return this.addressRepo.findOne(id) == null;
     }

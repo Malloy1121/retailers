@@ -1,3 +1,325 @@
-<p>
-  checkout works!
-</p>
+<div class="content">
+  <div class="checkout-container">
+    <div class="row checkout-title-container">
+      <div class="col-12">
+        <h1>Checkout (1 item)</h1>
+        <hr>
+      </div>
+    </div>
+
+    <div class="row" style="position: relative">
+      <div class="col-8">
+        <div class="checkout-option-container row">
+          <div class="col-1-clear">
+            <h3>1</h3>
+          </div>
+          <div class="col-3">
+            <h3>Shipping Address</h3>
+          </div>
+          <div class="col-6 checkout-option-box">
+            <div class="row"><h3>address tag here</h3></div>
+            <div class="row">street address + suite numbe alfjalskfjlasfjlas afasfasfa</div>
+            <div class="row">city + state + zipcode</div>
+          </div>
+          <div class="col-2">
+            <button class="btn-profile" (click)="openAddressSelect()">Change</button>
+          </div>
+        </div>
+        <hr class="checkout-option-divider">
+
+
+        <div class="checkout-option-container row">
+          <div class="col-1-clear">
+            <h3>2</h3>
+          </div>
+          <div class="col-3">
+            <h3>Payment method</h3>
+          </div>
+          <div class="col-6 checkout-option-box">
+            <div class="row"><h3>Card ending in <span style="color: blue;">1234</span></h3></div>
+            <div class="row">
+              <span style="color:blue;">Billing address: &nbsp;</span>
+              street address + suite number alfjalskfjlasfjlas afasfasfa
+            </div>
+            <div class="row">city + state + zipcode</div>
+          </div>
+          <div class="col-2">
+            <button class="btn-profile" (click)="openPaymentSelect()">Change</button>
+          </div>
+        </div>
+        <hr class="checkout-option-divider">
+
+        <div class="checkout-option-container row">
+          <div class="row">
+            <div class="col-1-clear">
+              <h3>3</h3>
+            </div>
+            <div class="col-6">
+              <h3>Review items</h3>
+            </div>
+          </div>
+
+          <div class="row checkout-item-container">
+            <div class="col-4">
+              <div class="flex-vertical-center checkout-image-container">
+                <img
+                  src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                  alt="item"
+                  (click)="goToDetail(1)">
+              </div>
+            </div>
+            <div class="col-6-clear col-offset-2">
+              <div class="row">
+                <h3 class="product-name" (click)="goToDetail(1)">Produc name here</h3>
+                <div class="row">
+                  <div class="row">
+                    <div class="product-retailer-name">by retailer name here</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">Price:&nbsp;</div>
+                    <div class="price col-3">$15.99</div>
+                    <div class="col-3">Amount:&nbsp;</div>
+                    <div class="col-3 price">3</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row checkout-item-container">
+            <div class="col-4">
+              <div class="flex-vertical-center checkout-image-container">
+                <img
+                  src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                  alt="item"
+                  (click)="goToDetail(1)">
+              </div>
+            </div>
+            <div class="col-6-clear col-offset-2">
+              <div class="row">
+                <h3 class="product-name" (click)="goToDetail(1)">Produc name here</h3>
+                <div class="row">
+                  <div class="row">
+                    <div class="product-retailer-name">by retailer name here</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">Price:&nbsp;</div>
+                    <div class="price col-3">$15.99</div>
+                    <div class="col-3">Amount:&nbsp;</div>
+                    <div class="col-3 price">3</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row checkout-item-container">
+            <div class="col-4">
+              <div class="flex-vertical-center checkout-image-container">
+                <img
+                  src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                  alt="item"
+                  (click)="goToDetail(1)">
+              </div>
+            </div>
+            <div class="col-6-clear col-offset-2">
+              <div class="row">
+                <h3 class="product-name" (click)="goToDetail(1)">Product name here</h3>
+                <div class="row">
+                  <div class="row">
+                    <div class="product-retailer-name">by retailer name here</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">Price:&nbsp;</div>
+                    <div class="price col-3">$15.99</div>
+                    <div class="col-3">Amount:&nbsp;</div>
+                    <div class="col-3 price">3</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<hr class="checkout-option-divider">-->
+
+      </div>
+      <div class="col-4-clear">
+        <div class="row" style="position: relative;">
+          <div class="col-12">
+            <div class="checkout-submit-container" appFixBox [top-threshold]="175">
+              <div class="row">
+                <div class="col-12">
+                  <button class="btn-profile">Place your order</button>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="row">
+                  <div class="col-12">
+                    <h2>Order Summary</h2>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-6">
+                    Items(3):
+                  </div>
+                  <div class="col-6 price summary-price">
+                    $35.99
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-6">
+                    Shipping & Handling:
+                  </div>
+                  <div class="col-6 price summary-price">
+                    $2.00
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-6">
+                    Estimated Tax:
+                  </div>
+                  <div class="col-6 price summary-price">
+                    $2.00
+                  </div>
+                </div>
+
+                <div class="row">
+                  <hr>
+                </div>
+
+                <div class="row total">
+                  <div class="col-6">
+                    Total
+                  </div>
+                  <div class="col-6 price summary-price">
+                    $39.99
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="full-screen-modal flex-vertical-center" [ngClass]="{'display-none': !addressSelectShown}">
+  <div class="select-container">
+    <div class="select-title-container">
+      <h3>Select shipping address</h3>
+      <button (click)="closeAddressSelect()">
+        <img src="/src/assets/images/delete.svg" alt="close">
+      </button>
+    </div>
+
+    <div class="select-options-container">
+      <div class="select-option-container row">
+        <span class="flex-vertical-center radio-container"><input type="radio" name="addressID"></span>
+        <span style="padding-left: 25px;position: static;">
+          <span><strong>address tag here</strong></span>
+          <span>street address here</span>,
+          <span>city here</span>,
+          <span>state here</span>,
+          <span>zipcode here</span>
+        </span>
+      </div>
+      <div class="select-option-container row">
+        <span class="flex-vertical-center radio-container"><input type="radio" name="addressID"></span>
+        <span style="padding-left: 25px;position: static;">
+          <span><strong>address tag here</strong></span>
+          <span>street address here</span>,
+          <span>city here</span>,
+          <span>state here</span>,
+          <span>zipcode here</span>
+        </span>
+      </div>
+      <div class="select-option-container row">
+        <span class="flex-vertical-center radio-container"><input type="radio" name="addressID"></span>
+        <span style="padding-left: 25px;position: static;">
+          <span><strong>address tag here</strong></span>
+          <span>street address here</span>,
+          <span>city here</span>,
+          <span>state here</span>,
+          <span>zipcode here</span>
+        </span>
+      </div>
+      <div class="select-option-container row">
+        <span class="flex-vertical-center radio-container"><input type="radio" name="addressID"></span>
+        <span style="padding-left: 25px;position: static;">
+          <span><strong>address tag here</strong></span>
+          <span>street address here</span>,
+          <span>city here</span>,
+          <span>state here</span>,
+          <span>zipcode here</span>
+        </span>
+      </div>
+
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-3 col-offset-6">
+          <button class="btn-profile" style="width: 100%;" (click)="addressOnSubmit()">Confirm</button>
+        </div>
+        <div class="col-3">
+          <button class="btn-danger" style="width: 100%;" (click)="closeAddressSelect()">Cancel</button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+</div>
+
+<div class="full-screen-modal flex-vertical-center" [ngClass]="{'display-none': !paymentSelectShown}">
+  <div class="select-container">
+    <div class="select-title-container">
+      <h3>Select payment method</h3>
+      <button (click)="closePaymentSelect()">
+        <img src="/src/assets/images/delete.svg" alt="close">
+      </button>
+    </div>
+
+    <div class="select-options-container">
+      <div class="row select-payment-title">
+        <div class="col-5 col-offset-1">Your card</div>
+        <div class="col-4">Name on card</div>
+        <div class="col-2">Expires on</div>
+      </div>
+      <div class="select-option-container row">
+        <div class="flex-vertical-center col-1"><input type="radio" name="addressID"></div>
+        <div class="col-5"><span>Card ending in 1234</span></div>
+        <div class="col-4"><span>asklfslfjaslf asfkjaslf</span></div>
+        <div class="col-2"><span>11/21</span></div>
+      </div>
+      <div class="select-option-container row">
+        <div class="flex-vertical-center col-1"><input type="radio" name="addressID"></div>
+        <div class="col-5"><span>Card ending in 1234</span></div>
+        <div class="col-4"><span>asklfslfjaslf asfkjaslf</span></div>
+        <div class="col-2"><span>11/21</span></div>
+      </div>
+      <div class="select-option-container row">
+        <div class="flex-vertical-center col-1"><input type="radio" name="addressID"></div>
+        <div class="col-5"><span>Card ending in 1234</span></div>
+        <div class="col-4"><span>asklfslfjaslf asfkjaslf</span></div>
+        <div class="col-2"><span>11/21</span></div>
+      </div>
+      <div class="select-option-container row">
+        <div class="flex-vertical-center col-1"><input type="radio" name="addressID"></div>
+        <div class="col-5"><span>Card ending in 1234</span></div>
+        <div class="col-4"><span>asklfslfjaslf asfkjaslf</span></div>
+        <div class="col-2"><span>11/21</span></div>
+      </div>
+
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-3 col-offset-6">
+          <button class="btn-profile" style="width: 100%;" (click)="paymentOnSubmit()">Confirm</button>
+        </div>
+        <div class="col-3">
+          <button class="btn-danger" style="width: 100%;" (click)="closePaymentSelect()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

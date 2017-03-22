@@ -8,8 +8,11 @@ import com.example.model.user.State;
 import com.example.model.user.User;
 import com.example.service.AddressService;
 import com.example.service.UserService;
+import com.example.validator.FormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,15 +53,28 @@ public class UserController {
 
     @PostMapping("/updateProfile")
     @PreAuthorize("isFullyAuthenticated()")
-    public ResponseMessage updateProfile(@RequestBody User user, HttpSession session) {
+    public ResponseMessage updateProfile(@RequestBody UserDTO user, HttpSession session, BindingResult bindingResult) {
         ResponseMessage message = new ResponseMessage();
+        long userID = (long) session.getAttribute("userID");
+        boolean result = this.userService.updateProfile(user, userID);
+        message.setResult((!bindingResult.hasErrors())&&result);
         return message;
     }
 
     @PostMapping("/changePassword")
     @PreAuthorize("isFullyAuthenticated()")
-    public ResponseMessage changePassword(@RequestBody User user, HttpSession session) {
+    public ResponseMessage changePassword(@RequestBody @Validated(value = FormValidator.class) User user, HttpSession session, BindingResult bindingResult) {
         ResponseMessage message = new ResponseMessage();
+        long userID = (long) session.getAttribute("userID");
+        boolean result = this.userService.changePassword(user.getCurrentPassword(), user.getPassword(), userID);
+        if (!result) {
+            message.setInfo("Incorrect password");
+        }
+
+        if (bindingResult.hasErrors()) {
+            message.setInfo("Invalid input");
+        }
+        message.setResult((!bindingResult.hasErrors())&&result);
         return message;
     }
 
@@ -67,7 +83,7 @@ public class UserController {
     public ResponseMessage addNewAddress(@RequestBody AddressDTO address, HttpSession session) {
         long userID = (long) session.getAttribute("userID");
         ResponseMessage message = new ResponseMessage();
-        boolean result=this.addressService.addNewAddress(address,userID);
+        boolean result = this.addressService.addNewAddress(address, userID);
         message.setResult(result);
         return message;
     }
@@ -76,7 +92,8 @@ public class UserController {
     @PreAuthorize("isFullyAuthenticated()")
     public ResponseMessage editAddress(@RequestBody AddressDTO address, HttpSession session) {
         ResponseMessage message = new ResponseMessage();
-        boolean result=this.addressService.updateAddress(address);
+        long userID = (long) session.getAttribute("userID");
+        boolean result = this.addressService.updateAddress(address, userID);
         message.setResult(result);
         return message;
     }
@@ -86,7 +103,7 @@ public class UserController {
     public ResponseMessage deleteAddress(@RequestBody AddressDTO address) {
 //        long id=user.getId();
         ResponseMessage message = new ResponseMessage();
-        boolean result=this.addressService.deleteAddress(address.getId());
+        boolean result = this.addressService.deleteAddress(address.getId());
         message.setResult(result);
         return message;
     }
@@ -95,16 +112,19 @@ public class UserController {
     @PreAuthorize("isFullyAuthenticated()")
     public ResponseMessage getCurrentAddresses(HttpSession session) {
         ResponseMessage message = new ResponseMessage();
-        List<AddressDTO> result = this.addressService.findAddressByUser((long) session.getAttribute("userID"));
+        List<AddressDTO> result = this.addressService.findAddressByUser((Long) session.getAttribute("userID"));
         message.setObject(result);
         message.setResult(true);
+        for (AddressDTO address : result) {
+            System.out.println(address);
+        }
         return message;
     }
 
     @GetMapping("/getStateList")
     public ResponseMessage getStateList() {
         ResponseMessage message = new ResponseMessage();
-        List<State> result=this.addressService.findAllStates();
+        List<State> result = this.addressService.findAllStates();
         message.setResult(true);
         message.setObject(result);
         return message;

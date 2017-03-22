@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 declare var screen: any;
 declare var navigator: any;
@@ -10,8 +12,9 @@ declare var i: any;
   styleUrls: ['cart.component.scss']
 })
 export class CartComponent implements OnInit {
+  private cartForm: FormGroup;
 
-  constructor() {
+  constructor(private fb: FormBuilder, private router: Router) {
   }
 
   ngOnInit() {
@@ -29,6 +32,33 @@ export class CartComponent implements OnInit {
     else {
       console.log("desktop");
     }
+
+    this.buildCartForm();
+
   }
 
+  proceedToCheckout() {
+    this.router.navigateByUrl("/products/checkout");
+  }
+
+  goToDetail(id) {
+    this.router.navigate(["/products/product/"+id]);
+  }
+
+  buildCartForm() {
+    this.cartForm = this.fb.group({
+      items: this.fb.array([
+        new FormControl(1, Validators.compose([
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          this.amountValidator
+        ]))
+      ])
+    });
+
+  }
+
+  amountValidator(c: FormControl) {
+    return c.value > 0 && c.value < 100 ? null : {amount: true};
+  }
 }

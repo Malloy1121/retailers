@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 /**
@@ -42,19 +43,28 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return this.userRepo.save(user) != null;
     }
 
+    @Transactional
     @Override
-    public boolean changePassword(String oldPassword, String newPassword) {
-        return false;
+    public boolean changePassword(String oldPassword, String newPassword, Long id) {
+        boolean validation = this.validatePassword(oldPassword,id);
+        if (!validation) {
+            return false;
+        }
+
+        this.userRepo.changePassword(this.passwordEncoder.encode(newPassword), id);
+        return true;
     }
 
+    @Transactional
     @Override
-    public boolean updateProfile(UserDTO user) {
-        return false;
+    public boolean updateProfile(UserDTO user, Long id) {
+        this.userRepo.updateProfile(user.getFirstname(), user.getLastname(), id);
+        return true;
     }
 
     @Override
     public boolean isEmailTaken(String email) {
-        User user =this.userRepo.findByEmail(email).orElse(null);
+        User user = this.userRepo.findByEmail(email).orElse(null);
         System.out.println(user);
         return this.userRepo.findByEmail(email).isPresent();
     }
@@ -82,7 +92,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDTO findUserByEmail(String email) {
         User user = this.userRepo.findByEmail(email).orElse(null);
-        if(user==null){
+        if (user == null) {
             return null;
         }
         UserDTO userDTO = new UserDTO();
@@ -121,5 +131,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = this.userRepo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(email));
         return new UserDetailsImpl(user);
+    }
+
+    private Boolean validatePassword(String password, Long id) {
+        String currentPassword=this.userRepo.getUserPassowrd(id);
+        System.out.println(currentPassword);
+        return this.passwordEncoder.matches(password, currentPassword);
     }
 }
