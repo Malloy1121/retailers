@@ -12,7 +12,6 @@ import {APP_ROUTE} from "./app.route";
 import {ProfileService} from "./service/profile.service";
 import {AuthGuard} from "./service/auth.guard";
 
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -4,6 +4,7 @@
   margin: auto;
   width: 100%;
   height: 100%;
+  max-width: 1200px;
 
   .category-select-container {
     float: left;
@@ -55,11 +56,16 @@
 
       .item-image-container {
         width: 100%;
-        height: 200px;
-        text-align: center;
+        height: 250px;
         cursor: pointer;
+        text-align: center;
+        display: flex;
+        margin: 5px auto;
 
         img {
+          display: block;
+          margin: auto;
+          width: 100%;
           max-width: 100%;
           max-height: 100%;
         }
@@ -81,8 +87,6 @@
             max-height: 36px;
           }
         }
-
-
 
         .product-name-container {
           cursor: pointer;

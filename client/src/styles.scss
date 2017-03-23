@@ -59,7 +59,7 @@ a:active {
 .content {
   width: 100%;
   min-width: 1000px;
-  margin: 50px 0;
+  margin: 50px 0 75px;
   box-sizing: border-box;
   padding: 0 15px;
 }
@@ -303,4 +303,13 @@ button {
   top:0;
   left: 0;
   bottom: 0;
+}
+
+.as-link {
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: #ef742d;
+  }
 }
