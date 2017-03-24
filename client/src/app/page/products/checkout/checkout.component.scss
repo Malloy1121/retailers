@@ -74,7 +74,6 @@
         color: grey;
         text-decoration: underline;
         overflow: hidden;
-        text-align: right;
         text-overflow: ellipsis;
         cursor: pointer;
         margin-bottom: 5px;
@@ -126,9 +125,6 @@
       margin: 5px auto 10px;
     }
 
-    .summary-price {
-      text-align: right;
-    }
 
     .total {
       font-size: 1.2em;

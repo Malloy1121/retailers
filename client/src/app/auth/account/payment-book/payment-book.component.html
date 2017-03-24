@@ -48,6 +48,43 @@
 
       </div>
     </div>
+    <div class="payment-card" [ngClass]="{'payment-card-open':cards[1]}">
+
+      <div class="payment-title-container" (click)="toggleCard(1)">
+        <div class="payment-card-icon-container">
+          <img src="/src/assets/images/chevron-arrow-down.svg" alt="down">
+        </div>
+        <div class="payment-card-title-left">
+          <span>Payment card ending in 1234</span>
+        </div>
+        <div class="payment-card-title-right">
+          <span>11/22</span>
+        </div>
+      </div>
+
+      <div class="payment-content-box">
+        <div class="payment-content-container">
+          <div class="payment-content-left">
+            <h4>Name on card</h4>
+            <p>Abcasdf Asdf</p>
+          </div>
+          <div class="payment-content-right">
+            <h4>Billing address</h4>
+            <p>
+              <span>street</span>
+              <span>city state zip </span>
+            </p>
+          </div>
+
+        </div>
+
+        <div class="btn-payment-card-container">
+          <button (click)="openEdit()">Edit</button>
+          <button (click)="onRemove(1)" class="btn-danger">Delete</button>
+        </div>
+
+      </div>
+    </div>
 
     <div class="add-payment-container">
       <h2>Add a New Payment Method</h2>

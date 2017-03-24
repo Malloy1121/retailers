@@ -14,7 +14,7 @@ declare var document: any;
   templateUrl: './payment-book.component.html',
   styleUrls: ['./payment-book.component.scss', './payment-edit.scss']
 })
-export class PaymentBookComponent implements OnInit,OnDestroy {
+export class PaymentBookComponent implements OnInit, OnDestroy {
   private cards: boolean[] = [false];
   private isAddCardOpen: boolean = false;
   private months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
@@ -112,8 +112,8 @@ export class PaymentBookComponent implements OnInit,OnDestroy {
     if (this.isAddCardOpen) {
       const left = this.newCard.nativeElement.offsetLeft;
       const top = this.newCard.nativeElement.offsetTop;
-      // console.log(left, top);
-      scrollTo(0, top);
+      console.log(left, top);
+      window.scrollTo(0, top + 500);
     }
   }
 

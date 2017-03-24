@@ -9,18 +9,18 @@
         <table>
           <tr>
             <td>
-              <button class="btn-profile">All Orders</button>
+              <button class="btn-profile" (click)="navigateByUrl('/auth/account/my_orders/1')">All Orders</button>
             </td>
             <td>
-              <button class="btn-profile">Orders In Process</button>
+              <button class="btn-profile" (click)="navigateByUrl('/auth/account/my_orders/2')">Orders In Process</button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="btn-profile">Delivered Orders</button>
+              <button class="btn-profile" (click)="navigateByUrl('/auth/account/my_orders/3')">Delivered Orders</button>
             </td>
             <td>
-              <button class="btn-profile">Canceled Orders</button>
+              <button class="btn-profile" (click)="navigateByUrl('/auth/account/my_orders/4')">Canceled Orders</button>
             </td>
           </tr>
         </table>
