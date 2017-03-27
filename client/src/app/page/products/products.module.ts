@@ -23,7 +23,7 @@ import {WishListComponent} from "./wish-list/wish-list.component";
     ItemDetailComponent,
     CheckoutComponent,
     FixBoxDirective,
-    WishListComponent
+    WishListComponent,
   ]
 })
 export class ProductsModule {

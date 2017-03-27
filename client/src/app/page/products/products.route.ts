@@ -10,7 +10,7 @@ import {WishListComponent} from "./wish-list/wish-list.component";
 export const PRODUCTS_ROUTE: Routes = [
   {path: "cart", component: CartComponent},
   {path: "product-list", component: ItemListComponent},
-  {path: "product", component: ItemDetailComponent},
+  {path: "product", redirectTo:"product-list"},
   {path: "product/:id", component: ItemDetailComponent},
   {path: "checkout", component: CheckoutComponent},
   {path:"wish-list",component:WishListComponent},
