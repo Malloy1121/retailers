@@ -1,7 +1,12 @@
-import {Component, OnInit, ElementRef, ViewChild, OnChanges, SimpleChanges, OnDestroy} from '@angular/core';
+import {
+  Component, OnInit, ElementRef, ViewChild, OnDestroy
+} from '@angular/core';
 import {AuthService} from "../service/auth.service";
 import {Router} from "@angular/router";
+import "rxjs";
 import {Subscription} from "rxjs";
+import {ShoppingService} from "../service/shopping.service";
+import {Category} from "../model/category";
 
 @Component({
   selector: 'app-header',
@@ -12,21 +17,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   private currentCategory: string = "All";
+  private currentCategoryID: any=0;
   private searchBarGetFocus: boolean = false;
   private isAuthenticated: boolean;
-  private currentUser: any;
-  private categories = ["alfkjdalf", "sd", "a", "fdaf", "fsadf", "asdffasdfasfasfa"];
+  private currentUser: any = null;
+  private categories: Category[] = [];
   private isAccountShown: boolean = false;
   private isCartShown: boolean = false;
   private userSubscription: Subscription;
 
   @ViewChild("categoryMenu") select: ElementRef;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService,
+              private router: Router,
+              private shpService: ShoppingService) {
   }
 
   ngOnInit() {
     this.currentCategory = this.select.nativeElement.options[this.select.nativeElement.selectedIndex].text;
+
+    this.shpService.getAllCategories()
+      .toPromise()
+      .then(data => {
+        const categories = data.object;
+        console.log(categories);
+        this.categories = categories;
+      });
 
     this.currentUser = this.authService.getCurrentUser()
       .toPromise()
@@ -77,8 +93,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl("/auth/register");
   }
 
-  categoryOnClick(category) {
-    this.currentCategory = category;
+  categoryOnClick(option) {
+    this.currentCategory = option.text;
+    this.currentCategoryID = option.value;
   }
 
   accountOpen() {

@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-wish-list',
   templateUrl: './wish-list.component.html',
-  styleUrls: ['./wish-list.component.scss',"../cart/cart.component.scss"]
+  styleUrls: ['./wish-list.component.scss',"../../../page/products/cart/cart.component.scss"]
 })
 export class WishListComponent implements OnInit {
   private wishListForm: FormGroup;

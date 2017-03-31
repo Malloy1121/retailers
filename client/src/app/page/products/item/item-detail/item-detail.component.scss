@@ -63,7 +63,9 @@
     .purchase-category-container {
       line-height: 35px;
 
-      .product-option-container {
+      .product-option {
+        outline: none;
+        background-color: white;
         display: inline-flex;
         padding: 0 10px;
         height: 35px;
@@ -74,6 +76,14 @@
         box-sizing: border-box;
         margin-bottom: 5px;
         margin-right: 5px;
+
+        &[disabled] {
+          cursor: no-drop;
+        }
+
+        &.type-selected {
+          border-color: red;
+        }
 
         &:hover {
           box-shadow: 0 0 10px 3px #ef742d, 0 0 5px white inset;

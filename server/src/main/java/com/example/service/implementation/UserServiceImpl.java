@@ -1,6 +1,5 @@
 package com.example.service.implementation;
 
-import com.example.dto.AddressDTO;
 import com.example.dto.UserDTO;
 import com.example.model.user.Role;
 import com.example.model.user.User;
@@ -14,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -134,7 +132,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private Boolean validatePassword(String password, Long id) {
-        String currentPassword=this.userRepo.getUserPassowrd(id);
+        String currentPassword=this.userRepo.getUserPassword(id);
         System.out.println(currentPassword);
         return this.passwordEncoder.matches(password, currentPassword);
     }

@@ -4,10 +4,14 @@ import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {Address} from "../../../model/address";
 import {ProfileService} from "../../../service/profile.service";
+import {Payment} from "../../../model/payment";
+import "rxjs/Rx";
+import {toPromise} from "rxjs/operator/toPromise";
 
 declare var scrollTo: any;
 declare var window: any;
 declare var document: any;
+declare var alert: any;
 
 @Component({
   selector: 'app-payment-book',
@@ -15,14 +19,15 @@ declare var document: any;
   styleUrls: ['./payment-book.component.scss', './payment-edit.scss']
 })
 export class PaymentBookComponent implements OnInit, OnDestroy {
-  private cards: boolean[] = [false];
+  private payments: Payment[];
+  private currentPaymentNumber: any = "";
   private isAddCardOpen: boolean = false;
   private months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
   private years = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027];
   private paramsSubscription: Subscription;
   private editMode: boolean = false;
 
-  private cardForm: FormGroup;
+  private paymentForm: FormGroup;
   private nameEdit: FormControl;
   private monthEdit: FormControl;
   private yearEdit: FormControl;
@@ -33,8 +38,7 @@ export class PaymentBookComponent implements OnInit, OnDestroy {
   private suiteEdit: FormControl;
   private states = [];
 
-
-  private paymentForm: FormGroup;
+  private cardForm: FormGroup;
   private name: FormControl;
   private number: FormControl;
   private month: FormControl;
@@ -45,16 +49,19 @@ export class PaymentBookComponent implements OnInit, OnDestroy {
   private zipcode: FormControl;
   private suite: FormControl;
   private currentAddress: Address = null;
-  private routerParamsSubscription: Subscription;
   private id: number = -1;
 
 
   @ViewChild("newCard") newCard: ElementRef;
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private profileService: ProfileService) {
+  constructor(private fb: FormBuilder,
+              private activatedRoute: ActivatedRoute,
+              private profileService: ProfileService) {
   }
 
   ngOnInit() {
+    this.loadPayments();
+
     this.profileService.getStateList()
       .toPromise()
       .then(data => {
@@ -79,29 +86,77 @@ export class PaymentBookComponent implements OnInit, OnDestroy {
     });
   }
 
-  onAdd() {
+  loadPayments() {
+    this.profileService.getUserPayment()
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.payments = data.object;
+        }
+      });
 
+  }
+
+  onAdd() {
+    if (this.cardForm.invalid) {
+      alert("Invalid form values!");
+      return;
+    }
+    const value = this.cardForm.value;
+    this.profileService.addPayment(value)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.loadPayments();
+        }
+      });
   }
 
   onEdit() {
-
+    const value = this.paymentForm.value;
+    value.id = this.currentPaymentNumber;
+    this.profileService.editPayment(value)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.loadPayments();
+          this.closeEdit();
+        }
+      })
   }
 
-  onRemove(id: number) {
-
+  onRemove(payment: Payment) {
+    this.profileService.deletePayment(payment)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.loadPayments();
+        }
+      });
   }
 
-  toggleCard(index: number) {
-    this.cards[index] = !this.cards[index];
+  toggleCard(payment: Payment) {
+    payment.isOpen = !payment.isOpen;
     console.log(window.innerWidth, document.documentElement.clientWidth);
   }
 
-  openEdit() {
+  openEdit(payment: Payment) {
+    this.nameEdit.setValue(payment.name);
+    this.monthEdit.setValue(payment.month);
+    this.yearEdit.setValue(payment.year);
+    this.streetEdit.setValue(payment.street);
+    this.cityEdit.setValue(payment.city);
+    this.stateEdit.setValue(payment.stateID);
+    this.zipcodeEdit.setValue(payment.zipcode);
+    this.suiteEdit.setValue(payment.suite);
+    this.currentPaymentNumber = payment.id;
     this.editMode = true;
   }
 
   closeEdit() {
     this.editMode = false;
+    this.cardForm.reset();
+    this.currentPaymentNumber = "";
   }
 
   toggleAddCard() {
@@ -120,7 +175,11 @@ export class PaymentBookComponent implements OnInit, OnDestroy {
   cardNumberLength(c: FormControl): any {
     const value = c.value;
 
-    if (value.trim().length == 0) {
+    if (value == null || value.length == 0) {
+      return null;
+    }
+
+    else if (value.trim().length == 0) {
       return null;
     }
 

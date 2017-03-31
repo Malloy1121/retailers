@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, URLSearchParams, Headers} from "@angular/http";
 import "rxjs/Rx";
 import {Router} from "@angular/router";
-import {Observable, Subject} from "rxjs";
+import {Observable, Subject, Subscription} from "rxjs";
 import {User} from "../model/user";
 
 @Injectable()
@@ -10,12 +10,12 @@ export class AuthService {
   private currentUser;
   private subject: Subject<any> = new Subject();
   private url = "";
+  private sub: Subscription;
   // private url="http://localhost:8080";
 
   constructor(private http: Http, private router: Router) {
-    this.getCurrentUser()
-      .toPromise()
-      .then(data => {
+    this.sub = this.getCurrentUser()
+      .subscribe(data => {
         console.log(data);
         if (data.result == true) {
           this.currentUser = data.object;
@@ -26,7 +26,7 @@ export class AuthService {
       });
   }
 
-  login(value) {
+  login(value, url) {
     console.log(value);
     const body = new URLSearchParams();
     body.set("email", value.email);
@@ -45,7 +45,12 @@ export class AuthService {
         console.log(data);
         this.currentUser = data;
         this.subject.next(this.currentUser);
-        this.router.navigateByUrl("/");
+        if (url == null) {
+          this.router.navigateByUrl("/");
+        }
+        else {
+          this.router.navigateByUrl(url);
+        }
         return data;
       })
       .catch(error => console.log(error));
@@ -91,5 +96,9 @@ export class AuthService {
 
   getUser() {
     return this.subject;
+  }
+
+  unsub(){
+    this.sub.unsubscribe();
   }
 }

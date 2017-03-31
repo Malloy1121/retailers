@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import "rxjs/Rx";
+import {Payment} from "../model/payment";
 
 @Injectable()
 export class ProfileService {
@@ -46,6 +47,34 @@ export class ProfileService {
   getStateList() {
     return this.http.get("/user/getStateList")
       .map((response: Response) => response.json());
+  }
+
+  getUserPayment() {
+    return this.http.get("/payment/getUserPayments")
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
+
+  addPayment(payment: Payment) {
+    return this.http.post("/payment/addPayment", payment)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
+
+  editPayment(payment: Payment) {
+    return this.http.post("/payment/editPayment", payment)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
+
+  deletePayment(payment: Payment) {
+    return this.http.post("/payment/deletePayment", payment)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
 }

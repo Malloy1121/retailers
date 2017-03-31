@@ -3,8 +3,6 @@ package com.example.service;
 import com.example.dto.ItemDTO;
 import com.example.dto.OrderDTO;
 import com.example.model.user.Order;
-import com.example.repository.OrderRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 

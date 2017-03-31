@@ -2,11 +2,8 @@ package com.example.model.user;
 
 import com.example.validator.FormValidator;
 import com.example.validator.SamePassword;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,7 +19,7 @@ import java.util.*;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "app_user")
-//@SamePassword(groups = {FormValidator.class})
+@SamePassword(groups = {FormValidator.class})
 public class User {
 
     @Id
@@ -75,11 +72,12 @@ public class User {
             joinColumns = {@JoinColumn(name = "userID", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "roleID", referencedColumnName = "id")}
     )
-
+    @Fetch(FetchMode.SUBSELECT)
     private Set<Role> roles = new HashSet<Role>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-//    @JsonBackReference
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userID")
+    @Fetch(FetchMode.SUBSELECT)
     private List<Order> orders = new ArrayList<>();
 
     @PrePersist

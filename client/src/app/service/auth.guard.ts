@@ -2,17 +2,31 @@
  * Created by Malloy on 3/16/2017.
  */
 import {Injectable} from "@angular/core";
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from "@angular/router";
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanLoad, Route} from "@angular/router";
 import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanLoad {
 
   constructor(private authService: AuthService, private router: Router) {
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    Observable<boolean>
+    | Promise<boolean>
+    | boolean {
+    console.log("request sent from" + state.url);
+    // return true;
+    return this.isAuthenticated(state.url);
+  }
+
+  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
+    // return true;
+    return this.isAuthenticated(null);
+  }
+
+  isAuthenticated(url): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.getCurrentUser()
       .toPromise()
       .then(data => {
@@ -25,7 +39,12 @@ export class AuthGuard implements CanActivate {
             .toPromise()
             .then(data => {
               if (data == 200) {
-                this.router.navigateByUrl("/auth/login");
+                if(url) {
+                  this.router.navigate(["/auth/login",{url:url}]);
+                }
+                else {
+                  this.router.navigate(["/auth/login"]);
+                }
               }
             });
 

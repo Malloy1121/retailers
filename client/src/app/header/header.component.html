@@ -11,9 +11,9 @@
           <i class="dropdown-icon" #category></i>
         </button>
         <select class="category-dropdown-list" #categoryMenu (focus)="searchBarOnFocus()" (blur)="searchBarOnBlur()"
-                (change)="categoryOnClick(categoryMenu.options[categoryMenu.selectedIndex].value)">
+                (change)="categoryOnClick(categoryMenu.options[categoryMenu.selectedIndex])">
           <option (click)="categoryOnClick('All')">All</option>
-          <option *ngFor="let category of categories">{{category}}</option>
+          <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
         </select>
       </div>
       <div class="searchBar-box">
@@ -32,6 +32,9 @@
         <button (click)="login()" class="btn-header-auth">Login</button>
       </div>
 
+      <div class="welcome-container btn-header-auth-container" *ngIf="isAuthenticated">
+        <span>Hello, {{currentUser==null?"":currentUser.firstname}}</span>
+      </div>
       <div class="btn-account-container  btn-header-auth-container dropdown-container">
         <button class="btn-header-auth" (click)="navigate('/auth/account')">
           <span style="margin-right: 20px;width: 100%;">My Account</span>

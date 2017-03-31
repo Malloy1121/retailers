@@ -29,6 +29,6 @@ public interface UserRepo extends CrudRepository<User, Long> {
     void changePassword(@Param("password") String password, @Param("id") Long id);
 
     @Query("select u.password from User u where u.id = :id")
-    String getUserPassowrd(@Param("id") Long id);
+    String getUserPassword(@Param("id") Long id);
 
 }

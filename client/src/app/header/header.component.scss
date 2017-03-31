@@ -1,7 +1,7 @@
 header {
   width: 100%;
   min-width: 1000px;
-    top:0;
+  top: 0;
 }
 
 nav {
@@ -112,6 +112,14 @@ nav {
       ul:before {
         left: 78.5px;
       }
+    }
+
+    .welcome-container {
+      max-width: 125px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: lightgrey;
+      font-weight: bold;
     }
 
     .btn-cart-container {

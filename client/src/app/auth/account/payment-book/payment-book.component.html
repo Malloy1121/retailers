@@ -11,17 +11,16 @@
 
     </div>
 
-    <div class="payment-card" [ngClass]="{'payment-card-open':cards[1]}">
-
-      <div class="payment-title-container" (click)="toggleCard(1)">
+    <div class="payment-card" *ngFor="let item of payments" [ngClass]="{'payment-card-open':item.isOpen}">
+      <div class="payment-title-container" (click)="toggleCard(item)">
         <div class="payment-card-icon-container">
-          <img src="/src/assets/images/chevron-arrow-down.svg" alt="down">
+          <img src="/assets/images/chevron-arrow-down.svg" alt="down">
         </div>
         <div class="payment-card-title-left">
-          <span>Payment card ending in 1234</span>
+          <span>Payment card ending in {{item.number| last4Digits}}</span>
         </div>
         <div class="payment-card-title-right">
-          <span>11/22</span>
+          <span>{{item.month}}/{{item.year}}</span>
         </div>
       </div>
 
@@ -29,62 +28,26 @@
         <div class="payment-content-container">
           <div class="payment-content-left">
             <h4>Name on card</h4>
-            <p>Abcasdf Asdf</p>
+            <p>{{item.name}}</p>
           </div>
           <div class="payment-content-right">
             <h4>Billing address</h4>
             <p>
-              <span>street</span>
-              <span>city state zip </span>
+              <span>{{item.street}}, {{item.suite}}</span>
+              <span>{{item.city}}, {{item.state}} {{item.zipcode}} </span>
             </p>
           </div>
 
         </div>
 
         <div class="btn-payment-card-container">
-          <button (click)="openEdit()">Edit</button>
-          <button (click)="onRemove(1)" class="btn-danger">Delete</button>
+          <button (click)="openEdit(item)">Edit</button>
+          <button (click)="onRemove(item)" class="btn-danger">Delete</button>
         </div>
 
       </div>
     </div>
-    <div class="payment-card" [ngClass]="{'payment-card-open':cards[1]}">
 
-      <div class="payment-title-container" (click)="toggleCard(1)">
-        <div class="payment-card-icon-container">
-          <img src="/src/assets/images/chevron-arrow-down.svg" alt="down">
-        </div>
-        <div class="payment-card-title-left">
-          <span>Payment card ending in 1234</span>
-        </div>
-        <div class="payment-card-title-right">
-          <span>11/22</span>
-        </div>
-      </div>
-
-      <div class="payment-content-box">
-        <div class="payment-content-container">
-          <div class="payment-content-left">
-            <h4>Name on card</h4>
-            <p>Abcasdf Asdf</p>
-          </div>
-          <div class="payment-content-right">
-            <h4>Billing address</h4>
-            <p>
-              <span>street</span>
-              <span>city state zip </span>
-            </p>
-          </div>
-
-        </div>
-
-        <div class="btn-payment-card-container">
-          <button (click)="openEdit()">Edit</button>
-          <button (click)="onRemove(1)" class="btn-danger">Delete</button>
-        </div>
-
-      </div>
-    </div>
 
     <div class="add-payment-container">
       <h2>Add a New Payment Method</h2>
@@ -93,12 +56,12 @@
       <div class="add-card-container" [ngClass]="{'add-card-open':isAddCardOpen}" #newCard>
         <a (click)="toggleAddCard()"
         ><span style="padding: 0 2px;"
-        ><img src="/src/assets/images/chevron-arrow-down.svg" alt="arrow"
+        ><img src="/assets/images/chevron-arrow-down.svg" alt="arrow"
         ></span
         >Add a Card</a>
         <div class="add-card-form-container">
           <h5>Enter your card information</h5>
-          <form (ngSubmit)="addCard()" [formGroup]="cardForm">
+          <form (ngSubmit)="onAdd()" [formGroup]="cardForm">
             <div class="row">
               <div class="col-3">
                 <div>Name on card</div>
@@ -128,6 +91,7 @@
             </div>
             <div class="row" style="height: 36px">
               <div class="col-3">
+                <div *ngIf="name.valid||!name.touched">&nbsp;</div>
                 <div class="form-validator"
                      *ngIf="name.hasError('required')&&name.touched">Name required
                 </div>
@@ -219,125 +183,125 @@
 
 
 <div class="payment-edit-container-outer full-screen-modal flex-vertical-center" [ngClass]="{'display-none':!editMode}">
-    <div class="payment-edit-container">
-      <div class="payment-edit-title-container">
-        <h3>Edit payment method</h3>
-        <button (click)="closeEdit()">
-          <img src="/src/assets/images/delete.svg" alt="close">
-        </button>
-      </div>
-      <div class="payment-edit-card-container">
-        <form [formGroup]="paymentForm" (ngSubmit)="onEdit()">
+  <div class="payment-edit-container">
+    <div class="payment-edit-title-container">
+      <h3>Edit payment method</h3>
+      <button (click)="closeEdit()">
+        <img src="/assets/images/delete.svg" alt="close">
+      </button>
+    </div>
+    <div class="payment-edit-card-container">
+      <form [formGroup]="paymentForm" (ngSubmit)="onEdit()">
+        <div class="row">
+          <div class="col-6">
+            <h3>Payment method</h3>
+          </div>
+          <div class="col-3">
+            <h3>Name on card</h3>
+          </div>
+          <div class="col-3">
+            <h3>Expiration Date</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <span>Card ending in {{currentPaymentNumber}}</span>
+          </div>
+          <div class="col-3">
+            <input type="text" formControlName="name">
+          </div>
+          <div class="col-3">
+            <select id="month-edit" style="margin-right: 10px" formControlName="month">
+              <option [value]="item" *ngFor="let item of months">{{item}}</option>
+            </select>
+            <select formControlName="year">
+              <option [value]="item" *ngFor="let item of years">{{item}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="height: 36px">
+          <div class="col-6">
+            &nbsp;
+          </div>
+          <div class="col-3">
+            <div class="form-validator"
+                 *ngIf="nameEdit.hasError('required')&&nameEdit.touched">Name required
+            </div>
+            <div class="form-validator"
+                 *ngIf="nameEdit.hasError('maxlength')&&nameEdit.touched">Name must have up to 25 characters
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-validator"
+                 *ngIf="paymentForm.hasError('expired')&&(monthEdit.touched||yearEdit.touched)">This card has expired
+            </div>
+          </div>
+        </div>
+
+
+        <div class="edit-billing-form-container">
+
+          <div class="row">
+            <div class="col-6">Street Address</div>
+            <div class="col-6">Address Continued</div>
+
+          </div>
           <div class="row">
             <div class="col-6">
-              <h3>Payment method</h3>
+              <input type="text" formControlName="street">
             </div>
-            <div class="col-3">
-              <h3>Name on card</h3>
+            <div class="col-6">
+              <input type="text" formControlName="suite" placeholder="Apartment, Suite, Building, etc">
             </div>
-            <div class="col-3">
-              <h3>Expiration Date</h3>
-            </div>
+          </div>
+          <div class="form-validator row">
+            <div *ngIf="streetEdit.hasError('required')&&streetEdit.touched">Street address required</div>
+            <div *ngIf="streetEdit.valid||!streetEdit.touched">&nbsp;</div>
+          </div>
+
+          <div class="row">
+            <div class="col-3">City</div>
+            <div class="col-3">State</div>
+            <div class="col-3"><span class="address-update-rightCol">Zip Code</span></div>
           </div>
           <div class="row">
-            <div class="col-6">
-              <span>Card ending in 1234</span>
+            <div class="col-3">
+              <input type="text" formControlName="city">
             </div>
             <div class="col-3">
-              <input type="text" formControlName="name">
-            </div>
-            <div class="col-3">
-              <select id="month-edit" style="margin-right: 10px" formControlName="month">
-                <option [value]="item" *ngFor="let item of months">{{item}}</option>
-              </select>
-              <select formControlName="year">
-                <option [value]="item" *ngFor="let item of years">{{item}}</option>
+              <select formControlName="stateID" style="width: 60px;max-width: 100%">
+                <option *ngFor="let item of states"
+                        [value]="item.id">
+                  {{item.state}}
+                </option>
               </select>
             </div>
-          </div>
-          <div class="row" style="height: 36px">
-            <div class="col-6">
-              &nbsp;
-            </div>
             <div class="col-3">
-              <div class="form-validator"
-                   *ngIf="nameEdit.hasError('required')&&nameEdit.touched">Name required
-              </div>
-              <div class="form-validator"
-                   *ngIf="nameEdit.hasError('maxlength')&&nameEdit.touched">Name must have up to 25 characters
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="form-validator"
-                   *ngIf="paymentForm.hasError('expired')&&(monthEdit.touched||yearEdit.touched)">This card has expired
-              </div>
+              <input type="text" formControlName="zipcode" class="address-update-rightCol">
             </div>
           </div>
-
-
-          <div class="edit-billing-form-container">
-
-              <div class="row">
-                <div class="col-6">Street Address</div>
-                <div class="col-6">Address Continued</div>
-
-              </div>
-              <div class="row">
-                <div class="col-6">
-                  <input type="text" formControlName="street">
-                </div>
-                <div class="col-6">
-                  <input type="text" formControlName="suite" placeholder="Apartment, Suite, Building, etc">
-                </div>
-              </div>
-              <div class="form-validator row">
-                <div *ngIf="streetEdit.hasError('required')&&streetEdit.touched">Street address required</div>
-                <div *ngIf="streetEdit.valid||!streetEdit.touched">&nbsp;</div>
-              </div>
-
-              <div class="row">
-                <div class="col-3">City</div>
-                <div class="col-3">State</div>
-                <div class="col-3"><span class="address-update-rightCol">Zip Code</span></div>
-              </div>
-              <div class="row">
-                <div class="col-3">
-                  <input type="text" formControlName="city">
-                </div>
-                <div class="col-3">
-                  <select formControlName="stateID" style="width: 60px;max-width: 100%">
-                    <option *ngFor="let item of states"
-                            [value]="item.id">
-                      {{item.state}}
-                    </option>
-                  </select>
-                </div>
-                <div class="col-3">
-                  <input type="text" formControlName="zipcode" class="address-update-rightCol">
-                </div>
-              </div>
-              <div class="form-validator row">
-                <div *ngIf="cityEdit.hasError('required')&&cityEdit.touched" class="col-3">City required</div>
-                <div *ngIf="cityEdit.valid||!cityEdit.touched" class="col-3">&nbsp;</div>
-                <div *ngIf="stateEdit.hasError('required')&&stateEdit.touched" class="col-3">State required</div>
-                <div *ngIf="stateEdit.valid||!stateEdit.touched" class="col-3">&nbsp;</div>
-                <div *ngIf="zipcodeEdit.hasError('required')&&zipcodeEdit.touched" class="col-3"><span
-                  class="address-update-rightCol">Zip code required</span>
-                </div>
-                <div *ngIf="zipcodeEdit.valid||!zipcodeEdit.touched">&nbsp;</div>
-              </div>
+          <div class="form-validator row">
+            <div *ngIf="cityEdit.hasError('required')&&cityEdit.touched" class="col-3">City required</div>
+            <div *ngIf="cityEdit.valid||!cityEdit.touched" class="col-3">&nbsp;</div>
+            <div *ngIf="stateEdit.hasError('required')&&stateEdit.touched" class="col-3">State required</div>
+            <div *ngIf="stateEdit.valid||!stateEdit.touched" class="col-3">&nbsp;</div>
+            <div *ngIf="zipcodeEdit.hasError('required')&&zipcodeEdit.touched" class="col-3"><span
+              class="address-update-rightCol">Zip code required</span>
             </div>
+            <div *ngIf="zipcodeEdit.valid||!zipcodeEdit.touched">&nbsp;</div>
+          </div>
+        </div>
 
-            <div class="btn-payment-edit-container">
-              <button type="submit" [disabled]="paymentForm.invalid">Save</button>
-              <button class="btn-danger" type="button" (click)="closeEdit()">Cancel</button>
-            </div>
-        </form>
-
-      </div>
+        <div class="btn-payment-edit-container">
+          <button type="submit" [disabled]="paymentForm.invalid">Save</button>
+          <button class="btn-danger" type="button" (click)="closeEdit()">Cancel</button>
+        </div>
+      </form>
 
     </div>
+
   </div>
+</div>
 
 
 

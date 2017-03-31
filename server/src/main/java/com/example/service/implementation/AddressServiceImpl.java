@@ -10,6 +10,7 @@ import com.example.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,16 +65,15 @@ public class AddressServiceImpl implements AddressService {
         return this.addressRepo.save(address) != null;
     }
 
+    @Transactional
     @Override
     public boolean updateAddress(AddressDTO addressDTO, Long userID) {
-        Address address = new Address();
-        User user = new User();
-        user.setId(userID);
-        address.setUser(user);
+        System.out.print(addressDTO);
+        Long id=addressDTO.getId();
+        Address address = this.addressRepo.findOne(id);
         State state = new State();
         state.setId(addressDTO.getStateID());
         address.setCity(addressDTO.getCity());
-        address.setId(addressDTO.getId());
         address.setIsPrimary(addressDTO.getIsPrimary() ? 1 : 0);
         address.setState(state);
         address.setStreet(addressDTO.getStreet());

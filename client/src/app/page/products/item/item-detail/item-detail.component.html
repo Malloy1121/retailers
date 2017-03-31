@@ -31,45 +31,30 @@
       <form [formGroup]="purchaseForm" class="col-5 purchase-container" (ngSubmit)="onAddToChart()">
         <div class="row">
           <div class="col-11 col-offset-1">
-            <h1 style="margin-top: 0;">Product Title Here</h1>
+            <h1 style="margin-top: 0;">{{currentItem.name}}</h1>
           </div>
         </div>
         <div class="row purchase-category-container">
           <div class="col-4 label">
             <span>Categories:</span>
           </div>
-          <div class="col-8 ">
-            <div class="product-option-container">
-              <a>White</a>
-            </div>
-            <div class="product-option-container">
-              <a>Black</a>
-            </div>
-            <div class="product-option-container">
-              <a>Red</a>
-            </div>
-            <div class="product-option-container">
-              <a>Navy</a>
-            </div>
-            <div class="product-option-container">
-              <a>Navy</a>
-            </div>
-            <div class="product-option-container">
-              <a>Navy</a>
-            </div>
-            <div class="product-option-container">
-              <a>Navy</a>
-            </div>
-
+          <div class="col-8">
+            <button class="product-option"
+                    *ngFor="let type of currentItem.itemType"
+                    (click)="typeOnClick(type)"
+                    [ngClass]="{'type-selected': currentType.id==type.id}"
+                    [disabled]="type.inventory<=0">
+              {{type.name}}
+            </button>
           </div>
         </div>
         <div class="row">
           <div class="col-4 label" style="line-height: 1.5em;">
             <span>Price:</span>
           </div>
-          <div class="col-8 price-container">$
-            <span *ngIf="currentCategory<0">{{lowestPrice.toFixed(2)}} - {{highestPrice.toFixed(2)}}</span>
-            <span *ngIf="currentCategory>=0">{{currentCategory.price}}</span>
+          <div class="col-8 price-container">
+            <span *ngIf="currentType.id<0">${{lowestPrice.toFixed(2)}} - ${{highestPrice.toFixed(2)}}</span>
+            <span *ngIf="currentType.id>=0">${{currentType.unitPrice}}</span>
           </div>
         </div>
 
@@ -78,16 +63,22 @@
             <label for="amount">Amount:</label>
           </div>
           <div class="col-3">
-            <input type="number" id="amount" min="1" max="99" (blur)="amountOnBlur()"
+            <input type="number" id="amount" min="0" [max]="currentType.id>=0?currentType.inventory:totalInventory"
+                   (blur)="amountOnBlur()"
                    formControlName="amount">
           </div>
         </div>
         <div class="row">
-          <div class="col-3 label">
-            &nbsp;
+          <div class="col-6 col-offset-4">
+            <span *ngIf="currentType.id>=3" style="color:red;font-weight: bold;">{{currentType.inventory}}</span>
+            <span *ngIf="currentType.id<0" style="color:red;font-weight: bold;">{{totalInventory}}</span>
+            in stock
           </div>
-          <div class="col-9 form-validator">
-            <span *ngIf="amount.invalid">Invalid amount</span>
+        </div>
+        <div class="row">
+          <div class="col-8 col-offset-4 form-validator">
+            <span *ngIf="amount.invalid;else validAmount">Invalid amount</span>
+            <ng-template #validAmount>&nbsp;</ng-template>
           </div>
         </div>
 
@@ -97,12 +88,12 @@
         <div class="btn-purchase-container">
           <div class="row">
             <div class="col-8 col-offset-2">
-              <button type="submit" [disabled]="purchaseForm.invalid||currentCategory<0">Add to Cart</button>
+              <button type="submit" [disabled]="purchaseForm.invalid||currentType.id<0">Add to Cart</button>
             </div>
           </div>
           <div class="row">
             <div class="col-8 col-offset-2">
-              <button>Add to Shopping List</button>
+              <button>Add to Wish List</button>
             </div>
           </div>
         </div>
@@ -114,7 +105,7 @@
       <div class="col-8 col-offset-2 detail-description-container">
         <h2>Description</h2>
         <p>
-          laksjfdlksajflasjflsafjksladfffffffffffflksanflanwefaklfhlashfashfkjahsfkahfkjhaskjlhfdkashfksafhkaslfhakslfhkaslfhksalfhskaljhfkslajhflkasjfhdslkafhsakljfhsklajfdhaskljdfhaksjldfhkasljhfaslkfjas
+          {{currentItem.description}}
         </p>
       </div>
     </div>
@@ -122,11 +113,7 @@
       <div class="col-8 col-offset-2 detail-description-container">
         <h2>Features & Details</h2>
         <ul>
-          <li>lafjlajf</li>
-          <li>asfasfasfasf</li>
-          <li>adfabgwdbg</li>
-          <li>ag4t3fewfs</li>
-          <li>2342fefvsff</li>
+          <li *ngFor="let detail of currentItem.details">{{detail}}</li>
         </ul>
       </div>
     </div>

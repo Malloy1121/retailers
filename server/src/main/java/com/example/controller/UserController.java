@@ -57,7 +57,7 @@ public class UserController {
         ResponseMessage message = new ResponseMessage();
         long userID = (long) session.getAttribute("userID");
         boolean result = this.userService.updateProfile(user, userID);
-        message.setResult((!bindingResult.hasErrors())&&result);
+        message.setResult((!bindingResult.hasErrors()) && result);
         return message;
     }
 
@@ -74,7 +74,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             message.setInfo("Invalid input");
         }
-        message.setResult((!bindingResult.hasErrors())&&result);
+        message.setResult((!bindingResult.hasErrors()) && result);
         return message;
     }
 
@@ -93,7 +93,12 @@ public class UserController {
     public ResponseMessage editAddress(@RequestBody AddressDTO address, HttpSession session) {
         ResponseMessage message = new ResponseMessage();
         long userID = (long) session.getAttribute("userID");
-        boolean result = this.addressService.updateAddress(address, userID);
+        boolean result;
+        if (address.getId() >= 0) {
+            result = this.addressService.updateAddress(address, userID);
+        } else {
+            result = false;
+        }
         message.setResult(result);
         return message;
     }
@@ -103,7 +108,13 @@ public class UserController {
     public ResponseMessage deleteAddress(@RequestBody AddressDTO address) {
 //        long id=user.getId();
         ResponseMessage message = new ResponseMessage();
-        boolean result = this.addressService.deleteAddress(address.getId());
+        boolean result;
+        if (address.getId() >= 0) {
+            result = this.addressService.deleteAddress(address.getId());
+        } else {
+            result = false;
+        }
+
         message.setResult(result);
         return message;
     }

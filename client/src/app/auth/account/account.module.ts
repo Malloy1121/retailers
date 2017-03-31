@@ -9,7 +9,9 @@ import {RouterModule} from "@angular/router";
 import {ACCOUNT_ROUTE} from "./account.route";
 import {AddressComponent} from './address-book/address.component';
 import {ProfileUpdateComponent} from './profile/profile-update/profile-update.component';
-import { OrderDetailComponent } from './order-detail/order-detail.component';
+import {OrderDetailComponent} from './order-detail/order-detail.component';
+import {WishListComponent} from "./wish-list/wish-list.component";
+import {Last4DigitsPipe} from "../../pipe/last-4-digits.pipe";
 
 @NgModule({
   imports: [
@@ -17,7 +19,17 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
     ReactiveFormsModule,
     RouterModule.forChild(ACCOUNT_ROUTE)
   ],
-  declarations: [OrderListComponent, ProfileComponent, AddressBookComponent, PaymentBookComponent, AddressComponent, ProfileUpdateComponent, OrderDetailComponent]
+  declarations: [
+    OrderListComponent,
+    ProfileComponent,
+    AddressBookComponent,
+    PaymentBookComponent,
+    AddressComponent,
+    ProfileUpdateComponent,
+    OrderDetailComponent,
+    WishListComponent,
+    Last4DigitsPipe
+  ]
 })
 export class AccountModule {
 }

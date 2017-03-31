@@ -13,7 +13,8 @@ public class RouteController {
     @RequestMapping({
             "/",
             "/login",
-            "/auth/**"
+            "/auth/**",
+            "/products/**"
     })
     public String home(){
         return "forward:/index.html";

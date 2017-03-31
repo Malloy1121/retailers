@@ -11,13 +11,15 @@ import {RouterModule} from "@angular/router";
 import {APP_ROUTE} from "./app.route";
 import {ProfileService} from "./service/profile.service";
 import {AuthGuard} from "./service/auth.guard";
+import {ShoppingService} from "./service/shopping.service";
+import {ProductDetailGuard} from "./service/product-detail.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,9 @@ import {AuthGuard} from "./service/auth.guard";
   providers: [
     AuthService,
     ProfileService,
-    AuthGuard
+    ShoppingService,
+    AuthGuard,
+    ProductDetailGuard
   ],
   bootstrap: [AppComponent]
 })

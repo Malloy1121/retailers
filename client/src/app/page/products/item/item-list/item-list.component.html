@@ -16,10 +16,10 @@
       <div class="row">
         <div class="product-list-navbar-container row">
           <div class="col-3-clear">
-            <button>Order by price<img src="/src/assets/images/arrow-up.svg" alt="ascending"></button>
+            <button>Order by price<img src="/assets/images/arrow-up.svg" alt="ascending"></button>
           </div>
           <div class="col-3-clear">
-            <button>Order by price<img src="/src/assets/images/arrow-pointing-down.svg" alt="descending"></button>
+            <button>Order by price<img src="/assets/images/arrow-pointing-down.svg" alt="descending"></button>
           </div>
           <div class="col-5-clear price-range-container">
             <div class="col-2-clear"><span>Price: </span></div>
@@ -37,7 +37,7 @@
           <div class="col-1">
                <span class="col-12">
                 <button id="price-submit">
-                  <img src="/src/assets/images/search.svg" alt="search" style="padding-left: 0;">
+                  <img src="/assets/images/search.svg" alt="search" style="padding-left: 0;">
                 </button>
               </span>
           </div>
@@ -45,7 +45,7 @@
 
         <div class="row" style="margin-top: 15px;">
 
-          <div class="col-4 item-container">
+          <div class="col-4 item-container" *ngFor="let item of products">
             <div class="row item-image-container flex-vertical-center">
               <img
                 src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
@@ -55,27 +55,27 @@
 
             <div class="row item-info-container">
               <div class="row two-text-rows">
-                <div class="col-12 product-name-container" (click)="goToDetail(1)">
-                  <h4>Product name here</h4>
+                <div class="col-12 product-name-container" (click)="goToDetail(item.id)">
+                  <h4>{{item.name}}</h4>
                 </div>
               </div>
               <div class="row two-text-rows">
-                <div class="col-6"><span class="price">$5.99</span></div>
+                <div class="col-6"><span class="price">${{item.itemType[0].unitPrice}}</span></div>
                 <div class="col-6 retailer-name">
                   <span>
-                    by retailer name here adfasfaasdasdfasfasfasfasfasfasfasfasfasfasfasfasfasfasf
+                    {{item.retailer.firstname}} {{item.retailer.lastname}}
                   </span>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12 item-brief-desc">
-                  <span>some info here  fasfasfasfaasdfasfasfasfasfasdfasfasfassfasfasfs</span>
+                  <span>{{item.briefDescription}}</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="col-4 item-container">
+         <!-- <div class="col-4 item-container">
             <div class="row item-image-container flex-vertical-center" (click)="goToDetail(1)">
               <img
                 src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
@@ -98,7 +98,7 @@
               </div>
               <div class="row">
                 <div class="col-12 item-brief-desc">
-                  <span>some info here  fasfasfasfaasdfasfasfasfasfasdfasfasfassfasfasfs</span>
+                  <span>some info here  fasfasfasfaaasdfasfasasdfasfasfasfasfsafasfasfsafasfasfafdsfasfasfasfasfasfasfasfasfdafsdfasfasfasfasfasdfasfasfassfasfasfs</span>
                 </div>
               </div>
             </div>
@@ -247,7 +247,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
         </div>
         <div class="row"></div>
       </div>

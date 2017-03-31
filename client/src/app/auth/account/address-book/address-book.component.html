@@ -1,21 +1,23 @@
 <div class="content">
   <div class="address-book-container">
-    <div class="address-book-item address-book-add">
-      <button (click)="onEdit(null)">Add Address</button>
-    </div>
-    <div class="address-book-item" *ngFor="let address of addresses">
-
-      <div>
-      <h3 *ngIf="address.isPrimary">Default Address</h3>
-      <p style="font-weight: bold">{{address.tag}}; id:{{address.id}}</p>
-      <p>{{address.street}} {{address.suite}}</p>
-      <p>{{address.city}}, {{address.state}} {{address.zipcode}}</p>
+    <div class="row">
+      <div class="address-book-item address-book-add col-4">
+        <button (click)="onEdit(null)">Add Address</button>
       </div>
+      <div class="address-book-item col-4" *ngFor="let address of addresses">
 
-      <div class="btn-group-address-book">
-        <button (click)="onEdit(address)" class="btn-profile">Edit</button>
-        &nbsp;
-        <button class="btn-profile btn-danger" (click)="onDelete(address)">Delete</button>
+        <div>
+          <h3 *ngIf="address.isPrimary">Default Address</h3>
+          <p style="font-weight: bold">{{address.tag}}; id:{{address.id}}</p>
+          <p>{{address.street}} {{address.suite}}</p>
+          <p>{{address.city}}, {{address.state}} {{address.zipcode}}</p>
+        </div>
+
+        <div class="btn-group-address-book">
+          <button (click)="onEdit(address)" class="btn-profile">Edit</button>
+          &nbsp;
+          <button class="btn-profile btn-danger" (click)="onDelete(address)">Delete</button>
+        </div>
       </div>
     </div>
   </div>
