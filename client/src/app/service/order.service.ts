@@ -2,30 +2,12 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import "rxjs/Rx";
 import {CartItem} from "../model/cart-item";
-import {Subject, Subscription} from "rxjs";
+import {MyEmitService} from "./emit.service";
 
 @Injectable()
 export class OrderService {
-  public cartItemAmountSubject: Subject<any> = new Subject();
-  public cartItemsAmountSubscription: Subscription = new Subscription();
-  private cartItemAmount = 0;
 
-  constructor(private http: Http) {
-  }
-
-  subscribeToCartAmount() {
-    this.cartItemsAmountSubscription = this.getCartItemAmount().subscribe(
-      data => {
-        if (data.result == true) {
-          this.cartItemAmount = data.object;
-          this.cartItemAmountSubject.next(this.cartItemAmount);
-        }
-        else {
-          this.cartItemAmount = 0;
-          this.cartItemAmountSubject.next(this.cartItemAmount);
-        }
-      }
-    );
+  constructor(private http: Http, private emitService: MyEmitService) {
   }
 
   getCartItems() {
@@ -35,7 +17,22 @@ export class OrderService {
 
   deleteCartItem(item: CartItem) {
     return this.http.delete("/orders/deleteCartItem/" + item.id)
-      .map((response: Response) => response.json());
+      .map((response: Response) => response.json())
+      .do(data => {
+        if (data.result == true) {
+          this.updateCartItemAmount();
+        }
+      });
+  }
+
+  updateCartItemAmount() {
+    this.getCartItemAmount()
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.emitService.cartItemAmountSubject.next(data.object);
+        }
+      });
   }
 
   getCartItemAmount() {
@@ -53,14 +50,15 @@ export class OrderService {
       });
   }
 
-  unsub() {
-    this.cartItemsAmountSubscription.unsubscribe();
-  }
-
   addToCart(cartItem: CartItem) {
     return this.http.post("/orders/addToCart", cartItem)
       .map((response: Response) => {
         return response.json();
+      })
+      .do(data => {
+        if (data.result == true) {
+          this.updateCartItemAmount();
+        }
       });
   }
 
@@ -89,13 +87,23 @@ export class OrderService {
     return this.http.post("/orders/moveOneFromWishListToCart/", item)
       .map((response: Response) => {
         return response.json();
+      })
+      .do(data => {
+        if (data.result == true) {
+          this.updateCartItemAmount();
+        }
       });
   }
 
-  moveAllFromWishListToCart(item:CartItem[]) {
-    return this.http.post("/orders/moveAllFromWishListToCart",item)
+  moveAllFromWishListToCart(item: CartItem[]) {
+    return this.http.post("/orders/moveAllFromWishListToCart", item)
       .map((response: Response) => {
         return response.json();
+      })
+      .do(data => {
+        if (data.result == true) {
+          this.updateCartItemAmount();
+        }
       });
   }
 }

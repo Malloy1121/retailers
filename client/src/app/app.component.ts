@@ -15,6 +15,5 @@ export class AppComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.authService.unsub();
-    this.orderService.unsub();
   }
 }

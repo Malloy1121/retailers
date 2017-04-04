@@ -2,31 +2,38 @@ import {Injectable} from '@angular/core';
 import {Http, Response, URLSearchParams, Headers} from "@angular/http";
 import "rxjs/Rx";
 import {Router} from "@angular/router";
-import {Observable, Subject, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {User} from "../model/user";
+import {OrderService} from "./order.service";
+import {MyEmitService} from "./emit.service";
 
 @Injectable()
 export class AuthService {
   private currentUser;
-  private subject: Subject<any> = new Subject();
   private url = "";
   private sub: Subscription;
-  // private url="http://localhost:8080";
 
-  constructor(private http: Http, private router: Router) {
+  constructor(private http: Http,
+              private router: Router,
+              private orderService: OrderService,
+              private emitService: MyEmitService) {
+
     this.sub = this.getCurrentUser()
       .subscribe(data => {
         console.log(data);
         if (data.result == true) {
           this.currentUser = data.object;
-          this.subject.next(data.object);
+          this.emitService.userStatusSubject.next(data.object);
+          this.orderService.updateCartItemAmount();
         }
         else {
           this.currentUser = null;
-          this.subject.next(null);
+          this.emitService.userStatusSubject.next(null);
+          this.emitService.cartItemAmountSubject.next(0);
         }
       });
   }
+
 
   login(value, url) {
     console.log(value);
@@ -46,7 +53,8 @@ export class AuthService {
       .then(data => {
         console.log(data);
         this.currentUser = data;
-        this.subject.next(this.currentUser);
+        this.emitService.userStatusSubject.next(this.currentUser);
+        this.orderService.updateCartItemAmount();
         if (url == null) {
           this.router.navigateByUrl("/");
         }
@@ -68,7 +76,8 @@ export class AuthService {
       .do((data) => {
         if (data == 200) {
           this.currentUser = null;
-          this.subject.next(null);
+          this.emitService.userStatusSubject.next(null);
+          this.emitService.cartItemAmountSubject.next(0);
         }
       });
   }
@@ -96,9 +105,6 @@ export class AuthService {
       });
   }
 
-  getUser() {
-    return this.subject;
-  }
 
   unsub() {
     this.sub.unsubscribe();

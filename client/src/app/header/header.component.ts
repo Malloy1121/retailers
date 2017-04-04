@@ -8,6 +8,7 @@ import {Observable, Subscription} from "rxjs";
 import {ShoppingService} from "../service/shopping.service";
 import {Category} from "../model/category";
 import {OrderService} from "../service/order.service";
+import {MyEmitService} from "../service/emit.service";
 
 @Component({
   selector: 'app-header',
@@ -31,11 +32,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @ViewChild("categoryMenu") select: ElementRef;
 
-  constructor(private authService: AuthService,
+  constructor(private emitService: MyEmitService,
+              private authService: AuthService,
               private router: Router,
-              private shpService: ShoppingService,
-              private orderService: OrderService,
-              private ref: ChangeDetectorRef) {
+              private shpService: ShoppingService) {
   }
 
   ngOnInit() {
@@ -50,48 +50,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.categories = categories;
       });
 
-    // this.currentUser = this.authService.getCurrentUser()
-    //   .toPromise()
-    //   .then(data => {
-    //     console.log(data);
-    //     if (data.result == true) {
-    //       this.currentUser = data.object;
-    //       this.isAuthenticated = true;
-    //     }
-    //     else {
-    //       this.isAuthenticated = false;
-    //     }
-    //   });
-
-    this.userSubscription = this.authService.getUser().subscribe(data => {
+    this.userSubscription = this.emitService.userStatusSubject.subscribe(data => {
       console.log(data);
       this.currentUser = data;
       this.isAuthenticated = this.currentUser != null;
-      if (this.isAuthenticated) {
-        this.subscribeToCartAmount();
-        this.orderService.subscribeToCartAmount();
-      }
-      else {
-        this.cartItemAmountSub.unsubscribe();
-        this.orderService.cartItemsAmountSubscription.unsubscribe();
-      }
     });
+
+    this.cartItemAmountSub = this.emitService.cartItemAmountSubject
+      .subscribe(data => {
+        this.cartItemAmount = data;
+      });
+
   }
 
-  subscribeToCartAmount() {
-    this.cartItemAmountSub = this.orderService.getCartItemAmount()
-      .subscribe(data => {
-        // console.log(data);
-        if (data.result == true) {
-          this.cartItemAmount = data.object;
-        }
-        else {
-          this.cartItemAmount = 0;
-        }
-        this.ref.markForCheck();
-        this.ref.detectChanges();
-      });
-  }
 
   searchBarOnFocus() {
     this.searchBarGetFocus = true;

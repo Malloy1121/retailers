@@ -14,6 +14,7 @@ import {AuthGuard} from "./service/auth.guard";
 import {ShoppingService} from "./service/shopping.service";
 import {ProductDetailGuard} from "./service/product-detail.service";
 import {OrderService} from "./service/order.service";
+import {MyEmitService} from "./service/emit.service";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {OrderService} from "./service/order.service";
     ShoppingService,
     AuthGuard,
     ProductDetailGuard,
-    OrderService
+    OrderService,
+    MyEmitService
   ],
   bootstrap: [AppComponent]
 })
