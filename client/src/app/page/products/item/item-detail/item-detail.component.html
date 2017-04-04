@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <form [formGroup]="purchaseForm" class="col-5 purchase-container" (ngSubmit)="onAddToChart()">
+      <form [formGroup]="purchaseForm" class="col-5 purchase-container" (ngSubmit)="onAddToCart()">
         <div class="row">
           <div class="col-11 col-offset-1">
             <h1 style="margin-top: 0;">{{currentItem.name}}</h1>
@@ -40,6 +40,7 @@
           </div>
           <div class="col-8">
             <button class="product-option"
+                    type="button"
                     *ngFor="let type of currentItem.itemType"
                     (click)="typeOnClick(type)"
                     [ngClass]="{'type-selected': currentType.id==type.id}"
@@ -63,9 +64,10 @@
             <label for="amount">Amount:</label>
           </div>
           <div class="col-3">
-            <input type="number" id="amount" min="0" [max]="currentType.id>=0?currentType.inventory:totalInventory"
+            <input type="number" id="amount" min="0" [max]="currentType.id>=0?currentType.inventory:0"
                    (blur)="amountOnBlur()"
-                   formControlName="amount">
+                   formControlName="amount"
+                   [disabled]="currentType.id<0">
           </div>
         </div>
         <div class="row">
@@ -93,7 +95,7 @@
           </div>
           <div class="row">
             <div class="col-8 col-offset-2">
-              <button>Add to Wish List</button>
+              <button [disabled]="currentType.id<0" type="button" (click)="onAddToWishList()">Add to Wish List</button>
             </div>
           </div>
         </div>

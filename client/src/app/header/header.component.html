@@ -43,7 +43,7 @@
         <ul class="dropdown-list">
           <li class="dropdown-list-item" (click)="navigate('/auth/account')">Account Management</li>
           <li class="dropdown-list-item" (click)="navigate('/auth/account/my_orders')">My Orders</li>
-          <li class="dropdown-list-item" (click)="navigate('/products/wish-list')">My List</li>
+          <li class="dropdown-list-item" (click)="navigate('/auth/account/wish-list')">My List</li>
           <li class="dropdown-list-item" (click)="navigate('/auth/account/my_addresses')">Address Book</li>
         </ul>
       </div>
@@ -61,13 +61,13 @@
         <button class="btn-header-auth"
                 id="cart"
                 (click)="navigate('/products/cart')">
-          <span id="header-cart-amount">0</span>
+          <span id="header-cart-amount">{{cartItemAmount}}</span>
           <img src="/assets/images/shopping-cart.svg" alt="cart">
           <span>Cart</span>
         </button>
-        <ul class="dropdown-list">
-          <li style="cursor: default">Cart is empty</li>
-        </ul>
+        <!--<ul class="dropdown-list">-->
+        <!--<li style="cursor: default">Cart is empty</li>-->
+        <!--</ul>-->
       </div>
 
     </div>

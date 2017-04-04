@@ -1,62 +1,102 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {CartItem} from "../../../model/cart-item";
+import {OrderService} from "../../../service/order.service";
 
 @Component({
   selector: 'app-wish-list',
   templateUrl: './wish-list.component.html',
-  styleUrls: ['./wish-list.component.scss',"../../../page/products/cart/cart.component.scss"]
+  styleUrls: ['./wish-list.component.scss', "../../../page/products/cart/cart.component.scss"]
 })
 export class WishListComponent implements OnInit {
-  private wishListForm: FormGroup;
+  private wishListItems: CartItem[] = [];
+  private reg: RegExp = new RegExp(/^\d+$/);
 
-  constructor(private router: Router, private fb: FormBuilder) {
+  constructor(private router: Router, private orderService: OrderService) {
   }
 
   ngOnInit() {
-    this.buildWishListForm();
+    this.fetchItems();
   }
 
-  addToCart(id) {
-
+  fetchItems() {
+    this.orderService.getWishListItems()
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          console.log(data.object);
+          this.wishListItems = data.object;
+        }
+        else {
+          this.router.navigateByUrl("/");
+        }
+      });
   }
 
-  removeOne(id){
-
+  moveToCart(item: CartItem) {
+    this.orderService.moveOneFromWishListToCart(item)
+      .toPromise()
+      .then(data => {
+        if (data.result == 1) {
+          this.fetchItems();
+        }
+      });
   }
 
-  addAllToCart(){
-
+  moveAllToCart() {
+    this.orderService.moveAllFromWishListToCart(this.wishListItems)
+      .toPromise()
+      .then(data => {
+        if (data.result == 1) {
+          this.fetchItems();
+        }
+      });
   }
 
-  removeAll(){
+  removeOne(item: CartItem) {
+    this.orderService.removeWishListItem(item)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.fetchItems();
+        }
+      });
+  }
 
+  removeAll() {
+    this.orderService.clearWishList()
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.fetchItems();
+        }
+      });
   }
 
   goToDetail(id) {
     this.router.navigate(["/products/product/" + id]);
   }
 
-  buildWishListForm() {
-    this.wishListForm = this.fb.group({
-      items: this.fb.array([
-        new FormControl(1, Validators.compose([
-          Validators.required,
-          Validators.pattern(/^\d+$/),
-          this.amountValidator
-        ])),
-        new FormControl(1, Validators.compose([
-          Validators.required,
-          Validators.pattern(/^\d+$/),
-          this.amountValidator
-        ]))
-      ])
-    });
-
+  isAmountValid(item: CartItem) {
+    if (item.amount <= 0 || item.amount > item.itemTypeInventory || !this.reg.test(item.amount)) {
+      return false;
+    }
+    return true;
   }
 
-  amountValidator(c: FormControl) {
-    return c.value > 0 && c.value < 100 ? null : {amount: true};
+  isAllValid() {
+    if (this.wishListItems.length == 0) {
+      return false;
+    }
+
+    for (let item of this.wishListItems) {
+      const result = this.isAmountValid(item);
+      if (!result) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
 }

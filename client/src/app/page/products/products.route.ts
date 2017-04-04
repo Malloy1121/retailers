@@ -4,11 +4,12 @@ import {ItemListComponent} from "./item/item-list/item-list.component";
 import {ItemDetailComponent} from "./item/item-detail/item-detail.component";
 import {CheckoutComponent} from "./checkout/checkout.component";
 import {ProductDetailGuard} from "../../service/product-detail.service";
+import {AuthGuard} from "../../service/auth.guard";
 /**
  * Created by Malloy on 2017/3/12.
  */
 export const PRODUCTS_ROUTE: Routes = [
-  {path: "cart", component: CartComponent},
+  {path: "cart", component: CartComponent,canActivate:[AuthGuard]},
   {path: "product-list", component: ItemListComponent},
   {path: "product", redirectTo: "product-list"},
   {path: "product/:id", component: ItemDetailComponent, canActivate: [ProductDetailGuard]},

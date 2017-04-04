@@ -1,11 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {ShoppingService} from "../../../../service/shopping.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import "rxjs/Rx";
 import {ItemType} from "../../../../model/item-type";
 import {Product} from "../../../../model/product";
+import {CartItem} from "../../../../model/cart-item";
+import {OrderService} from "../../../../service/order.service";
+
+declare var alert: any;
 
 @Component({
   selector: 'app-item-detail',
@@ -26,7 +30,9 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               private shp: ShoppingService,
-              private actRoute: ActivatedRoute) {
+              private actRoute: ActivatedRoute,
+              private orderService: OrderService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -77,6 +83,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   typeOnClick(itemType: ItemType) {
     this.currentType = itemType;
+    const newAmount = this.amount.value > this.currentType.inventory ? 0 : this.amount.value;
+    this.amount.setValue(newAmount);
   }
 
   ngOnDestroy() {
@@ -111,8 +119,45 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  onAddToChart() {
+  onAddToCart() {
+    if (this.purchaseForm.invalid) {
+      return;
+    }
 
+    const cartItem = new CartItem();
+    cartItem.amount = this.amount.value;
+    cartItem.itemTypeID = this.currentType.id;
+    cartItem.productID = this.currentItem.id;
+
+    this.orderService.addToCart(cartItem)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.router.navigateByUrl("/products/cart");
+        }
+        else {
+          alert("Add to cart failed! Please try again.");
+        }
+      });
+
+  }
+
+  onAddToWishList() {
+    const cartItem = new CartItem();
+    cartItem.itemTypeID = this.currentType.id;
+    cartItem.productID = this.currentItem.id;
+    cartItem.amount = this.amount.value;
+
+    this.orderService.addToWishList(cartItem)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.router.navigateByUrl("/auth/account/wish-list");
+        }
+        else {
+          alert("Add to wish list failed! Please try again.");
+        }
+      });
   }
 
 }

@@ -1,12 +1,13 @@
 import {
-  Component, OnInit, ElementRef, ViewChild, OnDestroy
+  Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef
 } from '@angular/core';
 import {AuthService} from "../service/auth.service";
 import {Router} from "@angular/router";
 import "rxjs";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {ShoppingService} from "../service/shopping.service";
 import {Category} from "../model/category";
+import {OrderService} from "../service/order.service";
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   private currentCategory: string = "All";
-  private currentCategoryID: any=0;
+  private currentCategoryID: any = 0;
   private searchBarGetFocus: boolean = false;
   private isAuthenticated: boolean;
   private currentUser: any = null;
@@ -25,45 +26,72 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private isAccountShown: boolean = false;
   private isCartShown: boolean = false;
   private userSubscription: Subscription;
+  private cartItemAmountSub: Subscription = new Subscription();
+  private cartItemAmount = 0;
 
   @ViewChild("categoryMenu") select: ElementRef;
 
   constructor(private authService: AuthService,
               private router: Router,
-              private shpService: ShoppingService) {
+              private shpService: ShoppingService,
+              private orderService: OrderService,
+              private ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this.currentCategory = this.select.nativeElement.options[this.select.nativeElement.selectedIndex].text;
 
+
     this.shpService.getAllCategories()
       .toPromise()
       .then(data => {
         const categories = data.object;
-        console.log(categories);
+        // console.log(categories);
         this.categories = categories;
       });
 
-    this.currentUser = this.authService.getCurrentUser()
-      .toPromise()
-      .then(data => {
-        console.log(data);
-        if (data.result == true) {
-          this.currentUser = data.object;
-          this.isAuthenticated = true;
-        }
-        else {
-          this.isAuthenticated = false;
-        }
-      });
+    // this.currentUser = this.authService.getCurrentUser()
+    //   .toPromise()
+    //   .then(data => {
+    //     console.log(data);
+    //     if (data.result == true) {
+    //       this.currentUser = data.object;
+    //       this.isAuthenticated = true;
+    //     }
+    //     else {
+    //       this.isAuthenticated = false;
+    //     }
+    //   });
 
     this.userSubscription = this.authService.getUser().subscribe(data => {
       console.log(data);
       this.currentUser = data;
       this.isAuthenticated = this.currentUser != null;
+      if (this.isAuthenticated) {
+        this.subscribeToCartAmount();
+        this.orderService.subscribeToCartAmount();
+      }
+      else {
+        this.cartItemAmountSub.unsubscribe();
+        this.orderService.cartItemsAmountSubscription.unsubscribe();
+      }
     });
   }
 
+  subscribeToCartAmount() {
+    this.cartItemAmountSub = this.orderService.getCartItemAmount()
+      .subscribe(data => {
+        // console.log(data);
+        if (data.result == true) {
+          this.cartItemAmount = data.object;
+        }
+        else {
+          this.cartItemAmount = 0;
+        }
+        this.ref.markForCheck();
+        this.ref.detectChanges();
+      });
+  }
 
   searchBarOnFocus() {
     this.searchBarGetFocus = true;
@@ -120,5 +148,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
+    this.cartItemAmountSub.unsubscribe();
   }
 }

@@ -4,7 +4,7 @@ import {OrderListComponent} from './order-list/order-list.component';
 import {ProfileComponent} from './profile/profile.component';
 import {AddressBookComponent} from './address-book/address-book.component';
 import {PaymentBookComponent} from './payment-book/payment-book.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {ACCOUNT_ROUTE} from "./account.route";
 import {AddressComponent} from './address-book/address.component';
@@ -17,6 +17,7 @@ import {Last4DigitsPipe} from "../../pipe/last-4-digits.pipe";
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     RouterModule.forChild(ACCOUNT_ROUTE)
   ],
   declarations: [

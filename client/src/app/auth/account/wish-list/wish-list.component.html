@@ -1,107 +1,100 @@
 <div class="content">
-  <form class="cart-container" (ngSubmit)="addAllToCart()" [formGroup]="wishListForm">
+  <div class="cart-container">
     <div class="row cart-title-container">
       <div class="col-6-clear">
         <h1 style="margin:auto">Wish List</h1>
       </div>
       <div class="col-3">
-        <button class="btn-profile" type="submit" [disabled]="wishListForm.invalid">Add all to cart</button>
+        <button class="btn-profile"
+                type="button" [disabled]="!isAllValid()"
+                (click)="moveAllToCart()">Add all to cart
+        </button>
       </div>
       <div class="col-3">
-        <button class="btn-danger" type="button" (click)="removeAll()">Remove all</button>
+        <button class="btn-danger"
+                type="button"
+                (click)="removeAll()"
+                [disabled]="wishListItems.length==0">Remove all
+        </button>
       </div>
 
     </div>
     <hr>
-    <div class="cart-list" formArrayName="items">
-      <div class="cart-list-item-header row">
-        <div class="col-4 col-offset-2">
-          <h3 style="margin: 0">Product Name</h3>
+
+      <div class="cart-list">
+        <div class="cart-list-item-header row">
+          <div class="col-4 col-offset-2">
+            <h3 style="margin: 0">Product Name</h3>
+          </div>
+          <div class="col-2">
+            <h3 style="margin: 0">Unit Price</h3>
+          </div>
+          <div class="col-2">
+            <h3 style="margin: 0">Quantity</h3>
+          </div>
         </div>
-        <div class="col-2">
-          <h3 style="margin: 0">Unit Price</h3>
-        </div>
-        <div class="col-2">
-          <h3 style="margin: 0">Quantity</h3>
+
+
+        <div class="cart-list-item row" *ngFor="let item of wishListItems">
+          <div class="col-2" style="position: absolute; height: calc(100% - 10px);">
+            <div class="cart-image-container flex-vertical-center">
+              <img
+                class="as-link"
+                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                alt="item"
+                (click)="goToDetail(item.productID)">
+            </div>
+          </div>
+          <div class="col-4 col-offset-2">
+            <div class="row">
+              <div class="col-12">
+                <span (click)="goToDetail(item.productID)" class="as-link blue">{{item.productName}}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <span style="margin-top: 10px;color: grey;">{{item.itemTypeName}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-2 price">
+            <span>$ {{item.unitPrice}}</span>
+          </div>
+          <div class="col-2">
+            <div class="row">
+              <input type="number" min="1" [max]="item.itemTypeInventory" [(ngModel)]="item.amount">
+            </div>
+            <div class="row">
+              <div class="col-12" style="margin: 10px 0;">
+                <span style="color: red;font-weight: bold">{{item.itemTypeInventory}}</span> in stock
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12" *ngIf="isAmountValid(item)">&nbsp;</div>
+              <div class="col-12 form-validator" *ngIf="!isAmountValid(item)">Invalid amount</div>
+            </div>
+          </div>
+          <div class="col-2 wish-list-item-btn-container">
+            <div class="row">
+              <div class="col-12">
+                <button class="btn-profile" type="button" (click)="moveToCart(item)" [disabled]="!isAmountValid(item)">
+                  Add
+                  to cart
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <button class="btn-danger" type="button" (click)="removeOne(item)">Remove</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="cart-list-item row">
-        <div class="col-2" style="position: absolute; height: calc(100% - 10px);">
-          <div class="cart-image-container flex-vertical-center">
-            <img
-              class="as-link"
-              src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
-              alt="item"
-              (click)="goToDetail(1)">
-          </div>
-        </div>
-        <div class="col-4 col-offset-2">
-          <span (click)="goToDetail(1)" class="as-link blue">lasdkjflasjflkasjflasjflsajflksajfljaslfjlsakfjlkasjflkasjflkasjflksajflkasjdflkjsalfkjsalkfjasdfasfsafsafdsafsafsafsafsadgfafbfdbdstrtbhgfhsdafgadfasfafasfasdflsakjflkdsflksajdfklsjflksaflksajflskafjlkj</span>
-        </div>
-        <div class="col-2 price">
-          <span>$ 19.99</span>
-        </div>
-        <div class="col-2">
-          <div class="row">
-            <input type="number" min="1" max="99" formControlName="0">
-          </div>
-          <div class="row">
-            <div class="col-12" *ngIf="wishListForm.get('items').get('0').valid">&nbsp;</div>
-            <div class="col-12 form-validator" *ngIf="wishListForm.get('items').get('0').invalid">Invalid amount</div>
-          </div>
-        </div>
-        <div class="col-2 wish-list-item-btn-container">
-          <div class="row">
-            <div class="col-12">
-              <button class="btn-profile" type="button" (click)="addToCart(0)" [disabled]="wishListForm.get('items').get('0').invalid">Add to cart</button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <button class="btn-danger" type="button" (click)="removeOne(0)">Remove</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="cart-list-item row">
-        <div class="col-2" style="position: absolute; height: calc(100% - 10px);">
-          <div class="cart-image-container flex-vertical-center">
-            <img
-              class="as-link"
-              src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
-              alt="item"
-              (click)="goToDetail(1)">
-          </div>
-        </div>
-        <div class="col-4 col-offset-2">
-          <span (click)="goToDetail(1)" class="as-link">lasdkjflasjflkasjflasjflsajflksajfljaslfjlsakfjlkasjflkasjflkasjflksajflkasjdflkjsalfkjsalkfjasdfasfsafsafdsafsafsafsafsadgfafbfdbdstrtbhgfhsdafgadfasfafasfasdflsakjflkdsflksajdfklsjflksaflksajflskafjlkj</span>
-        </div>
-        <div class="col-2 price">
-          <span>$ 19.99</span>
-        </div>
-        <div class="col-2">
-          <div class="row">
-            <input type="number" min="1" max="99" formControlName="1">
-          </div>
-          <div class="row">
-            <div class="col-12" *ngIf="wishListForm.get('items').get('1').valid">&nbsp;</div>
-            <div class="col-12 form-validator" *ngIf="wishListForm.get('items').get('1').invalid">Invalid amount</div>
-          </div>
-        </div>
-        <div class="col-2 wish-list-item-btn-container">
-          <div class="row">
-            <div class="col-12">
-              <button class="btn-profile" type="button" (click)="addToCart(0)" [disabled]="wishListForm.get('items').get('1').invalid">Add to cart</button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <button class="btn-danger" type="button" (click)="removeOne(0)">Remove</button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div *ngIf="wishListItems.length==0">
+      <h2>Your wish list is empty!</h2>
     </div>
-  </form>
+  </div>
 </div>
+

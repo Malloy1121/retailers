@@ -13,6 +13,7 @@ import {ProfileService} from "./service/profile.service";
 import {AuthGuard} from "./service/auth.guard";
 import {ShoppingService} from "./service/shopping.service";
 import {ProductDetailGuard} from "./service/product-detail.service";
+import {OrderService} from "./service/order.service";
 
 @NgModule({
   declarations: [
@@ -25,14 +26,15 @@ import {ProductDetailGuard} from "./service/product-detail.service";
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(APP_ROUTE)
+    RouterModule.forRoot(APP_ROUTE, {useHash: true})
   ],
   providers: [
     AuthService,
     ProfileService,
     ShoppingService,
     AuthGuard,
-    ProductDetailGuard
+    ProductDetailGuard,
+    OrderService
   ],
   bootstrap: [AppComponent]
 })

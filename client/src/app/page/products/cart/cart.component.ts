@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {CartItem} from "../../../model/cart-item";
+import {OrderService} from "../../../service/order.service";
 
 declare var screen: any;
 declare var navigator: any;
@@ -12,9 +13,12 @@ declare var i: any;
   styleUrls: ['cart.component.scss']
 })
 export class CartComponent implements OnInit {
-  private cartForm: FormGroup;
+  private items: CartItem[] = [];
+  private isValid: boolean = true;
+  private reg: RegExp = new RegExp(/^\d+$/);
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private router: Router,
+              private orderService: OrderService) {
   }
 
   ngOnInit() {
@@ -27,14 +31,24 @@ export class CartComponent implements OnInit {
       || navigator.userAgent.match(/BlackBerry/i)
       || navigator.userAgent.match(/Windows Phone/i)
     ) {
-      console.log("mobile");
+      // console.log("mobile");
     }
     else {
-      console.log("desktop");
+      // console.log("desktop");
     }
+    this.fetchItems();
 
-    this.buildCartForm();
+  }
 
+  fetchItems() {
+    this.orderService.getCartItems()
+      .toPromise()
+      .then(data => {
+        console.log(data);
+        if (data.result == true) {
+          this.items = data.object;
+        }
+      });
   }
 
   proceedToCheckout() {
@@ -42,23 +56,47 @@ export class CartComponent implements OnInit {
   }
 
   goToDetail(id) {
-    this.router.navigate(["/products/product/"+id]);
+    this.router.navigate(["/products/product/" + id]);
   }
 
-  buildCartForm() {
-    this.cartForm = this.fb.group({
-      items: this.fb.array([
-        new FormControl(1, Validators.compose([
-          Validators.required,
-          Validators.pattern(/^\d+$/),
-          this.amountValidator
-        ]))
-      ])
-    });
-
+  isAmountValid(item: CartItem) {
+    if (item.amount <= 0 || item.amount > item.itemTypeInventory || !this.reg.test(item.amount)) {
+      return false;
+    }
+    return true;
   }
 
-  amountValidator(c: FormControl) {
-    return c.value > 0 && c.value < 100 ? null : {amount: true};
+  isAllValid() {
+    if (this.items.length == 0) {
+      return false;
+    }
+    for (let item of this.items) {
+      const result = this.isAmountValid(item);
+      if (!result) {
+        return false;
+      }
+    }
+
+    return true;
   }
+
+  cartSubtotal() {
+    let amount = 0;
+    for (let item of this.items) {
+      amount += item.unitPrice * item.amount;
+    }
+
+    return amount;
+  }
+
+  deleteItem(item: CartItem) {
+    this.orderService.deleteCartItem(item)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.fetchItems();
+        }
+      });
+  }
+
 }

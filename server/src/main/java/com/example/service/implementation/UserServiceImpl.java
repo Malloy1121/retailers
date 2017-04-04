@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
 
+
     @Override
     public boolean signup(User user) {
         String password = this.passwordEncoder.encode(user.getPassword());

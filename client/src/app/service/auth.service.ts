@@ -19,9 +19,11 @@ export class AuthService {
         console.log(data);
         if (data.result == true) {
           this.currentUser = data.object;
+          this.subject.next(data.object);
         }
         else {
           this.currentUser = null;
+          this.subject.next(null);
         }
       });
   }
@@ -98,7 +100,7 @@ export class AuthService {
     return this.subject;
   }
 
-  unsub(){
+  unsub() {
     this.sub.unsubscribe();
   }
 }
