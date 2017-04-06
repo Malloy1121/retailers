@@ -10,8 +10,9 @@ import {AuthGuard} from "../../service/auth.guard";
  */
 export const PRODUCTS_ROUTE: Routes = [
   {path: "cart", component: CartComponent,canActivate:[AuthGuard]},
+  // {path: "product-list", redirectTo:"product-list/-1",pathMatch:"full"},
   {path: "product-list", component: ItemListComponent},
-  {path: "product", redirectTo: "product-list"},
+  {path: "product", redirectTo: "product-list",pathMatch:"full"},
   {path: "product/:id", component: ItemDetailComponent, canActivate: [ProductDetailGuard]},
   {path: "checkout", component: CheckoutComponent},
   {path: "", redirectTo: "/", pathMatch: "full"},

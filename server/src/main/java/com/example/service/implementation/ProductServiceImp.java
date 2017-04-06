@@ -52,41 +52,15 @@ public class ProductServiceImp implements ProductService {
     public List<ItemDTO> getItemsByCategory(Integer categoryID, int page, int ascending) {
         int size = 15;
         PageRequest request = new PageRequest(page, size);
-        Page<Item> items = this.itemRepo.findAllByCategoryId(categoryID, request);
-        System.out.println("Total pages:" + items.getTotalPages() + ", Total elements:" + items.getTotalElements());
-        List<ItemDTO> mappedItems = new ArrayList<>();
-        for (Item item : items) {
-            ItemDTO mappedItem = new ItemDTO();
-
-            CategoryDTO categoryDTO = new CategoryDTO();
-            Category category = item.getCategory();
-            categoryDTO.setId(category.getId());
-            categoryDTO.setName(category.getName());
-            mappedItem.setCategory(categoryDTO);
-
-            mappedItem.setName(item.getName());
-            mappedItem.setDescription(item.getDescription());
-            mappedItem.setId(item.getId());
-            mappedItem.setBriefDescription(item.getBriefDescription());
-
-            User user = item.getRetailer();
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(user.getId());
-            userDTO.setFirstname(user.getFirstname());
-            userDTO.setLastname(user.getLastname());
-            mappedItem.setRetailer(userDTO);
-
-            ItemType itemType = this.itemTypeRepo.findTopByItemIdOrderByUnitPriceAsc(item.getId());
-            ItemTypeDTO itemTypeDTO = new ItemTypeDTO();
-            itemTypeDTO.setUnitPrice(itemType.getUnitPrice());
-            List<ItemTypeDTO> itemTypes = new ArrayList<>();
-            itemTypes.add(itemTypeDTO);
-            mappedItem.setItemType(itemTypes);
-
-            mappedItems.add(mappedItem);
-
+        Page<Item> items;
+        if (categoryID >= 0) {
+            items = this.itemRepo.findAllByCategoryId(categoryID, request);
+        } else {
+            items = this.itemRepo.findAll(request);
         }
-        return mappedItems;
+        System.out.println("Total pages:" + items.getTotalPages() + ", Total elements:" + items.getTotalElements());
+
+        return this.mappingItems(items);
     }
 
     @Override
@@ -138,5 +112,84 @@ public class ProductServiceImp implements ProductService {
     @Override
     public boolean ifExist(Long id) {
         return this.itemRepo.exists(id);
+    }
+
+    @Override
+    public List<KeywordCollection> findItemNamesByKeyword(String keyword) {
+        PageRequest request = new PageRequest(0, 10);
+//        List<String> list1 = new ArrayList<>();
+//        list1.add("%" + keyword + "%");
+        Page<Item> items = this.itemRepo.findByNameStartingWithIgnoreCase(keyword, request);
+//        Page<Item> items = this.itemRepo.findByNameStartingWithIgnoreCase(list1, request);
+        List<KeywordCollection> result = new ArrayList<>();
+        for (Item item : items) {
+            KeywordCollection keywordCollection = new KeywordCollection();
+            keywordCollection.setKeyword(item.getName());
+            System.out.println(item.getName());
+            result.add(keywordCollection);
+        }
+        return result;
+    }
+
+    @Override
+    public List<ItemDTO> getItemsByCategoryAndKeywords(Integer categoryID,
+                                                       List<String> keywords,
+                                                       int page,
+                                                       int ascending) {
+        PageRequest request = new PageRequest(page, 15);
+
+        List<String> keys = new ArrayList<>();
+//        List<String> keys = keywords;
+        for (String keyword : keywords) {
+            keyword = "%" + keyword + "%";
+            keys.add(keyword);
+        }
+        for (String keyword : keys) {
+            System.out.println(keyword);
+        }
+        Page<Item> items;
+        if (categoryID >= 0) {
+            items = this.itemRepo.findByNameLikeIgnoreCaseAndCategoryId(keys.get(0), categoryID, request);
+        } else {
+            items = this.itemRepo.findByNameLikeIgnoreCase(keys.get(0), request);
+        }
+
+        return this.mappingItems(items);
+    }
+
+    private List<ItemDTO> mappingItems(Page<Item> items) {
+        List<ItemDTO> mappedItems = new ArrayList<>();
+        for (Item item : items) {
+            ItemDTO mappedItem = new ItemDTO();
+
+            CategoryDTO categoryDTO = new CategoryDTO();
+            Category category = item.getCategory();
+            categoryDTO.setId(category.getId());
+            categoryDTO.setName(category.getName());
+            mappedItem.setCategory(categoryDTO);
+
+            mappedItem.setName(item.getName());
+            mappedItem.setDescription(item.getDescription());
+            mappedItem.setId(item.getId());
+            mappedItem.setBriefDescription(item.getBriefDescription());
+
+            User user = item.getRetailer();
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setFirstname(user.getFirstname());
+            userDTO.setLastname(user.getLastname());
+            mappedItem.setRetailer(userDTO);
+
+            ItemType itemType = this.itemTypeRepo.findTopByItemIdOrderByUnitPriceAsc(item.getId());
+            ItemTypeDTO itemTypeDTO = new ItemTypeDTO();
+            itemTypeDTO.setUnitPrice(itemType.getUnitPrice());
+            List<ItemTypeDTO> itemTypes = new ArrayList<>();
+            itemTypes.add(itemTypeDTO);
+            mappedItem.setItemType(itemTypes);
+
+            mappedItems.add(mappedItem);
+
+        }
+        return mappedItems;
     }
 }

@@ -12,16 +12,31 @@
         </button>
         <select class="category-dropdown-list" #categoryMenu (focus)="searchBarOnFocus()" (blur)="searchBarOnBlur()"
                 (change)="categoryOnClick(categoryMenu.options[categoryMenu.selectedIndex])">
-          <option (click)="categoryOnClick('All')">All</option>
+          <option (click)="categoryOnClick('All')" value="-1">All</option>
           <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
         </select>
       </div>
-      <div class="searchBar-box">
-        <input type="text" (focus)="searchBarOnFocus()" (blur)="searchBarOnBlur()">
+      <div class="searchBar-box" #searchBox>
+        <input type="text"
+               class="searchBar-input"
+               (focus)="searchBarOnFocus()"
+               (blur)="searchBarOnBlur()"
+               [(ngModel)]="searchContent"
+               (input)="onSearchInput()"
+               placeholder=" Enter something you looking for..."
+               (click)="inputOnClick($event)">
+        <ul class="keyword-list" [ngClass]="{active: keywordListShown}"
+            *ngIf="searchContent.trim().length>0&&keywordListItem.length>0">
+          <li class="keyword-item"
+              (click)="listItemOnClick($event,item.keyword)"
+              *ngFor="let item of keywordListItem">
+            {{item.keyword}}
+          </li>
+        </ul>
       </div>
 
       <div class="searchIcon-box">
-        <button id="search" (click)="navigate('/products/product-list')">
+        <button id="search" (click)="onSearch()">
           <img src="/assets/images/search.svg" alt="search">
         </button>
       </div>

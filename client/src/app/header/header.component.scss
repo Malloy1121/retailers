@@ -93,7 +93,43 @@ nav {
         padding: 0;
         text-indent: 8px;
         font-size: 15px;
-        letter-spacing: 1px;
+      }
+
+      .keyword-list {
+        position: absolute;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        background-color: white;
+        list-style: none;
+        border: 1px solid grey;
+        box-sizing: border-box;
+        display: none;
+        z-index: 1;
+
+        &.active {
+          display: block;
+        }
+
+
+        .keyword-item {
+          width: calc(100% - 10px);
+          height: 20px;
+          line-height: 20px;
+          padding: 5px;
+          border-bottom: 1px solid grey;
+          color: black;
+          cursor: pointer;
+          text-indent: 5px;
+
+          &:hover {
+            background-color: lightgrey;
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
       }
     }
 

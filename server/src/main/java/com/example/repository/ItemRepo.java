@@ -21,4 +21,11 @@ public interface ItemRepo extends PagingAndSortingRepository<Item, Long> {
     Page<Item> findAllByCategoryId(Integer id, Pageable pageable);
 
     Optional<Item> findById(Long id);
+
+    Page<Item> findByNameStartingWithIgnoreCase(String name, Pageable pageable);
+
+    Page<Item> findByNameLikeIgnoreCase(String name, Pageable pageable);
+
+    Page<Item> findByNameLikeIgnoreCaseAndCategoryId(String name, Integer id, Pageable pageable);
+
 }

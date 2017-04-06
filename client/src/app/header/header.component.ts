@@ -1,25 +1,30 @@
 import {
-  Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef
+  Component, OnInit, ElementRef, ViewChild, OnDestroy
 } from '@angular/core';
 import {AuthService} from "../service/auth.service";
 import {Router} from "@angular/router";
 import "rxjs";
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {ShoppingService} from "../service/shopping.service";
 import {Category} from "../model/category";
-import {OrderService} from "../service/order.service";
 import {MyEmitService} from "../service/emit.service";
+import {KeywordCollection} from "../model/keyword-collection";
+
+declare var document: any;
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  host: {
+    "(document:click)": "onClick($event)"
+  }
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
 
   private currentCategory: string = "All";
-  private currentCategoryID: any = 0;
+  private currentCategoryID: any = -1;
   private searchBarGetFocus: boolean = false;
   private isAuthenticated: boolean;
   private currentUser: any = null;
@@ -29,8 +34,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private userSubscription: Subscription;
   private cartItemAmountSub: Subscription = new Subscription();
   private cartItemAmount = 0;
+  private searchContent: string = "";
+  private searchKeywords: string[] = [];
+  private keywordListShown: boolean = false;
+  private keywordListItem: KeywordCollection[] = [];
 
   @ViewChild("categoryMenu") select: ElementRef;
+  @ViewChild("searchBox") searchBox: ElementRef;
 
   constructor(private emitService: MyEmitService,
               private authService: AuthService,
@@ -40,7 +50,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentCategory = this.select.nativeElement.options[this.select.nativeElement.selectedIndex].text;
-
 
     this.shpService.getAllCategories()
       .toPromise()
@@ -120,5 +129,68 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
     this.cartItemAmountSub.unsubscribe();
+  }
+
+  onSearchInput() {
+    this.keywordListShown = true;
+    console.log(this.searchContent);
+    if (this.searchContent.trim().length == 0) {
+      this.keywordListItem = [];
+      return;
+    }
+    this.shpService.getProductsByKeywords(this.searchContent)
+      .toPromise()
+      .then(data => {
+        this.keywordListItem = data.object;
+        // console.log(this.keywordListItem);
+      });
+  }
+
+  onSearch() {
+    const splitedContent = this.searchContent.split(" ");
+    for (let keyword of splitedContent) {
+      if (keyword.trim().length > 0) {
+        this.searchKeywords.push(keyword.trim());
+      }
+    }
+    this.router.navigate(['/products/product-list/'],
+      {
+        queryParams: {
+          categoryID: this.currentCategoryID,
+          keywords: this.searchKeywords
+        }
+      });
+
+    this.searchKeywords = [];
+  }
+
+  listItemOnClick(event, keyword) {
+    this.searchContent = keyword;
+    this.keywordListShown = false;
+    this.router.navigate(["/products/product-list"], {
+      queryParams: {
+        categoryID: this.currentCategoryID,
+        keywords: keyword
+      }
+    });
+
+    this.keywordListShown = false;
+    event.stopPropagation();
+
+  }
+
+  inputOnClick(event) {
+    this.keywordListShown = !this.keywordListShown;
+    event.stopPropagation();
+  }
+
+  onClick(event) {
+    // console.log(!this.searchBox.nativeElement.contains(event.target));
+    if (!this.searchBox.nativeElement.contains(event.target)) {
+      this.keywordListShown = false;
+    }
+    else {
+      this.keywordListShown = true;
+    }
   }
 }

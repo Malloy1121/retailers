@@ -1,13 +1,11 @@
 package com.example.controller;
 
-import com.example.dto.CategoryDTO;
-import com.example.dto.ItemDTO;
-import com.example.dto.PageDTO;
-import com.example.dto.ResponseMessage;
+import com.example.dto.*;
 import com.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +30,28 @@ public class ProductController {
         ResponseMessage message = new ResponseMessage();
         message.setResult(true);
         message.setObject(this.productService.getItemsByCategory(categoryID, page, 0));
+        return message;
+    }
+
+    @PostMapping("/getProductsByCategoryAndKeywords/{categoryID}/{page}")
+    public ResponseMessage getProductsByCategoryAndKeywords(@PathVariable Integer categoryID,
+                                                            @PathVariable Integer page,
+                                                            @RequestBody List<KeywordCollection> keys) {
+        ResponseMessage message = new ResponseMessage();
+        List<String> keywords = new ArrayList<>();
+        for (KeywordCollection keywordCollection : keys) {
+            keywords.add(keywordCollection.getKeyword());
+        }
+        message.setObject(this.productService.getItemsByCategoryAndKeywords(categoryID, keywords, page, 0));
+        message.setResult(true);
+        return message;
+    }
+
+    @PostMapping("/getProductsByKeywords")
+    public ResponseMessage getProductsByCategoryAndKeywords(@RequestBody KeywordCollection keywordCollection) {
+        ResponseMessage message = new ResponseMessage();
+        message.setObject(this.productService.findItemNamesByKeyword(keywordCollection.getKeyword()));
+        message.setResult(true);
         return message;
     }
 
