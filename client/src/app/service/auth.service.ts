@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, URLSearchParams, Headers} from "@angular/http";
-import "rxjs/Rx";
+import "rxjs/operator/map";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {User} from "../model/user";
@@ -9,7 +9,7 @@ import {MyEmitService} from "./emit.service";
 
 @Injectable()
 export class AuthService {
-  private currentUser;
+  public currentUser;
   private url = "";
   private sub: Subscription;
 
@@ -35,8 +35,8 @@ export class AuthService {
   }
 
 
-  login(value, url) {
-    console.log(value);
+  login(value) {
+    // console.log(value);
     const body = new URLSearchParams();
     body.set("email", value.email);
     const header = new Headers();
@@ -44,26 +44,12 @@ export class AuthService {
     body.set("password", value.password);
     return this.http.post(this.url + "/login", body.toString(), {headers: header})
       .map((response: Response) => {
-        if (response.status >= 400) {
-          throw new Error("Login Failed");
-        }
+        // if (response.status >= 400) {
+        //   throw new Error("Login Failed");
+        // }
         return response.json();
-      })
-      .toPromise()
-      .then(data => {
-        console.log(data);
-        this.currentUser = data;
-        this.emitService.userStatusSubject.next(this.currentUser);
-        this.orderService.updateCartItemAmount();
-        if (url == null) {
-          this.router.navigateByUrl("/");
-        }
-        else {
-          this.router.navigateByUrl(url);
-        }
-        return data;
-      })
-      .catch(error => console.log(error));
+      });
+
 
   }
 

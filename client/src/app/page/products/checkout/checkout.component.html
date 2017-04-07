@@ -59,88 +59,34 @@
             </div>
           </div>
 
-          <div class="row checkout-item-container">
+          <div class="row checkout-item-container" *ngFor="let item of cartItems">
             <div class="col-4">
               <div class="flex-vertical-center checkout-image-container">
                 <img
                   src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
                   alt="item"
-                  (click)="goToDetail(1)">
+                  (click)="goToDetail(item.productID)">
               </div>
             </div>
             <div class="col-6-clear col-offset-2">
               <div class="row">
-                <h3 class="product-name as-link blue" (click)="goToDetail(1)">Product name here</h3>
+                <h3 class="product-name as-link blue" (click)="goToDetail(item.productID)">
+                  {{item.productName}} ({{item.itemTypeName}})</h3>
                 <div class="row">
                   <div class="row">
-                    <div class="product-retailer-name">by retailer name here</div>
+                    <div class="product-retailer-name">{{item.retailerName}}</div>
                   </div>
                   <div class="row">
                     <div class="col-3">Price:&nbsp;</div>
-                    <div class="price col-3">$15.99</div>
+                    <div class="price col-3">${{item.unitPrice}}</div>
                     <div class="col-3">Amount:&nbsp;</div>
-                    <div class="col-3 price">3</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row checkout-item-container">
-            <div class="col-4">
-              <div class="flex-vertical-center checkout-image-container">
-                <img
-                  src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
-                  alt="item"
-                  (click)="goToDetail(1)">
-              </div>
-            </div>
-            <div class="col-6-clear col-offset-2">
-              <div class="row">
-                <h3 class="product-name as-link blue" (click)="goToDetail(1)">Product name here</h3>
-                <div class="row">
-                  <div class="row">
-                    <div class="product-retailer-name">by retailer name here</div>
-                  </div>
-                  <div class="row">
-                    <div class="col-3">Price:&nbsp;</div>
-                    <div class="price col-3">$15.99</div>
-                    <div class="col-3">Amount:&nbsp;</div>
-                    <div class="col-3 price">3</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row checkout-item-container">
-            <div class="col-4">
-              <div class="flex-vertical-center checkout-image-container">
-                <img
-                  src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
-                  alt="item"
-                  (click)="goToDetail(1)">
-              </div>
-            </div>
-            <div class="col-6-clear col-offset-2">
-              <div class="row">
-                <h3 class="product-name as-link blue" (click)="goToDetail(1)">Product name here</h3>
-                <div class="row">
-                  <div class="row">
-                    <div class="product-retailer-name">by retailer name here</div>
-                  </div>
-                  <div class="row">
-                    <div class="col-3">Price:&nbsp;</div>
-                    <div class="price col-3">$15.99</div>
-                    <div class="col-3">Amount:&nbsp;</div>
-                    <div class="col-3 price">3</div>
+                    <div class="col-3 price">{{item.amount}}</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!--<hr class="checkout-option-divider">-->
 
       </div>
       <div class="col-4-clear">
@@ -267,7 +213,7 @@
         </div>
       </div>
     </div>
-    </div>
+  </div>
 
 </div>
 

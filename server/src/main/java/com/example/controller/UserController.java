@@ -141,4 +141,14 @@ public class UserController {
         return message;
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/setAddressToDefault")
+    public ResponseMessage setAddressToDefault(@RequestBody AddressDTO addressDTO, HttpSession session) {
+        ResponseMessage message = new ResponseMessage();
+        Long userID = (Long) session.getAttribute("userID");
+        boolean result = this.addressService.setAddressToDefault(addressDTO, userID);
+        message.setResult(result);
+        return message;
+    }
+
 }

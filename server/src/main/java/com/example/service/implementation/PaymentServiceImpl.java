@@ -63,8 +63,11 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setState(state);
         payment.setSuite(paymentDTO.getSuite());
         payment.setZipcode(paymentDTO.getZipcode());
-        payment.setIsPrimary(0);
-        User user=new User();
+
+        int count = this.paymentRepo.countAllByUserId(userID);
+        count = count == 0 ? 1 : 0;
+        payment.setIsPrimary(count);
+        User user = new User();
         user.setId(userID);
         payment.setUser(user);
 
@@ -94,5 +97,14 @@ public class PaymentServiceImpl implements PaymentService {
     public boolean deletePaymentMethod(Long id) {
         this.paymentRepo.delete(id);
         return this.paymentRepo.findOne(id) == null;
+    }
+
+    @Transactional
+    @Override
+    public boolean setPaymentToDefault(PaymentDTO paymentDTO, Long userID) {
+        System.out.println("Set Address primary: " + paymentDTO);
+        this.paymentRepo.setDefaultToFalse(userID, 0, 1);
+        this.paymentRepo.updateDefault(1, paymentDTO.getId());
+        return true;
     }
 }

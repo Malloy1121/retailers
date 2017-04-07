@@ -84,7 +84,7 @@ public class AddressDTO {
     }
 
     public void setIsPrimary(boolean isPrimary) {
-        isPrimary = isPrimary;
+        this.isPrimary = isPrimary;
     }
 
     public String getTag() {

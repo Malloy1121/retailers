@@ -17,7 +17,9 @@
           <img src="/assets/images/chevron-arrow-down.svg" alt="down">
         </div>
         <div class="payment-card-title-left">
-          <span>Payment card ending in {{item.number| last4Digits}}</span>
+          <span>Payment card ending in {{item.number| last4Digits}}
+            <span class="form-validator" style="display: inline;" *ngIf="item.isPrimary">(Primary)</span>
+          </span>
         </div>
         <div class="payment-card-title-right">
           <span>{{item.month}}/{{item.year}}</span>
@@ -42,6 +44,7 @@
 
         <div class="btn-payment-card-container">
           <button (click)="openEdit(item)">Edit</button>
+          <button *ngIf="!item.isPrimary" (click)="onSetDefault(item)">Set as Primary</button>
           <button (click)="onRemove(item)" class="btn-danger">Delete</button>
         </div>
 
@@ -102,8 +105,9 @@
               <div class="col-6">
                 <div class="form-validator" *ngIf="number.hasError('required')&&number.touched">Card number required
                 </div>
-                <div class="form-validator" *ngIf="number.hasError('numberLength')&&number.touched">Card number must
-                  have 16 digits
+                <div class="form-validator"
+                     *ngIf="number.hasError('pattern')&&number.touched">
+                  Card number must have 16 digits
                 </div>
                 <div *ngIf="number.valid||!number.touched">&nbsp;</div>
               </div>

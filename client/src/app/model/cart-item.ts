@@ -22,4 +22,8 @@ export class CartItem {
 
   public itemTypeInventory: number;
 
+  public retailerName: string;
+
+  public retailerID: number;
+
 }

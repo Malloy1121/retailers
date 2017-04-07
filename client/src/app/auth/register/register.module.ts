@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {RegisterComponent} from "./register.component";
 import {ReactiveFormsModule} from "@angular/forms";
-import {HttpModule} from "@angular/http";
 
 
 const REGISTER_ROUTE:Routes=[

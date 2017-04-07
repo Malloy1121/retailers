@@ -92,6 +92,15 @@ export class PaymentBookComponent implements OnInit, OnDestroy {
       .then(data => {
         if (data.result == true) {
           this.payments = data.object;
+
+          for (let payment of this.payments) {
+            if (payment.isPrimary) {
+              const first = this.payments.splice(0, this.payments.indexOf(payment));
+              const last = this.payments.splice(this.payments.indexOf(payment) + 1, this.payments.length);
+              this.payments = [payment].concat(first).concat(last);
+              break;
+            }
+          }
         }
       });
 
@@ -214,7 +223,7 @@ export class PaymentBookComponent implements OnInit, OnDestroy {
 
     this.number = new FormControl("", Validators.compose([
       Validators.required,
-      this.cardNumberLength
+      Validators.pattern(/d{16}/)
     ]));
 
     this.month = new FormControl("", Validators.compose([
@@ -310,6 +319,19 @@ export class PaymentBookComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
+  }
+
+  onSetDefault(payment) {
+    this.profileService.setPaymentToDefault(payment)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.loadPayments();
+        }
+        else {
+          alert("Request failed! Please try again later!");
+        }
+      })
   }
 
 }

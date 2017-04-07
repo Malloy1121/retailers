@@ -16,4 +16,6 @@ public interface PaymentService {
     boolean updatePaymentMethod(PaymentDTO paymentDTO, Long userID);
 
     boolean deletePaymentMethod(Long id);
+
+    boolean setPaymentToDefault(PaymentDTO paymentDTO,Long userID);
 }

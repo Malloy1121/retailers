@@ -1,13 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {ShoppingService} from "../../../../service/shopping.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterStateSnapshot} from "@angular/router";
 import {Subscription} from "rxjs";
 import "rxjs/Rx";
 import {ItemType} from "../../../../model/item-type";
 import {Product} from "../../../../model/product";
 import {CartItem} from "../../../../model/cart-item";
 import {OrderService} from "../../../../service/order.service";
+import {AuthService} from "../../../../service/auth.service";
 
 declare var alert: any;
 
@@ -27,15 +28,19 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   private purchaseForm: FormGroup;
   private paramSub: Subscription;
   private amoutnSub: Subscription;
+  private route: RouterStateSnapshot;
 
   constructor(private fb: FormBuilder,
               private shp: ShoppingService,
               private actRoute: ActivatedRoute,
               private orderService: OrderService,
-              private router: Router) {
+              private router: Router,
+              private authService: AuthService) {
+    this.route = this.router.routerState.snapshot;
   }
 
   ngOnInit() {
+    console.log(this.actRoute.snapshot.url);
     this.paramSub = this.actRoute.params.subscribe(data => {
       if (data["id"]) {
         const id = data["id"];
@@ -129,6 +134,27 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     cartItem.itemTypeID = this.currentType.id;
     cartItem.productID = this.currentItem.id;
 
+    this.authService.getCurrentUser()
+      .toPromise()
+      .then(data => {
+        console.log(data);
+        if (data.result == true) {
+          this.addToCart(cartItem);
+        }
+        else {
+          this.authService.logout()
+            .toPromise()
+            .then(data => {
+              if (data == 200) {
+                this.router.navigate(["/auth/login", {url: this.route.url}]);
+              }
+            });
+        }
+      });
+
+  }
+
+  addToCart(cartItem) {
     this.orderService.addToCart(cartItem)
       .toPromise()
       .then(data => {
@@ -139,7 +165,6 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
           alert("Add to cart failed! Please try again.");
         }
       });
-
   }
 
   onAddToWishList() {
@@ -147,7 +172,27 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     cartItem.itemTypeID = this.currentType.id;
     cartItem.productID = this.currentItem.id;
     cartItem.amount = this.amount.value;
+    this.authService.getCurrentUser()
+      .toPromise()
+      .then(data => {
+        console.log(data);
+        if (data.result == true) {
+          this.addToWishList(cartItem);
+        }
+        else {
+          this.authService.logout()
+            .toPromise()
+            .then(data => {
+              if (data == 200) {
+                this.router.navigate(["/auth/login", {url: this.route.url}]);
+              }
+            });
+        }
+      });
 
+  }
+
+  addToWishList(cartItem) {
     this.orderService.addToWishList(cartItem)
       .toPromise()
       .then(data => {

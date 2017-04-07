@@ -15,6 +15,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/payment")
+@PreAuthorize("isAuthenticated()")
 public class PaymentController {
     @Autowired
     private PaymentService paymentService;
@@ -61,6 +62,15 @@ public class PaymentController {
         } else {
             result = false;
         }
+        message.setResult(result);
+        return message;
+    }
+
+    @PostMapping("/setPaymentToDefault")
+    public ResponseMessage setPaymentToDefault(@RequestBody PaymentDTO paymentDTO, HttpSession session) {
+        ResponseMessage message = new ResponseMessage();
+        Long userID = (Long) session.getAttribute("userID");
+        boolean result = this.paymentService.setPaymentToDefault(paymentDTO, userID);
         message.setResult(result);
         return message;
     }

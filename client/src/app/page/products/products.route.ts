@@ -14,7 +14,7 @@ export const PRODUCTS_ROUTE: Routes = [
   {path: "product-list", component: ItemListComponent},
   {path: "product", redirectTo: "product-list",pathMatch:"full"},
   {path: "product/:id", component: ItemDetailComponent, canActivate: [ProductDetailGuard]},
-  {path: "checkout", component: CheckoutComponent},
+  {path: "checkout", component: CheckoutComponent,canActivate: [AuthGuard]},
   {path: "", redirectTo: "/", pathMatch: "full"},
   {path: "**", redirectTo: "", pathMatch: "full"}
 ];

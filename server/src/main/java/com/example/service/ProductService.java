@@ -15,7 +15,13 @@ public interface ProductService {
 
     List<CategoryDTO> getAllCategories();
 
-    List<ItemDTO> getItemsByCategory(Integer categoryID, int page, int ascending);
+    List<ItemDTO> getItemsByCategory(
+            Integer categoryID,
+            int page,
+            int ascending,
+            float lowestPrice,
+            float highestPrice
+    );
 
     ItemDTO getItemById(Long id);
 
@@ -23,5 +29,12 @@ public interface ProductService {
 
     List<KeywordCollection> findItemNamesByKeyword(String keyword);
 
-    List<ItemDTO> getItemsByCategoryAndKeywords(Integer categoryID, List<String> keywords, int page, int ascending);
+    List<ItemDTO> getItemsByCategoryAndKeywords(
+            Integer categoryID,
+            List<String> keywords,
+            int page,
+            int ascending,
+            float lowestPrice,
+            float highestPrice
+    );
 }

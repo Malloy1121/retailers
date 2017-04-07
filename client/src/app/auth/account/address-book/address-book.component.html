@@ -7,7 +7,7 @@
       <div class="address-book-item col-4" *ngFor="let address of addresses">
 
         <div>
-          <h3 *ngIf="address.isPrimary">Default Address</h3>
+          <h3 *ngIf="address.isPrimary">Primary Address</h3>
           <p style="font-weight: bold">{{address.tag}}; id:{{address.id}}</p>
           <p>{{address.street}} {{address.suite}}</p>
           <p>{{address.city}}, {{address.state}} {{address.zipcode}}</p>
@@ -15,7 +15,7 @@
 
         <div class="btn-group-address-book">
           <button (click)="onEdit(address)" class="btn-profile">Edit</button>
-          &nbsp;
+          &nbsp;<button *ngIf="!address.isPrimary" class="btn-profile" (click)="onSetDefault(address)">Set as Primary</button>
           <button class="btn-profile btn-danger" (click)="onDelete(address)">Delete</button>
         </div>
       </div>

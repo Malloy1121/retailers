@@ -3,6 +3,8 @@ import {Address} from "../../../model/address";
 import {Router} from "@angular/router";
 import {ProfileService} from "../../../service/profile.service";
 
+declare var alert: any;
+
 @Component({
   selector: 'app-address-book',
   templateUrl: './address-book.component.html',
@@ -16,22 +18,7 @@ export class AddressBookComponent implements OnInit {
   }
 
   ngOnInit() {
-    // for (let i = 0; i < 5; i++) {
-    //   const address: Address = {
-    //     city: "Manassas",
-    //     street: "10529 Crestwood Dr",
-    //     suite: "203",
-    //     state: "VA",
-    //     stateID: 1,
-    //     tag: "Office",
-    //     isPrimary: i == 2,
-    //     id: i,
-    //     zipcode: 20155
-    //   };
-    //   this.addresses.push(address);
-    // }
     this.onLoad()
-
   }
 
   onLoad() {
@@ -41,16 +28,18 @@ export class AddressBookComponent implements OnInit {
         console.log(data.object);
         const object = data.object;
         this.addresses = object;
-      });
 
-    for (let address of this.addresses) {
-      if (address.isPrimary) {
-        const first = this.addresses.splice(0, this.addresses.indexOf(address));
-        const last = this.addresses.splice(this.addresses.indexOf(address) + 1, this.addresses.length);
-        this.addresses = [address].concat(first).concat(last);
-        break;
-      }
-    }
+        for (let address of this.addresses) {
+          if (address.isPrimary) {
+            const first = this.addresses.splice(0, this.addresses.indexOf(address));
+            const last = this.addresses.splice(this.addresses.indexOf(address) + 1, this.addresses.length);
+            this.addresses = [address].concat(first).concat(last);
+            // console.log("sorted address array first: ", first);
+            // console.log("sorted address array last: ", last);
+            break;
+          }
+        }
+      });
   }
 
   onEdit(params: Address) {
@@ -72,5 +61,19 @@ export class AddressBookComponent implements OnInit {
         console.log(error);
       });
   }
+
+  onSetDefault(address) {
+    this.profileService.setAddressToDefault(address)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.onLoad();
+        }
+        else {
+          alert("Request failed! Please try again later!");
+        }
+      })
+  }
+
 
 }

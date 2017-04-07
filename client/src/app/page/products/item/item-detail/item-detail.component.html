@@ -55,7 +55,7 @@
           </div>
           <div class="col-8 price-container">
             <span *ngIf="currentType.id<0">${{lowestPrice.toFixed(2)}} - ${{highestPrice.toFixed(2)}}</span>
-            <span *ngIf="currentType.id>=0">${{currentType.unitPrice}}</span>
+            <span *ngIf="currentType.id>=0">${{currentType.unitPrice.toFixed(2)}}</span>
           </div>
         </div>
 

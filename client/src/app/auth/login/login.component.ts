@@ -3,6 +3,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../service/auth.service";
 import {Subscription} from "rxjs";
+import {MyEmitService} from "../../service/emit.service";
+import {OrderService} from "../../service/order.service";
+import {Response} from "@angular/http";
 
 @Component({
   selector: 'app-login',
@@ -14,11 +17,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   private loginForm: FormGroup;
   private paramsSub: Subscription;
   private forwardUrl: string;
+  private loginFailed: boolean = false;
 
   constructor(private fb: FormBuilder,
               private router: Router,
               private authService: AuthService,
-              private actRoute: ActivatedRoute) {
+              private actRoute: ActivatedRoute,
+              private emitService: MyEmitService,
+              private orderService: OrderService) {
   }
 
   ngOnInit() {
@@ -38,7 +44,28 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.authService.login(this.loginForm.value, this.forwardUrl);
+    this.authService.login(this.loginForm.value)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.authService.currentUser = data.object;
+          this.emitService.userStatusSubject.next(data.object);
+          this.orderService.updateCartItemAmount();
+          if (this.forwardUrl == null) {
+            this.router.navigateByUrl("/");
+          }
+          else {
+            this.router.navigateByUrl(this.forwardUrl);
+          }
+          return data;
+        }
+        else {
+          this.loginFailed = true;
+        }
+      })
+      .catch((error: Response) => {
+        console.log(error.json().error);
+      });
   }
 
   goToSignup() {

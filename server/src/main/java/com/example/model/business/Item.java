@@ -47,6 +47,12 @@ public class Item {
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<ItemType> itemType;
 
+    @Column(name = "highest_price")
+    private float highestPrice;
+
+    @Column(name = "lowest_price")
+    private float lowestPrice;
+
     public Long getId() {
         return id;
     }
@@ -118,5 +124,21 @@ public class Item {
 
     public void setBriefDescription(String briefDescription) {
         this.briefDescription = briefDescription;
+    }
+
+    public float getHighestPrice() {
+        return highestPrice;
+    }
+
+    public void setHighestPrice(float highestPrice) {
+        this.highestPrice = highestPrice;
+    }
+
+    public float getLowestPrice() {
+        return lowestPrice;
+    }
+
+    public void setLowestPrice(float lowestPrice) {
+        this.lowestPrice = lowestPrice;
     }
 }

@@ -18,6 +18,8 @@ public interface PaymentRepo extends CrudRepository<Payment, Long> {
 
     List<Payment> findAllByUserId(Long userID);
 
+    int countAllByUserId(Long userID);
+
     @Modifying(clearAutomatically = true)
     @Query("update Payment p set " +
             "p.month=:month," +
@@ -38,4 +40,12 @@ public interface PaymentRepo extends CrudRepository<Payment, Long> {
                       @Param("city") String city,
                       @Param("state") State state,
                       @Param("zipcode") int zipcode);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update Payment p set p.isPrimary=:isDefault where p.id=:id")
+    void updateDefault(@Param("isDefault") int isDefault, @Param("id") long id);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update Payment p set p.isPrimary=:falseFlag where p.user.id=:id and p.isPrimary=:trueFlag")
+    void setDefaultToFalse(@Param("id") Long userID,@Param("falseFlag") int falseFlag,@Param("trueFlag") int trueFlag);
 }

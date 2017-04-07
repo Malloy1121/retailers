@@ -51,14 +51,34 @@
         </button>
       </div>
 
+      <div class="login-failure-container">
+        <div class="row">
+          <div class="col-12" *ngIf="loginFailed">
+            User name or password incorrect!
+          </div>
+          <div class="col-12" *ngIf="!loginFailed">
+            &nbsp;
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12" *ngIf="loginFailed">
+            Please try again!
+          </div>
+          <div class="col-12" *ngIf="!loginFailed">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+
       <div class="separator">
         <h4>New to Retailers?</h4>
       </div>
-      <div class="btn-login-container">
+      <div class="btn-login-container" style="margin-bottom: 20px;">
         <button id="login-to-signup"
                 (click)="goToSignup()">Create a New Account
         </button>
       </div>
+
     </form>
   </div>
 </div>

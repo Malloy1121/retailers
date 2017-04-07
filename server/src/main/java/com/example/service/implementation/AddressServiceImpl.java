@@ -56,7 +56,11 @@ public class AddressServiceImpl implements AddressService {
         user.setId(userID);
         address.setUser(user);
         address.setCity(addressDTO.getCity());
-        address.setIsPrimary(0);
+
+        int count = this.addressRepo.countAllByUserId(userID);
+        System.out.println("Address count: "+count);
+        count = count == 0 ? 1 : 0;
+        address.setIsPrimary(count);
         address.setState(state);
         address.setStreet(addressDTO.getStreet());
         address.setSuite(addressDTO.getSuite());
@@ -69,7 +73,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public boolean updateAddress(AddressDTO addressDTO, Long userID) {
         System.out.print(addressDTO);
-        Long id=addressDTO.getId();
+        Long id = addressDTO.getId();
         Address address = this.addressRepo.findOne(id);
         State state = new State();
         state.setId(addressDTO.getStateID());
@@ -93,5 +97,14 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public List<State> findAllStates() {
         return this.stateRepo.findAll();
+    }
+
+    @Transactional
+    @Override
+    public boolean setAddressToDefault(AddressDTO addressDTO, Long userID) {
+        System.out.println("Set Address primary: "+addressDTO);
+        this.addressRepo.setDefaultToFalse(userID, 0, 1);
+        this.addressRepo.updateDefault(1, addressDTO.getId());
+        return true;
     }
 }

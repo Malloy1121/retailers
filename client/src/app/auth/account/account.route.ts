@@ -7,6 +7,7 @@ import {AddressComponent} from "./address-book/address.component";
 import {ProfileUpdateComponent} from "./profile/profile-update/profile-update.component";
 import {OrderDetailComponent} from "./order-detail/order-detail.component";
 import {WishListComponent} from "./wish-list/wish-list.component";
+import {AuthGuard} from "../../service/auth.guard";
 /**
  * Created by Malloy on 3/9/2017.
  */

@@ -23,6 +23,18 @@ public class CartItemDTO {
 
     private int itemTypeInventory;
 
+    private String retailerName;
+
+    private Long retailerID;
+
+    public Long getRetailerID() {
+        return retailerID;
+    }
+
+    public void setRetailerID(Long retailerID) {
+        this.retailerID = retailerID;
+    }
+
     public Long getId() {
         return id;
     }
@@ -95,6 +107,11 @@ public class CartItemDTO {
         this.unitPrice = unitPrice;
     }
 
+    public String getRetailerName() {
+        return retailerName;
+    }
 
-
+    public void setRetailerName(String retailerName) {
+        this.retailerName = retailerName;
+    }
 }

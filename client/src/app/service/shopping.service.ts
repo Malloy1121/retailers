@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from "@angular/http";
-import "rxjs/Rx";
+import {Http, Response, URLSearchParams} from "@angular/http";
+import "rxjs/operator/map";
 import {KeywordCollection} from "../model/keyword-collection";
 
 @Injectable()
@@ -16,23 +16,64 @@ export class ShoppingService {
       });
   }
 
-  getProductsByCategory(categoryID: number, pageNumber: number) {
+  getProductsByCategory(categoryID: number, pageNumber: number, lowestPrice: any, highestPrice: any) {
     pageNumber -= 1;
-    return this.http.get("/products/getProductsByCategory/" + categoryID + "/" + pageNumber)
+    let lowest = -1;
+    let highest = -1;
+    if (lowestPrice == "") {
+      lowest = -1;
+    }
+    else {
+      lowest = lowestPrice;
+    }
+    if (highestPrice == "") {
+      highest = -1;
+    }
+    else {
+      highest = highestPrice;
+    }
+    console.log("Lowest: ", lowestPrice);
+    console.log("Highest:", highestPrice);
+
+    const params = new URLSearchParams();
+    params.set("lowestPrice", "" + lowest + "");
+    params.set("highestPrice", "" + highest + "");
+
+
+    return this.http.get("/products/getProductsByCategory/" + categoryID + "/" + pageNumber, {search: params})
       .map((response: Response) => {
         return response.json();
       });
   }
 
-  getProductsByCategoryAndKeyword(categoryID: number, keywords: string[], pageNumber: number) {
+  getProductsByCategoryAndKeyword(categoryID: number, keywords: string[], pageNumber: number, lowestPrice: any, highestPrice: any) {
     const keys = [];
     for (let keyword of keywords) {
       const keywordCollection = new KeywordCollection();
       keywordCollection.keyword = keyword;
       keys.push(keywordCollection);
     }
+    let lowest = -1;
+    let highest = -1;
+    if (lowestPrice == "") {
+      lowest = -1;
+    }
+    else {
+      lowest = lowestPrice;
+    }
+    if (highestPrice == "") {
+      highest = -1;
+    }
+    else {
+      highest = highestPrice;
+    }
     pageNumber -= 1;
-    return this.http.post("/products/getProductsByCategoryAndKeywords/" + categoryID + "/" + pageNumber, keys)
+    console.log("Lowest: ", lowestPrice);
+    console.log("Highest:", highestPrice);
+    const params = new URLSearchParams();
+    params.set("lowestPrice", "" + lowest + "");
+    params.set("highestPrice", "" + highest + "");
+    return this.http.post("/products/getProductsByCategoryAndKeywords/" + categoryID + "/" + pageNumber, keys, {search: params})
       .map((response: Response) => {
         return response.json();
       });
@@ -56,6 +97,40 @@ export class ShoppingService {
 
   ifItemExist(id: number) {
     return this.http.get("/products/ifItemExists/" + id)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
+
+  getProductsByPriceOrder(categoryID: number, keywords: string[], ascending: boolean, lowestPrice: any, highestPrice: any) {
+    const keys = [];
+    for (let keyword of keywords) {
+      const keywordCollection = new KeywordCollection();
+      keywordCollection.keyword = keyword;
+      keys.push(keywordCollection);
+    }
+
+    let lowest = -1;
+    let highest = -1;
+    if (lowestPrice == "") {
+      lowest = -1;
+    }
+    else {
+      lowest = lowestPrice;
+    }
+    if (highestPrice == "") {
+      highest = -1;
+    }
+    else {
+      highest = highestPrice;
+    }
+    console.log("Lowest: ", lowestPrice);
+    console.log("Highest:", highestPrice);
+    const params = new URLSearchParams();
+    params.set("lowestPrice", "" + lowest + "");
+    params.set("highestPrice", "" + highest + "");
+    const orderFlag = ascending == true ? 1 : -1;
+    return this.http.post("/products/getProductsByPriceOrder/" + categoryID + "/" + orderFlag, keys, {search: params})
       .map((response: Response) => {
         return response.json();
       });

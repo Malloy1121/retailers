@@ -13,11 +13,13 @@ import com.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * Created by Malloy on 3/29/2017.
@@ -32,6 +34,8 @@ public class ProductServiceImp implements ProductService {
 
     @Autowired
     private ItemTypeRepo itemTypeRepo;
+
+    Logger log = Logger.getLogger(this.getClass().getName());
 
     @Override
     public List<CategoryDTO> getAllCategories() {
@@ -49,14 +53,26 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<ItemDTO> getItemsByCategory(Integer categoryID, int page, int ascending) {
+    public List<ItemDTO> getItemsByCategory(
+            Integer categoryID,
+            int page,
+            int ascending,
+            float lowestPrice,
+            float highestPrice
+    ) {
+
+//        System.out.println("Highest: "+highestPrice);
+//        System.out.println("Lowest: "+lowestPrice);
+
         int size = 15;
         PageRequest request = new PageRequest(page, size);
         Page<Item> items;
+        System.out.println("Highest: " + highestPrice);
+        System.out.println("Lowest: " + lowestPrice);
         if (categoryID >= 0) {
-            items = this.itemRepo.findAllByCategoryId(categoryID, request);
+            items = this.itemRepo.findAllByCategoryIdAndLowestPriceGreaterThanEqualAndHighestPriceLessThanEqual(categoryID, lowestPrice, highestPrice, request);
         } else {
-            items = this.itemRepo.findAll(request);
+            items = this.itemRepo.findAllByLowestPriceGreaterThanEqualAndHighestPriceLessThanEqual(lowestPrice, highestPrice, request);
         }
         System.out.println("Total pages:" + items.getTotalPages() + ", Total elements:" + items.getTotalElements());
 
@@ -132,14 +148,28 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<ItemDTO> getItemsByCategoryAndKeywords(Integer categoryID,
-                                                       List<String> keywords,
-                                                       int page,
-                                                       int ascending) {
-        PageRequest request = new PageRequest(page, 15);
+    public List<ItemDTO> getItemsByCategoryAndKeywords(
+            Integer categoryID,
+            List<String> keywords,
+            int page,
+            int ascending,
+            float lowestPrice,
+            float highestPrice
+    ) {
+
+        PageRequest request;
+        Sort sort;
+        if (ascending == 0) {
+            request = new PageRequest(page, 15);
+        } else if (ascending > 0) {
+            sort = new Sort(Sort.Direction.ASC, "lowestPrice");
+            request = new PageRequest(page, 15, sort);
+        } else {
+            sort = new Sort(Sort.Direction.DESC, "lowestPrice");
+            request = new PageRequest(page, 15, sort);
+        }
 
         List<String> keys = new ArrayList<>();
-//        List<String> keys = keywords;
         for (String keyword : keywords) {
             keyword = "%" + keyword + "%";
             keys.add(keyword);
@@ -147,12 +177,23 @@ public class ProductServiceImp implements ProductService {
         for (String keyword : keys) {
             System.out.println(keyword);
         }
-        Page<Item> items;
-        if (categoryID >= 0) {
-            items = this.itemRepo.findByNameLikeIgnoreCaseAndCategoryId(keys.get(0), categoryID, request);
-        } else {
-            items = this.itemRepo.findByNameLikeIgnoreCase(keys.get(0), request);
+
+        if (keywords.size() == 0) {
+            keys.add("%%");
         }
+//        System.out.println("keys: " + keys.size());
+        Page<Item> items;
+//        System.out.println("key: " + keys.get(0));
+        System.out.println("Highest: " + highestPrice);
+        System.out.println("Lowest: " + lowestPrice);
+        if (categoryID >= 0) {
+            items = this.itemRepo.findAllWithinPriceRangeByCategoryID(keys.get(0), categoryID, lowestPrice, highestPrice, request);
+        } else {
+            items = this.itemRepo.findAllWithinPriceRange(keys.get(0), lowestPrice, highestPrice, request);
+        }
+
+//        System.out.println("Highest: "+highestPrice);
+//        System.out.println("Lowest: "+lowestPrice);
 
         return this.mappingItems(items);
     }

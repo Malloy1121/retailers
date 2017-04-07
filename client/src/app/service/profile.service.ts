@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from "@angular/http";
-import "rxjs/Rx";
+import "rxjs/operator/map";
 import {Payment} from "../model/payment";
 
 @Injectable()
@@ -44,6 +44,11 @@ export class ProfileService {
       .map((response: Response) => response.json());
   }
 
+  setAddressToDefault(address){
+    return this.http.post("/user/setAddressToDefault", address)
+      .map((response: Response) => response.json());
+  }
+
   getStateList() {
     return this.http.get("/user/getStateList")
       .map((response: Response) => response.json());
@@ -75,6 +80,11 @@ export class ProfileService {
       .map((response: Response) => {
         return response.json();
       });
+  }
+
+  setPaymentToDefault(payment){
+    return this.http.post("/payment/setPaymentToDefault", payment)
+      .map((response: Response) => response.json());
   }
 
 }

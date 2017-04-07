@@ -1,5 +1,6 @@
 package com.example.config;
 
+import com.example.dto.ResponseMessage;
 import com.example.dto.UserDTO;
 import com.example.model.user.User;
 import com.example.service.UserService;
@@ -49,7 +50,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         response.setStatus(HttpServletResponse.SC_OK);
         System.out.println(this.objectMapper.writeValueAsString(user));
-        response.getOutputStream().print(this.objectMapper.writeValueAsString(user));
+        ResponseMessage message=new ResponseMessage();
+        message.setResult(true);
+        message.setObject(user);
+        response.getOutputStream().print(this.objectMapper.writeValueAsString(message));
 
     }
 }

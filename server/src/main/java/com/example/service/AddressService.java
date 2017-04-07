@@ -20,4 +20,6 @@ public interface AddressService {
     boolean deleteAddress(Long id);
 
     List<State> findAllStates();
+
+    boolean setAddressToDefault(AddressDTO addressDTO,Long userID);
 }

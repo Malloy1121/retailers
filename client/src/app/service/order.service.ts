@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from "@angular/http";
-import "rxjs/Rx";
+import "rxjs/operator/map";
 import {CartItem} from "../model/cart-item";
 import {MyEmitService} from "./emit.service";
 

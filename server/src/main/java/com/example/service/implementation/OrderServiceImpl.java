@@ -80,6 +80,7 @@ public class OrderServiceImpl implements OrderService {
             cartItem.setUnitPrice(item.getItemType().getUnitPrice());
             cartItem.setItemTypeInventory(item.getItemType().getInventory());
 
+            cartItem.setRetailerName(item.getItem().getRetailer().getFirstname()+" " + (item.getItem().getRetailer().getLastname()));
             mappedItems.add(cartItem);
         }
         return mappedItems;

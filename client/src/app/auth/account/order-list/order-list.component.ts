@@ -41,5 +41,4 @@ export class OrderListComponent implements OnInit, OnDestroy {
   gotToOrderDetail(id){
     this.router.navigateByUrl("/auth/account/order_detail/"+id);
   }
-
 }
