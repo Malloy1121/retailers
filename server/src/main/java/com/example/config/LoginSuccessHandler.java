@@ -1,8 +1,7 @@
 package com.example.config;
 
 import com.example.dto.ResponseMessage;
-import com.example.dto.UserDTO;
-import com.example.model.user.User;
+import com.example.dto.user.UserDTO;
 import com.example.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        System.out.println("Login successful");
+//        System.out.println("Login successful");
         String username = request.getParameter("email");
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
         UserDTO user = this.userService.findUserByEmail(username);
@@ -49,7 +48,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         request.getSession().setAttribute("userID", id);
         authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         response.setStatus(HttpServletResponse.SC_OK);
-        System.out.println(this.objectMapper.writeValueAsString(user));
+//        System.out.println(this.objectMapper.writeValueAsString(user));
         ResponseMessage message=new ResponseMessage();
         message.setResult(true);
         message.setObject(user);

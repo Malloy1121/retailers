@@ -4,7 +4,7 @@ import "rxjs/operator/map";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {User} from "../model/user";
-import {OrderService} from "./order.service";
+import {CartService} from "./cart.service";
 import {MyEmitService} from "./emit.service";
 
 @Injectable()
@@ -15,16 +15,16 @@ export class AuthService {
 
   constructor(private http: Http,
               private router: Router,
-              private orderService: OrderService,
+              private cartService: CartService,
               private emitService: MyEmitService) {
 
     this.sub = this.getCurrentUser()
       .subscribe(data => {
-        console.log(data);
+        // console.log(data);
         if (data.result == true) {
           this.currentUser = data.object;
           this.emitService.userStatusSubject.next(data.object);
-          this.orderService.updateCartItemAmount();
+          this.cartService.updateCartItemAmount();
         }
         else {
           this.currentUser = null;

@@ -6,7 +6,7 @@
           <div class="col-12">
             <div class="preview-image-container">
               <img
-                src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                [src]="currentImage"
                 alt="preview">
             </div>
           </div>
@@ -16,13 +16,18 @@
             <div class="preview-gallery-image-container">
               <img
                 src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
-                alt="preview">
+                alt="preview"
+                (click)="currentImage='https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg'">
             </div>
             <div class="preview-gallery-image-container">
-              <img src="http://i164.photobucket.com/albums/u8/hemi1hemi/COLOR/COL9-6.jpg" alt="preview">
+              <img src="http://i164.photobucket.com/albums/u8/hemi1hemi/COLOR/COL9-6.jpg"
+                   alt="preview"
+                   (click)="currentImage='http://i164.photobucket.com/albums/u8/hemi1hemi/COLOR/COL9-6.jpg'">
             </div>
             <div class="preview-gallery-image-container">
-              <img src="http://i.telegraph.co.uk/multimedia/archive/03598/lightning-10_3598416k.jpg" alt="preview">
+              <img src="http://i.telegraph.co.uk/multimedia/archive/03598/lightning-10_3598416k.jpg"
+                   alt="preview"
+                   (click)="currentImage='http://i.telegraph.co.uk/multimedia/archive/03598/lightning-10_3598416k.jpg'">
             </div>
           </div>
         </div>

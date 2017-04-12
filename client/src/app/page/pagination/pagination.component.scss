@@ -1,0 +1,30 @@
+.pagination-list {
+  padding: 0;
+  margin: auto;
+  text-align: center;
+
+  button {
+    min-width: 50px;
+    border-radius: 0;
+
+    &.currentPage {
+      color: white;
+      background-color: red;
+
+    }
+
+    &[disabled] {
+      cursor: no-drop;
+    }
+  }
+
+  .page-item-first {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  .page-item-last {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+}

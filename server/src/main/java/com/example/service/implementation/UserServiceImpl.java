@@ -1,8 +1,8 @@
 package com.example.service.implementation;
 
-import com.example.dto.UserDTO;
-import com.example.model.user.Role;
-import com.example.model.user.User;
+import com.example.dto.user.UserDTO;
+import com.example.model.user.profile.Role;
+import com.example.model.user.profile.User;
 import com.example.repository.UserRepo;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

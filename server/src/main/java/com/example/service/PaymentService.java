@@ -1,7 +1,7 @@
 package com.example.service;
 
 
-import com.example.dto.PaymentDTO;
+import com.example.dto.user.PaymentDTO;
 import java.util.List;
 
 /**

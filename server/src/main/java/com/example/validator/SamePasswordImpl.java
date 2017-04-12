@@ -1,6 +1,6 @@
 package com.example.validator;
 
-import com.example.model.user.User;
+import com.example.model.user.profile.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

@@ -1,12 +1,12 @@
 package com.example.service.implementation;
 
-import com.example.dto.PaymentDTO;
-import com.example.dto.UserDTO;
-import com.example.model.user.Payment;
-import com.example.model.user.State;
-import com.example.model.user.User;
+import com.example.dto.user.PaymentDTO;
+import com.example.model.user.profile.Payment;
+import com.example.model.business.State;
+import com.example.model.user.profile.User;
 import com.example.repository.PaymentRepo;
 import com.example.service.PaymentService;
+import com.example.utility.MapUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,19 +29,7 @@ public class PaymentServiceImpl implements PaymentService {
         List<PaymentDTO> mappedPayments = new ArrayList<>();
 
         for (Payment payment : payments) {
-            PaymentDTO paymentDTO = new PaymentDTO();
-            paymentDTO.setId(payment.getId());
-            paymentDTO.setIsPrimary(payment.getIsPrimary() == 1);
-            paymentDTO.setMonth(payment.getMonth());
-            paymentDTO.setYear(payment.getYear());
-            paymentDTO.setName(payment.getName());
-            paymentDTO.setNumber(payment.getNumber());
-            paymentDTO.setStreet(payment.getStreet());
-            paymentDTO.setCity(payment.getCity());
-            paymentDTO.setState(payment.getState().getState());
-            paymentDTO.setStateID(payment.getState().getId());
-            paymentDTO.setSuite(payment.getSuite());
-            paymentDTO.setZipcode(payment.getZipcode());
+            PaymentDTO paymentDTO = MapUtility.mapPayment(payment);
 
             mappedPayments.add(paymentDTO);
         }
@@ -51,18 +39,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public boolean addPaymentMethod(PaymentDTO paymentDTO, Long userID) {
-        Payment payment = new Payment();
-        payment.setName(paymentDTO.getName());
-        payment.setNumber(paymentDTO.getNumber());
-        payment.setMonth(paymentDTO.getMonth());
-        payment.setYear(paymentDTO.getYear());
-        payment.setStreet(paymentDTO.getStreet());
-        payment.setCity(paymentDTO.getCity());
-        State state = new State();
-        state.setId(paymentDTO.getStateID());
-        payment.setState(state);
-        payment.setSuite(paymentDTO.getSuite());
-        payment.setZipcode(paymentDTO.getZipcode());
+        Payment payment =MapUtility.mapPaymentDTO(paymentDTO);
 
         int count = this.paymentRepo.countAllByUserId(userID);
         count = count == 0 ? 1 : 0;

@@ -5,11 +5,11 @@
         <h1 style="margin:auto">Shopping Cart</h1>
       </div>
       <div class="col-4 flex-vertical-center">
-        <span>Cart subtotal({{items.length}} item): <span class="price">$ {{cartSubtotal().toFixed(2)}}</span></span>
+        <span>Cart subtotal({{items.length}} items): <span class="price">$ {{cartSubtotal().toFixed(2)}}</span></span>
       </div>
       <div class="col-4 flex-vertical-center">
         <button class="btn-profile"
-                [disabled]="!isAllValid()"
+                [disabled]="!isAllValid()||pending||items.length==0"
                 (click)="proceedToCheckout()">
           Proceed to checkout
         </button>
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="cart-list-item row" *ngFor="let item of items">
+      <div class="cart-list-item row" *ngFor="let item of items;let i = index">
         <div class="col-2" style="position: absolute; height: calc(100% - 30px);">
           <div class="cart-image-container flex-vertical-center">
             <img

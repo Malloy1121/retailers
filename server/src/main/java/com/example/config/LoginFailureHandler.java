@@ -23,7 +23,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        System.out.println("Login failed");
+//        System.out.println("Login failed");
         ResponseMessage message=new ResponseMessage();
         message.setResult(false);
         response.getOutputStream().print(this.objectMapper.writeValueAsString(message));

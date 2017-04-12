@@ -1,10 +1,8 @@
 package com.example.service.implementation;
 
-import com.example.dto.UserDTO;
-import com.example.model.user.User;
+import com.example.model.user.profile.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 

@@ -1,14 +1,14 @@
 /**
  * Created by Malloy on 3/10/2017.
  */
-export interface Address {
-  id:any,
-  tag:string,
-  street:string,
-  city:string,
-  stateID:number,
-  state:string,
-  suite:string,
-  zipcode:number,
-  isPrimary:boolean
+export class Address {
+  public id: any;
+  public tag: string;
+  public street: string;
+  public city: string;
+  public stateID: number;
+  public state: string;
+  public suite: string = "";
+  public zipcode: number;
+  public isPrimary: boolean;
 }

@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate, CanLoad, CanActivateChild {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>
     | Promise<boolean>
     | boolean {
-    console.log("request sent from" + state.url);
+    // console.log("request sent from" + state.url);
     // return true;
     return this.isAuthenticated(state.url);
   }
@@ -38,7 +38,7 @@ export class AuthGuard implements CanActivate, CanLoad, CanActivateChild {
     return this.authService.getCurrentUser()
       .toPromise()
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data.result == true) {
           return true;
         }
@@ -48,7 +48,7 @@ export class AuthGuard implements CanActivate, CanLoad, CanActivateChild {
             .then(data => {
               if (data == 200) {
                 if (url) {
-                  this.router.navigate(["/auth/login", {url: url}]);
+                  this.router.navigate(["/auth/login"],{queryParams:{url: url}});
                 }
                 else {
                   this.router.navigate(["/auth/login"]);

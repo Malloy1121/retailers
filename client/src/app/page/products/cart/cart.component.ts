@@ -1,28 +1,33 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {CartItem} from "../../../model/cart-item";
-import {OrderService} from "../../../service/order.service";
+import {CartService} from "../../../service/cart.service";
+import {CheckoutService} from "../../../service/checkout.service";
 
 declare var screen: any;
 declare var navigator: any;
 declare var i: any;
+declare var alert: any;
 
 @Component({
   selector: 'app-cart',
   templateUrl: 'cart.component.html',
   styleUrls: ['cart.component.scss']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   private items: CartItem[] = [];
   private isValid: boolean = true;
   private reg: RegExp = new RegExp(/^\d+$/);
+  private pending: boolean = false;
 
   constructor(private router: Router,
-              private orderService: OrderService) {
+              private cartService: CartService,
+              private checkoutService: CheckoutService) {
   }
 
   ngOnInit() {
-    console.log(screen.width);
+    this.checkoutService.canGoToCheckout = false;
+    // console.log(screen.width);
     if (navigator.userAgent.match(/Android/i)
       || navigator.userAgent.match(/webOS/i)
       || navigator.userAgent.match(/iPhone/i)
@@ -41,18 +46,29 @@ export class CartComponent implements OnInit {
   }
 
   fetchItems() {
-    this.orderService.getCartItems()
+    this.cartService.getCartItems()
       .toPromise()
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data.result == true) {
           this.items = data.object;
+          this.checkoutService.canGoToCheckout = (this.items.length != 0);
         }
       });
   }
 
   proceedToCheckout() {
-    this.router.navigateByUrl("/products/checkout");
+    // console.log("cart items: ", this.items);
+    this.checkoutService.prepareAll(this.items)
+      .toPromise()
+      .then(data => {
+        if (data.result == true) {
+          this.router.navigateByUrl("/products/checkout");
+        }
+        else {
+          alert("Request failed!\nPlease try again!");
+        }
+      });
   }
 
   goToDetail(id) {
@@ -67,7 +83,7 @@ export class CartComponent implements OnInit {
   }
 
   isAllValid() {
-    if (this.items.length == 0) {
+    if (this.items == null || this.items.length == 0) {
       return false;
     }
     for (let item of this.items) {
@@ -89,14 +105,21 @@ export class CartComponent implements OnInit {
     return amount;
   }
 
+
   deleteItem(item: CartItem) {
-    this.orderService.deleteCartItem(item)
+    this.pending = true;
+    this.cartService.deleteCartItem(item)
       .toPromise()
       .then(data => {
         if (data.result == true) {
           this.fetchItems();
         }
+        this.pending = false;
       });
   }
 
+
+  ngOnDestroy() {
+    this.checkoutService.canGoToCheckout = false;
+  }
 }

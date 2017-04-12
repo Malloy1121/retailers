@@ -16,12 +16,12 @@
       <div class="row">
         <div class="product-list-navbar-container row">
           <div class="col-3-clear">
-            <button (click)="orderByPrice(true)">Order by price<img src="/assets/images/arrow-up.svg" alt="ascending">
+            <button (click)="orderByPrice(true)">Sort by price<img src="/assets/images/arrow-up.svg" alt="ascending">
             </button>
           </div>
           <div class="col-3-clear">
-            <button (click)="orderByPrice(false)">Order by price<img src="/assets/images/arrow-pointing-down.svg"
-                                                                     alt="descending"></button>
+            <button (click)="orderByPrice(false)">Sort by price<img src="/assets/images/arrow-pointing-down.svg"
+                                                                    alt="descending"></button>
           </div>
           <div class="col-5-clear price-range-container">
             <div class="col-2-clear"><span>Price: </span></div>
@@ -79,5 +79,9 @@
       </div>
 
     </div>
+    <div class="item-list-container">
+      <app-pagination></app-pagination>
+    </div>
   </div>
+
 </div>

@@ -1,6 +1,6 @@
 package com.example.model.business;
 
-import com.example.model.user.User;
+import com.example.model.user.profile.User;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 

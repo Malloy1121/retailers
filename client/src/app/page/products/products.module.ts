@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {CartComponent} from "./cart/cart.component";
 import {ItemListComponent} from "./item/item-list/item-list.component";
 import {ItemDetailComponent} from "./item/item-detail/item-detail.component";
@@ -8,12 +7,13 @@ import {PRODUCTS_ROUTE} from "./products.route";
 import {CheckoutComponent} from './checkout/checkout.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FixBoxDirective} from "../../directive/fix-box.directive";
+import {SharedModule} from "../../pipe/shared-module/shared.module";
 
 @NgModule({
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild(PRODUCTS_ROUTE)
   ],
   declarations: [
@@ -21,7 +21,7 @@ import {FixBoxDirective} from "../../directive/fix-box.directive";
     ItemListComponent,
     ItemDetailComponent,
     CheckoutComponent,
-    FixBoxDirective,
+    FixBoxDirective
   ]
 })
 export class ProductsModule {

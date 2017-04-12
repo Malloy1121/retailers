@@ -1,0 +1,129 @@
+<div class="content">
+  <div class="orders-container">
+
+    <div class="row">
+      <h1 style="margin-top: 0;">Order Details</h1>
+    </div>
+
+    <ng-container *ngFor="let order of orders">
+      <div class="row order-title-container">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">Order placed on {{order.month}}/{{order.date}}/{{order.year|formattedYear}}</div>
+          </div>
+          <div class="row">
+            <div class="col-12">Order # {{order.orderID}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="order-info-container">
+          <div class="row order-info-header">
+            <div class="col-5">Shipping Address</div>
+            <div class="col-3">Payment Method</div>
+            <div class="col-4">Order Summary</div>
+          </div>
+          <div class="row">
+            <div class="col-5">
+              <div class="row">
+                <div class="col-12">{{order.address.tag}}</div>
+              </div>
+              <div class="row">
+                <div class="col-12">{{order.address.street}} {{order.address.suite}}</div>
+              </div>
+              <div class="row">
+                <div class="col-12">{{order.address.city}}, {{order.address.state}} {{order.address.zipcode}}</div>
+              </div>
+            </div>
+            <div class="col-3">Card ending in {{order.payment.number|last4Digits}}</div>
+            <div class="col-4">
+              <div class="row ">
+                <div class="col-8">Items({{order.items.length}}) Subtotal:&nbsp;</div>
+                <div class="col-4 align-right">${{order.subtotal.toFixed(2)}}</div>
+              </div>
+
+              <div class="row ">
+                <div class="col-8">Shipping & Handling:</div>
+                <div class="col-4 align-right">${{order.handling.toFixed(2)}}</div>
+              </div>
+
+              <div class="row ">
+                <div class="col-8">Tax Collected:</div>
+                <div class="col-4 align-right">${{order.tax.toFixed(2)}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-8">Total:</div>
+                <div class="col-4 align-right">${{order.total.toFixed(2)}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 order-item">
+          <div class="row order-card">
+
+            <div class="order-card-body-container">
+              <div class="row">
+                <div class="col-12">
+                  <h2 class="order-status">{{order.status}}</h2>
+                </div>
+              </div>
+
+              <div class="row order-card-body" *ngFor="let item of items">
+                <div class="col-3" style="position: absolute; height: calc(100% - 10px);">
+                  <div class="order-image-container flex-vertical-center">
+                    <img
+                      class="as-link"
+                      src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                      alt="item"
+                      (click)="goToDetail(item.productID)">
+                  </div>
+                </div>
+
+                <div class="col-6 col-offset-3">
+                  <div class="row">
+                    <div class="col-12 product-name">
+                      <h3 (click)="goToDetail(item.productID)" class="as-link blue">
+                        {{item.productName}} ({{item.itemTypeName}})</h3>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <span class="as-link">Sold by {{item.retailerName}}</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4">
+                      Unit Price: <span class="price">${{item.unitPrice.toFixed(2)}}</span>
+                    </div>
+                    <div class="col-4-clear">
+                      Amount: <span class="price">{{item.amount}}</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <button class="btn-profile" style="max-width: 200px;" (click)="goToDetail(item.productID)">Buy it
+                        Again
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!--<ng-container *ngIf="orders.length==0">-->
+    <!--<h2>-->
+    <!--Order not found!-->
+    <!--</h2>-->
+    <!--</ng-container>-->
+  </div>
+</div>

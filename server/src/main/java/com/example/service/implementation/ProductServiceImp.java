@@ -1,15 +1,20 @@
 package com.example.service.implementation;
 
-import com.example.dto.*;
+import com.example.dto.business.CategoryDTO;
+import com.example.dto.business.ItemDTO;
+import com.example.dto.business.ItemTypeDTO;
+import com.example.dto.business.KeywordCollection;
+import com.example.dto.user.UserDTO;
 import com.example.model.business.Category;
 import com.example.model.business.Item;
 import com.example.model.business.ItemDetail;
 import com.example.model.business.ItemType;
-import com.example.model.user.User;
+import com.example.model.user.profile.User;
 import com.example.repository.CategoryRepo;
 import com.example.repository.ItemRepo;
 import com.example.repository.ItemTypeRepo;
 import com.example.service.ProductService;
+import com.example.utility.MapUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -94,11 +99,7 @@ public class ProductServiceImp implements ProductService {
         List<String> mappedItemDetails = new ArrayList<>();
 
         for (ItemType itemType : itemTypes) {
-            ItemTypeDTO itemTypeDTO = new ItemTypeDTO();
-            itemTypeDTO.setId(itemType.getId());
-            itemTypeDTO.setUnitPrice(itemType.getUnitPrice());
-            itemTypeDTO.setInventory(itemType.getInventory());
-            itemTypeDTO.setName(itemType.getName());
+            ItemTypeDTO itemTypeDTO = MapUtility.mapItemType(itemType);
             mappedItemTypes.add(itemTypeDTO);
         }
 

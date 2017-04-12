@@ -1,6 +1,6 @@
 package com.example.repository;
 
-import com.example.model.user.WishListItem;
+import com.example.model.user.order.WishListItem;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

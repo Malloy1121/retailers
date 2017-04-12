@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {AuthService} from "./service/auth.service";
-import {OrderService} from "./service/order.service";
+import {CartService} from "./service/cart.service";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import {OrderService} from "./service/order.service";
 export class AppComponent implements OnDestroy {
   title = 'app works!';
 
-  constructor(private authService: AuthService, protected orderService: OrderService) {
+  constructor(private authService: AuthService, protected cartService: CartService) {
   }
 
   ngOnDestroy() {

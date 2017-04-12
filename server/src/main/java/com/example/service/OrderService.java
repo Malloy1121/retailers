@@ -1,9 +1,8 @@
 package com.example.service;
 
-import com.example.dto.CartItemDTO;
-import com.example.dto.ItemDTO;
-import com.example.dto.OrderDTO;
-import com.example.model.user.Order;
+import com.example.dto.user.CartItemDTO;
+import com.example.dto.business.ItemDTO;
+import com.example.dto.user.OrderDTO;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,33 +12,13 @@ import java.util.List;
  */
 public interface OrderService {
 
-    boolean makeAnOrder(List<ItemDTO> items);
-
     boolean cancelOrder(OrderDTO order);
 
     boolean updateOrder(OrderDTO order);
 
-    List<Order> getOrders(Long userID);
+    List<OrderDTO> getOrders(long userID,int pageNumber,int index);
 
-    Order findOrderByID(long id);
+    OrderDTO findOrderByID(long id,long userID);
 
-    List<CartItemDTO> getCartItems(Long userID);
 
-    boolean deleteCartItem(long cartItemID);
-
-    Integer getCartItemAmount(long userID);
-
-    List<CartItemDTO> getWishListItems(long userID);
-
-    boolean clearWishList(Long userID);
-
-    boolean moveAllFromWishListToCart(Long userID, Collection<CartItemDTO> items);
-
-    boolean moveOneFromWishListToCart(Long userID, CartItemDTO wishListItemDTO);
-
-    boolean addToCart(Long userID, CartItemDTO cartItemDTO);
-
-    boolean addToWishList(Long userID, CartItemDTO cartItemDTO);
-
-    boolean removeWishListItem(Long id, Long userID);
 }

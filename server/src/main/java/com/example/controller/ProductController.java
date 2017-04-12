@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import com.example.dto.*;
+import com.example.dto.business.ItemDTO;
+import com.example.dto.business.KeywordCollection;
 import com.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

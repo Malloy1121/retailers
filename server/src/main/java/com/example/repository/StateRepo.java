@@ -1,6 +1,6 @@
 package com.example.repository;
 
-import com.example.model.user.State;
+import com.example.model.business.State;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

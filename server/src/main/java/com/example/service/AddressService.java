@@ -1,8 +1,7 @@
 package com.example.service;
 
-import com.example.dto.AddressDTO;
-import com.example.model.user.Address;
-import com.example.model.user.State;
+import com.example.dto.user.AddressDTO;
+import com.example.model.business.State;
 
 import java.util.List;
 

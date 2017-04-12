@@ -1,0 +1,136 @@
+<div class="content">
+  <div class="orders-container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="order-hearder-title">My Orders</h1>
+      </div>
+    </div>
+
+    <div class="row order-list-navbar">
+      <div class="col-12">
+        <ul>
+          <li>
+            <button (click)="switchPanel(1)" [ngClass]="{'active': index==1}">All Orders</button>
+          </li>
+          <li>
+            <button (click)="switchPanel(2)" [ngClass]="{'active': index==2}">Open Orders</button>
+          </li>
+          <li>
+            <button (click)="switchPanel(3)" [ngClass]="{'active': index==3}">Delivered Orders</button>
+          </li>
+          <li>
+            <button (click)="switchPanel(4)" [ngClass]="{'active': index==4}">Canceled Orders</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row" *ngFor="let order of orders" style="margin-bottom: 20px;">
+      <div class="col-12 order-item">
+        <div class="row order-card">
+          <div class="order-card-header-container">
+            <div class="row" style="display: flex;">
+              <div class="order-card-header-left row">
+                <div class="col-3">
+                  <div class="row">Order placed on</div>
+                  <div class="row">{{order.month}}/{{order.date}}/{{order.year|formattedYear}}</div>
+                </div>
+                <div class="col-3">
+                  <div class="row">Total</div>
+                  <div class="row">${{order.total}}</div>
+                </div>
+                <div class="col-3">
+                  <div class="row">Ship to</div>
+                  <div class="row">
+                    <span class="as-link blue dropdown-container"
+                          style="display: block;width: 100%;margin-right: auto;">
+                      <span style="padding-right: 20px;position: relative;">{{order.address.tag}}<i
+                        class="triangle-down"></i></span>
+                      <div class="dropdown-list">
+                        <div class="dropdown-padding">
+                          <div class="row">
+                            <div class="col-12">
+                              <h3>{{order.address.tag}}</h3>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              {{order.address.street}} {{order.address.suite}}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              {{order.address.city}}, {{order.address.state}}, {{order.address.zipcode}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="order-card-header-right">
+                <div class="col-12">
+                  <div class="row">Order # {{order.orderID}}</div>
+                  <div class="row as-link blue" (click)="gotToOrderDetail(order.orderID)">Order Details</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-card-body-container">
+            <div class="row">
+              <div class="col">
+                <h2 class="order-status">{{order.status}}</h2>
+              </div>
+            </div>
+
+            <div class="row order-card-body" *ngFor="let item of order.items">
+              <div class="col-3" style="position: absolute; height: calc(100% - 10px);">
+                <div class="order-image-container flex-vertical-center">
+                  <img
+                    class="as-link"
+                    src="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg"
+                    alt="item"
+                    (click)="goToDetail(item.productID)">
+                </div>
+              </div>
+
+              <div class="col-6 col-offset-3">
+                <div class="row">
+                  <div class="col-12 product-name">
+                    <h3 (click)="goToDetail(item.productID)" class="as-link blue">
+                      {{item.productName}} ({{item.itemTypeName}})</h3>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <span class="as-link">Sold by {{item.retailerName}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-4">
+                    Unit Price: <span class="price">${{item.unitPrice.toFixed(2)}}</span>
+                  </div>
+                  <div class="col-4-clear">
+                    Amount: <span class="price">{{item.amount}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <button class="btn-profile" style="max-width: 200px;" (click)="goToDetail(item.productID)">Buy it
+                      Again
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <app-pagination></app-pagination>
+</div>

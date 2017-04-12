@@ -1,11 +1,9 @@
 package com.example.service;
 
-import com.example.dto.AddressDTO;
-import com.example.dto.UserDTO;
-import com.example.model.user.User;
+import com.example.dto.user.UserDTO;
+import com.example.model.user.profile.User;
 
 import java.util.List;
-import java.util.Optional;
 
 
 /**

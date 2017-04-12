@@ -1,11 +1,10 @@
 package com.example.controller;
 
-import com.example.dto.AddressDTO;
+import com.example.dto.user.AddressDTO;
 import com.example.dto.ResponseMessage;
-import com.example.dto.UserDTO;
-import com.example.model.user.Address;
-import com.example.model.user.State;
-import com.example.model.user.User;
+import com.example.dto.user.UserDTO;
+import com.example.model.business.State;
+import com.example.model.user.profile.User;
 import com.example.service.AddressService;
 import com.example.service.UserService;
 import com.example.validator.FormValidator;

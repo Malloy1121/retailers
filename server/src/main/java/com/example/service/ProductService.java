@@ -1,10 +1,8 @@
 package com.example.service;
 
-import com.example.dto.CategoryDTO;
-import com.example.dto.ItemDTO;
-import com.example.dto.ItemTypeDTO;
-import com.example.dto.KeywordCollection;
-import org.springframework.data.domain.Page;
+import com.example.dto.business.CategoryDTO;
+import com.example.dto.business.ItemDTO;
+import com.example.dto.business.KeywordCollection;
 
 import java.util.List;
 

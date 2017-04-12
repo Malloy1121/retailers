@@ -1,16 +1,14 @@
 package com.example.controller;
 
 import com.example.dto.ResponseMessage;
-import com.example.dto.UserDTO;
-import com.example.model.user.User;
+import com.example.dto.user.UserDTO;
+import com.example.model.user.profile.User;
 import com.example.service.UserService;
 import com.example.validator.FormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by Malloy on 3/1/2017.

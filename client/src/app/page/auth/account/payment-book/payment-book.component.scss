@@ -1,0 +1,250 @@
+@import "../../../../../assets/style/theme";
+
+.payment-container {
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+
+  img {
+    width: 10px;
+    top: 50%;
+    -webkit-transition: transform 0.5s;
+    -moz-transition: transform 0.5s;
+    -ms-transition: transform 0.5s;
+    -o-transition: transform 0.5s;
+    transition: transform 0.5s;
+    will-change: transform;
+  }
+
+  .payment-header-container {
+    position: relative;
+    display: flex;
+    margin-bottom: 15px;
+
+    > div {
+      display: inline-flex;
+
+      h3 {
+        width: 100%;
+        min-width: 200px;
+        margin: 0;
+      }
+    }
+
+    .payment-header-left {
+      width: 100%;
+    }
+
+    .payment-header-right {
+    }
+  }
+
+  .payment-card {
+    border: 1px lightgrey solid;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    margin-bottom: 20px;
+
+    &.payment-card-open {
+
+      .payment-card-icon-container {
+
+        img {
+          transform: rotateX(180deg);
+        }
+      }
+
+      .payment-content-box {
+        height: 180px;
+      }
+    }
+
+    span {
+      display: block;
+    }
+
+    .payment-title-container {
+      padding: 15px 50px 15px 15px;
+      position: relative;
+      display: flex;
+      background-color: #ececec;
+      cursor: pointer;
+
+      .payment-card-icon-container {
+        position: absolute;
+        right: 20px;
+
+      }
+
+      .payment-card-title-left {
+        width: 100%;
+
+      }
+
+      .payment-card-title-right {
+
+        span {
+          width: 150px;
+        }
+      }
+
+    }
+
+    .payment-content-box {
+      height: 0;
+      overflow-y: hidden;
+      -webkit-transition: height 0.5s;
+      -moz-transition: height 0.5s;
+      -ms-transition: height 0.5s;
+      -o-transition: height 0.5s;
+      transition: height 0.5s;
+      will-change: height;
+
+      .payment-content-container {
+        display: flex;
+        padding: 15px;
+
+        h4, p {
+          margin: 10px 0;
+        }
+
+        .payment-content-left {
+          width: 100%;
+        }
+
+        .payment-content-right {
+
+          p {
+            width: 200px;
+            word-break: break-all;
+          }
+        }
+
+      }
+
+      .btn-payment-card-container {
+        padding: 15px;
+        width: auto;
+        max-width: 300px;
+        margin-left: auto;
+        text-align: center;
+
+        button {
+          padding: 0 15px;
+          height: 35px;
+          margin: auto 5px;
+          border-radius: 5px;
+          background-color: $btn-background-color;
+          border: none;
+          color: white;
+
+          &:active {
+            background-color: $btn-background-color-active;
+          }
+        }
+      }
+    }
+  }
+
+  .add-payment-container {
+
+    .row {
+      margin-left: 10px;
+      margin-right: 10px;
+      width: calc(100% - 20px);
+      padding: 3px 0;
+    }
+
+    input {
+      height: 31px;
+      text-indent: 8px;
+      width: calc(100% - 15px);
+      box-sizing: border-box;
+      outline: none;
+      border-radius: 2px;
+      border: 1px solid grey;
+
+      &:focus {
+        box-shadow: 0 0 10px 3px #ef742d, 0 0 5px white inset;
+      }
+    }
+
+    select {
+      height: 31px;
+    }
+
+    hr {
+      border: none;
+      border-bottom: 1px lightgrey solid;
+    }
+
+    .add-card-container {
+
+      a {
+        color: blue;
+        cursor: pointer;
+
+        &:hover {
+          color: red;
+          text-decoration: underline;
+        }
+
+        img {
+          transform: rotateZ(-90deg);
+          will-change: transform;
+        }
+      }
+
+      &.add-card-open {
+
+        a {
+          img {
+            transform: rotateZ(0);
+          }
+        }
+
+        .add-card-form-container {
+          height: 400px;
+        }
+      }
+
+      .add-card-form-container {
+        height: 0;
+        margin: auto;
+        transition: height 0.5s;
+        will-change: height;
+        overflow-y: hidden;
+
+        h5 {
+          margin: 5px 10px;
+          font-size: 1em;
+        }
+
+        form {
+          display: block;
+
+          span {
+            display: block;
+          }
+
+          button {
+            height: 35px;
+            width: 100%;
+            margin: auto;
+            color: white;
+            background-color: $btn-background-color;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            padding: 0 15px;
+            white-space: nowrap;
+
+            &:active {
+              background-color: $btn-background-color-active;
+            }
+          }
+        }
+      }
+    }
+  }
+}

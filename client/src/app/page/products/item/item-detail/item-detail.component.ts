@@ -7,7 +7,7 @@ import "rxjs/Rx";
 import {ItemType} from "../../../../model/item-type";
 import {Product} from "../../../../model/product";
 import {CartItem} from "../../../../model/cart-item";
-import {OrderService} from "../../../../service/order.service";
+import {CartService} from "../../../../service/cart.service";
 import {AuthService} from "../../../../service/auth.service";
 
 declare var alert: any;
@@ -29,11 +29,12 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   private paramSub: Subscription;
   private amoutnSub: Subscription;
   private route: RouterStateSnapshot;
+  private currentImage:string="";
 
   constructor(private fb: FormBuilder,
               private shp: ShoppingService,
               private actRoute: ActivatedRoute,
-              private orderService: OrderService,
+              private cartService: CartService,
               private router: Router,
               private authService: AuthService) {
     this.route = this.router.routerState.snapshot;
@@ -49,7 +50,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
           .then(data => {
             if (data.result == true) {
               this.currentItem = data.object;
+              this.currentImage="https://wallpaperbrowse.com/media/images/Dubai-Photos-Images-Oicture-Dubai-Landmarks-800x600.jpg";
               this.findPrices(this.currentItem.itemType);
+            }
+            else {
+              this.router.navigateByUrl("/products/product-list");
             }
           });
       }
@@ -146,7 +151,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
             .toPromise()
             .then(data => {
               if (data == 200) {
-                this.router.navigate(["/auth/login", {url: this.route.url}]);
+                this.router.navigate(["/auth/login"], {queryParams: {url: this.route.url}});
               }
             });
         }
@@ -155,7 +160,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
   addToCart(cartItem) {
-    this.orderService.addToCart(cartItem)
+    this.cartService.addToCart(cartItem)
       .toPromise()
       .then(data => {
         if (data.result == true) {
@@ -193,7 +198,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
   addToWishList(cartItem) {
-    this.orderService.addToWishList(cartItem)
+    this.cartService.addToWishList(cartItem)
       .toPromise()
       .then(data => {
         if (data.result == true) {

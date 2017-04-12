@@ -17,7 +17,7 @@ export class Payment {
 
   public street: string;
 
-  public suite: string;
+  public suite: string = "";
 
   public city: string;
 

@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.PaymentDTO;
+import com.example.dto.user.PaymentDTO;
 import com.example.dto.ResponseMessage;
 import com.example.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;

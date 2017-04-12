@@ -1,12 +1,13 @@
 package com.example.service.implementation;
 
-import com.example.dto.AddressDTO;
-import com.example.model.user.Address;
-import com.example.model.user.State;
-import com.example.model.user.User;
+import com.example.dto.user.AddressDTO;
+import com.example.model.user.profile.Address;
+import com.example.model.business.State;
+import com.example.model.user.profile.User;
 import com.example.repository.AddressRepo;
 import com.example.repository.StateRepo;
 import com.example.service.AddressService;
+import com.example.utility.MapUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,16 +31,7 @@ public class AddressServiceImpl implements AddressService {
         List<Address> addresses = this.addressRepo.findAllByUserId(id);
         List<AddressDTO> mappedAddresses = new ArrayList<>();
         for (Address address : addresses) {
-            AddressDTO addressDTO = new AddressDTO();
-            addressDTO.setId(address.getId());
-            addressDTO.setStreet(address.getStreet());
-            addressDTO.setCity(address.getCity());
-            addressDTO.setState(address.getState().getState());
-            addressDTO.setSuite(address.getSuite());
-            addressDTO.setZipcode(address.getZipcode());
-            addressDTO.setIsPrimary(address.getIsPrimary() == 1);
-            addressDTO.setTag(address.getTag());
-            addressDTO.setStateID(address.getState().getId());
+            AddressDTO addressDTO = MapUtility.mapAddress(address);
             mappedAddresses.add(addressDTO);
             System.out.println(addressDTO);
         }

@@ -1,6 +1,6 @@
 package com.example.repository;
 
-import com.example.model.user.CartItem;
+import com.example.model.user.order.CartItem;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +20,6 @@ public interface CartRepo extends CrudRepository<CartItem, Long> {
     Integer countAllByUserId(Long userID);
 
     Optional<CartItem> findByItemTypeIdAndUserId(Long itemTypeID,Long userID);
+
+    void deleteAllByUserId(long userId);
 }
