@@ -1,5 +1,6 @@
 package com.example.service.implementation;
 
+import com.example.dto.ResponseMessage;
 import com.example.dto.business.CategoryDTO;
 import com.example.dto.business.ItemDTO;
 import com.example.dto.business.ItemTypeDTO;
@@ -58,7 +59,7 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<ItemDTO> getItemsByCategory(
+    public ResponseMessage getItemsByCategory(
             Integer categoryID,
             int page,
             int ascending,
@@ -69,7 +70,7 @@ public class ProductServiceImp implements ProductService {
 //        System.out.println("Highest: "+highestPrice);
 //        System.out.println("Lowest: "+lowestPrice);
 
-        int size = 15;
+        int size = 3;
         PageRequest request = new PageRequest(page, size);
         Page<Item> items;
         System.out.println("Highest: " + highestPrice);
@@ -80,8 +81,12 @@ public class ProductServiceImp implements ProductService {
             items = this.itemRepo.findAllByLowestPriceGreaterThanEqualAndHighestPriceLessThanEqual(lowestPrice, highestPrice, request);
         }
         System.out.println("Total pages:" + items.getTotalPages() + ", Total elements:" + items.getTotalElements());
+        System.out.println("Current page: " + page);
+        ResponseMessage message = new ResponseMessage();
+        message.setObject(this.mappingItems(items));
+        message.setTotalPages(items.getTotalPages());
 
-        return this.mappingItems(items);
+        return message;
     }
 
     @Override
@@ -149,7 +154,7 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<ItemDTO> getItemsByCategoryAndKeywords(
+    public ResponseMessage getItemsByCategoryAndKeywords(
             Integer categoryID,
             List<String> keywords,
             int page,
@@ -161,13 +166,15 @@ public class ProductServiceImp implements ProductService {
         PageRequest request;
         Sort sort;
         if (ascending == 0) {
-            request = new PageRequest(page, 15);
+            request = new PageRequest(page, 3);
         } else if (ascending > 0) {
             sort = new Sort(Sort.Direction.ASC, "lowestPrice");
-            request = new PageRequest(page, 15, sort);
-        } else {
+            request = new PageRequest(page, 3, sort);
+        } else if (ascending < 0) {
             sort = new Sort(Sort.Direction.DESC, "lowestPrice");
-            request = new PageRequest(page, 15, sort);
+            request = new PageRequest(page, 3, sort);
+        } else {
+            request = new PageRequest(page, 3);
         }
 
         List<String> keys = new ArrayList<>();
@@ -193,10 +200,11 @@ public class ProductServiceImp implements ProductService {
             items = this.itemRepo.findAllWithinPriceRange(keys.get(0), lowestPrice, highestPrice, request);
         }
 
-//        System.out.println("Highest: "+highestPrice);
-//        System.out.println("Lowest: "+lowestPrice);
+        ResponseMessage message = new ResponseMessage();
+        message.setObject(this.mappingItems(items));
+        message.setTotalPages(items.getTotalPages());
 
-        return this.mappingItems(items);
+        return message;
     }
 
     private List<ItemDTO> mappingItems(Page<Item> items) {

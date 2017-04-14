@@ -34,10 +34,9 @@ public class OrderController {
         ResponseMessage message = new ResponseMessage();
         long userID = (long) session.getAttribute("userID");
 
-        List<OrderDTO> orders = this.orderService.getOrders(userID,page,index);
+        message = this.orderService.getOrders(userID,page,index);
 
-        message.setResult(orders!=null);
-        message.setObject(orders);
+        message.setResult(true);
 
         return message;
     }

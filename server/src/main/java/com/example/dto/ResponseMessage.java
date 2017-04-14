@@ -8,6 +8,19 @@ public class ResponseMessage {
     private boolean result;
     private String info;
     private Object object;
+    private int totalPages;
+
+    public boolean isResult() {
+        return result;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
 
     public int getStatus() {
         return status;

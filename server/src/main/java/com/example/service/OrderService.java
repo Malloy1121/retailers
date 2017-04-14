@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.ResponseMessage;
 import com.example.dto.user.CartItemDTO;
 import com.example.dto.business.ItemDTO;
 import com.example.dto.user.OrderDTO;
@@ -16,7 +17,7 @@ public interface OrderService {
 
     boolean updateOrder(OrderDTO order);
 
-    List<OrderDTO> getOrders(long userID,int pageNumber,int index);
+    ResponseMessage getOrders(long userID, int pageNumber, int index);
 
     OrderDTO findOrderByID(long id,long userID);
 

@@ -46,8 +46,8 @@ public class ProductController {
             highestPrice = Integer.MAX_VALUE;
         }
         ResponseMessage message = new ResponseMessage();
+        message = this.productService.getItemsByCategory(categoryID, page, 0, lowestPrice, highestPrice);
         message.setResult(true);
-        message.setObject(this.productService.getItemsByCategory(categoryID, page, 0, lowestPrice, highestPrice));
         return message;
     }
 
@@ -72,7 +72,7 @@ public class ProductController {
             keywords.add(keywordCollection.getKeyword());
         }
         System.out.println("keywords: " + keywords.size());
-        message.setObject(this.productService.getItemsByCategoryAndKeywords(categoryID, keywords, page, 0, lowestPrice, highestPrice));
+        message = this.productService.getItemsByCategoryAndKeywords(categoryID, keywords, page, 0, lowestPrice, highestPrice);
         message.setResult(true);
         return message;
     }
@@ -102,10 +102,11 @@ public class ProductController {
         return message;
     }
 
-    @PostMapping("/getProductsByPriceOrder/{categoryID}/{order}")
+    @PostMapping("/getProductsByPriceOrder/{categoryID}/{order}/{page}")
     public ResponseMessage getProductsByPriceOrder(
             @PathVariable Integer categoryID,
             @PathVariable Integer order,
+            @PathVariable Integer page,
             @RequestBody List<KeywordCollection> keys,
             @RequestParam(name = "lowestPrice") float lowestPrice,
             @RequestParam(name = "highestPrice") float highestPrice
@@ -124,7 +125,7 @@ public class ProductController {
             keywords.add(keywordCollection.getKeyword());
             log.info(keywordCollection.getKeyword());
         }
-        message.setObject(this.productService.getItemsByCategoryAndKeywords(categoryID, keywords, 0, order, lowestPrice, highestPrice));
+        message = this.productService.getItemsByCategoryAndKeywords(categoryID, keywords, page - 1, order, lowestPrice, highestPrice);
         message.setResult(true);
         return message;
     }

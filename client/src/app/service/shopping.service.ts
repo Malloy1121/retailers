@@ -102,7 +102,7 @@ export class ShoppingService {
       });
   }
 
-  getProductsByPriceOrder(categoryID: number, keywords: string[], ascending: boolean, lowestPrice: any, highestPrice: any) {
+  getProductsByPriceOrder(categoryID: number, page: number, keywords: string[], ascending: number, lowestPrice: any, highestPrice: any) {
     const keys = [];
     for (let keyword of keywords) {
       const keywordCollection = new KeywordCollection();
@@ -129,8 +129,8 @@ export class ShoppingService {
     const params = new URLSearchParams();
     params.set("lowestPrice", "" + lowest + "");
     params.set("highestPrice", "" + highest + "");
-    const orderFlag = ascending == true ? 1 : -1;
-    return this.http.post("/products/getProductsByPriceOrder/" + categoryID + "/" + orderFlag, keys, {search: params})
+    // const orderFlag = ascending == true ? 1 : -1;
+    return this.http.post("/products/getProductsByPriceOrder/" + categoryID + "/" + ascending + "/" + page, keys, {search: params})
       .map((response: Response) => {
         return response.json();
       });

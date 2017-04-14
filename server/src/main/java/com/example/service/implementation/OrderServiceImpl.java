@@ -1,5 +1,6 @@
 package com.example.service.implementation;
 
+import com.example.dto.ResponseMessage;
 import com.example.dto.user.OrderDTO;
 import com.example.dto.user.OrderItemDTO;
 import com.example.model.user.order.Order;
@@ -37,8 +38,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getOrders(long userID, int pageNumber, int index) {
-        Pageable request = new PageRequest(pageNumber - 1, 10, Sort.Direction.DESC, "createTime");
+    public ResponseMessage getOrders(long userID, int pageNumber, int index) {
+        Pageable request = new PageRequest(pageNumber - 1, 5, Sort.Direction.DESC, "createTime");
 
         Page<Order> orders;
 
@@ -63,20 +64,14 @@ public class OrderServiceImpl implements OrderService {
 
         for (Order order : orders) {
             OrderDTO orderDTO = MapUtility.mapOrder(order);
-
-//            List<OrderItemDTO> mappedItems = new ArrayList<>();
-//            List<OrderItem> items = order.getOrderItems();
-//            for (OrderItem item : items) {
-//                OrderItemDTO orderItemDTO = MapUtility.mapOrderItem(item);
-//                mappedItems.add(orderItemDTO);
-//            }
-
-//            orderDTO.setItems(mappedItems);
             mappedOrders.add(orderDTO);
         }
 
         GregorianCalendar calendar=new GregorianCalendar();
-        return mappedOrders;
+        ResponseMessage message=new ResponseMessage();
+        message.setObject(mappedOrders);
+        message.setTotalPages(orders.getTotalPages());
+        return message;
     }
 
     @Override

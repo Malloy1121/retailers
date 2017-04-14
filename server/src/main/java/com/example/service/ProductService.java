@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.ResponseMessage;
 import com.example.dto.business.CategoryDTO;
 import com.example.dto.business.ItemDTO;
 import com.example.dto.business.KeywordCollection;
@@ -13,7 +14,7 @@ public interface ProductService {
 
     List<CategoryDTO> getAllCategories();
 
-    List<ItemDTO> getItemsByCategory(
+    ResponseMessage getItemsByCategory(
             Integer categoryID,
             int page,
             int ascending,
@@ -27,7 +28,7 @@ public interface ProductService {
 
     List<KeywordCollection> findItemNamesByKeyword(String keyword);
 
-    List<ItemDTO> getItemsByCategoryAndKeywords(
+    ResponseMessage getItemsByCategoryAndKeywords(
             Integer categoryID,
             List<String> keywords,
             int page,

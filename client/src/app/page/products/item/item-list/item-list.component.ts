@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ShoppingService} from "../../../../service/shopping.service";
 import {Product} from "../../../../model/product";
 import "rxjs/Rx";
 import {Subscription} from "rxjs";
+import {MyEmitService} from "../../../../service/emit.service";
 
 declare var alert: any;
 
@@ -12,19 +13,23 @@ declare var alert: any;
   templateUrl: 'item-list.component.html',
   styleUrls: ['item-list.component.scss']
 })
-export class ItemListComponent implements OnInit {
+export class ItemListComponent implements OnInit, OnDestroy {
   private paramSub: Subscription;
   private products: Product[] = [];
   private currentCategoryID: number = -1;
   private keywords: string[] = [];
-  private page: number = 0;
-  private highestPrice = "";
-  private lowestPrice = "";
+  private currentPage: number = 1;
+  private totalPages: number = 1;
+  private highestPrice: any = "";
+  private lowestPrice: any = "";
   private reg: RegExp = new RegExp(/^(\d+\.?\d{0,2})$/);
+  private currentPageSub: Subscription;
+  private isSorted: number = 0;
 
   constructor(private router: Router,
               private shpService: ShoppingService,
-              private actRoute: ActivatedRoute) {
+              private actRoute: ActivatedRoute,
+              private emitService: MyEmitService) {
   }
 
   ngOnInit() {
@@ -32,6 +37,7 @@ export class ItemListComponent implements OnInit {
       .subscribe(data => {
         this.highestPrice = "";
         this.lowestPrice = "";
+        this.isSorted = 0;
         if (data["categoryID"]) {
           this.currentCategoryID = data["categoryID"];
         }
@@ -56,26 +62,43 @@ export class ItemListComponent implements OnInit {
 
       });
 
+    this.currentPageSub = this.emitService.currentPageSubject
+      .subscribe(data => {
+        if (data != this.currentPage) {
+          this.currentPage = data;
+          if (this.isSorted == 0) {
+            this.searchByPriceRange();
+          }
+          else {
+            this.orderByPrice(this.isSorted);
+          }
+        }
+      });
+
   }
 
   fetchItems() {
-    this.shpService.getProductsByCategory(this.currentCategoryID, 1, -1, -1)
+    this.shpService.getProductsByCategory(this.currentCategoryID, this.currentPage, -1, -1)
       .toPromise()
       .then(data => {
         if (data.result == true) {
           this.products = data.object;
-          console.log(this.products);
+          this.totalPages = data.totalPages;
+          this.emitService.totalPageSubject.next(this.totalPages);
+          console.log(data);
         }
       });
   }
 
   fetchItemsByKeywords() {
-    this.shpService.getProductsByCategoryAndKeyword(this.currentCategoryID, this.keywords, 1, -1, -1)
+    this.shpService.getProductsByCategoryAndKeyword(this.currentCategoryID, this.keywords, this.currentPage, -1, -1)
       .toPromise()
       .then(data => {
         if (data.result == true) {
           this.products = data.object;
-          console.log(this.products);
+          this.totalPages = data.totalPages;
+          this.emitService.totalPageSubject.next(this.totalPages);
+          console.log(data);
         }
       });
   }
@@ -85,13 +108,17 @@ export class ItemListComponent implements OnInit {
   }
 
 
-  orderByPrice(ascending: boolean) {
-    this.shpService.getProductsByPriceOrder(this.currentCategoryID, this.keywords, ascending, this.lowestPrice, this.highestPrice)
+  orderByPrice(ascending: number) {
+    this.isSorted = ascending;
+    this.currentPage = 1;
+    this.shpService.getProductsByPriceOrder(this.currentCategoryID, this.currentPage, this.keywords, ascending, this.lowestPrice, this.highestPrice)
       .toPromise()
       .then(data => {
         if (data.result == true) {
           this.products = data.object;
-          console.log(this.products);
+          this.totalPages = data.totalPages;
+          this.emitService.totalPageSubject.next(this.totalPages);
+          console.log(data);
         }
       });
   }
@@ -119,14 +146,20 @@ export class ItemListComponent implements OnInit {
   }
 
   searchByPriceRange() {
-    this.shpService.getProductsByCategoryAndKeyword(this.currentCategoryID, this.keywords, 1, this.lowestPrice, this.highestPrice)
+    this.shpService.getProductsByCategoryAndKeyword(this.currentCategoryID, this.keywords, this.currentPage, this.lowestPrice, this.highestPrice)
       .toPromise()
       .then(data => {
         if (data.result == true) {
           this.products = data.object;
-          console.log(this.products);
+          this.totalPages = data.totalPages;
+          this.emitService.totalPageSubject.next(this.totalPages);
+          console.log(data);
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.currentPageSub.unsubscribe();
   }
 
 }
