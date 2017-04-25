@@ -70,7 +70,7 @@ public class ProductServiceImp implements ProductService {
 //        System.out.println("Highest: "+highestPrice);
 //        System.out.println("Lowest: "+lowestPrice);
 
-        int size = 3;
+        int size = 9;
         PageRequest request = new PageRequest(page, size);
         Page<Item> items;
         System.out.println("Highest: " + highestPrice);
@@ -166,15 +166,15 @@ public class ProductServiceImp implements ProductService {
         PageRequest request;
         Sort sort;
         if (ascending == 0) {
-            request = new PageRequest(page, 3);
+            request = new PageRequest(page, 9);
         } else if (ascending > 0) {
             sort = new Sort(Sort.Direction.ASC, "lowestPrice");
-            request = new PageRequest(page, 3, sort);
+            request = new PageRequest(page, 9, sort);
         } else if (ascending < 0) {
             sort = new Sort(Sort.Direction.DESC, "lowestPrice");
-            request = new PageRequest(page, 3, sort);
+            request = new PageRequest(page, 9, sort);
         } else {
-            request = new PageRequest(page, 3);
+            request = new PageRequest(page, 9);
         }
 
         List<String> keys = new ArrayList<>();

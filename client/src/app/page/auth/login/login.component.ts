@@ -14,10 +14,10 @@ import {CartService} from "../../../service/cart.service";
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  private loginForm: FormGroup;
+  public loginForm: FormGroup;
   private paramsSub: Subscription;
   private forwardUrl: string;
-  private loginFailed: boolean = false;
+  public loginFailed: boolean = false;
 
   constructor(private fb: FormBuilder,
               private router: Router,

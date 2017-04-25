@@ -8,7 +8,7 @@
 
         <div>
           <h3 *ngIf="address.isPrimary">Primary Address</h3>
-          <p style="font-weight: bold">{{address.tag}}; id:{{address.id}}</p>
+          <p style="font-weight: bold">{{address.tag | uppercase}}</p>
           <p>{{address.street}} {{address.suite}}</p>
           <p>{{address.city}}, {{address.state}} {{address.zipcode}}</p>
         </div>

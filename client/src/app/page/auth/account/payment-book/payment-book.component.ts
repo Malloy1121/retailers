@@ -17,37 +17,37 @@ declare var alert: any;
   styleUrls: ['./payment-book.component.scss', './payment-edit.scss']
 })
 export class PaymentBookComponent implements OnInit, OnDestroy {
-  private payments: Payment[];
-  private currentPaymentNumber: any = "";
-  private isAddCardOpen: boolean = false;
-  private months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-  private years = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027];
+  public payments: Payment[];
+  public currentPaymentNumber: any = "";
+  public isAddCardOpen: boolean = false;
+  public months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+  public years = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027];
   private paramsSubscription: Subscription;
-  private editMode: boolean = false;
+  public editMode: boolean = false;
 
-  private paymentForm: FormGroup;
-  private nameEdit: FormControl;
-  private monthEdit: FormControl;
-  private yearEdit: FormControl;
-  private streetEdit: FormControl;
-  private cityEdit: FormControl;
-  private stateEdit: FormControl;
-  private zipcodeEdit: FormControl;
-  private suiteEdit: FormControl;
-  private states = [];
+  public paymentForm: FormGroup;
+  public nameEdit: FormControl;
+  public monthEdit: FormControl;
+  public yearEdit: FormControl;
+  public streetEdit: FormControl;
+  public cityEdit: FormControl;
+  public stateEdit: FormControl;
+  public zipcodeEdit: FormControl;
+  public suiteEdit: FormControl;
+  public states = [];
 
-  private cardForm: FormGroup;
-  private name: FormControl;
-  private number: FormControl;
-  private month: FormControl;
-  private year: FormControl;
-  private street: FormControl;
-  private city: FormControl;
-  private state: FormControl;
-  private zipcode: FormControl;
-  private suite: FormControl;
-  private currentAddress: Address = null;
-  private id: number = -1;
+  public cardForm: FormGroup;
+  public name: FormControl;
+  public number: FormControl;
+  public month: FormControl;
+  public year: FormControl;
+  public street: FormControl;
+  public city: FormControl;
+  public state: FormControl;
+  public zipcode: FormControl;
+  public suite: FormControl;
+  public currentAddress: Address = null;
+  public id: number = -1;
 
 
   @ViewChild("newCard") newCard: ElementRef;

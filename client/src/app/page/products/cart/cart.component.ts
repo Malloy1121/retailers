@@ -15,10 +15,9 @@ declare var alert: any;
   styleUrls: ['cart.component.scss']
 })
 export class CartComponent implements OnInit, OnDestroy {
-  private items: CartItem[] = [];
-  private isValid: boolean = true;
+  public items: CartItem[] = [];
   private reg: RegExp = new RegExp(/^\d+$/);
-  private pending: boolean = false;
+  public pending: boolean = false;
 
   constructor(private router: Router,
               private cartService: CartService,

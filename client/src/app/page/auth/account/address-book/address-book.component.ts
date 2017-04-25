@@ -12,7 +12,7 @@ declare var alert: any;
   styleUrls: ['./address-book.component.scss']
 })
 export class AddressBookComponent implements OnInit {
-  private addresses: Address[] = [];
+  public addresses: Address[] = [];
 
   constructor(private router: Router,
               private profileService: ProfileService) {

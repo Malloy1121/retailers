@@ -8,12 +8,12 @@ import {Subscription} from "rxjs/Subscription";
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnInit, OnDestroy {
-  private buttons = [];
-  @Input("currentPage") private currentPage: number = 1;
-  @Input("totalPages") private totalPages: number = 2;
+  public buttons = [];
+  @Input("currentPage") public currentPage: number = 1;
+  @Input("totalPages") public totalPages: number = 2;
 
   private pageSub: Subscription;
-
+  private changePageSub:Subscription;
   constructor(private emitService: MyEmitService) {
   }
 
@@ -23,6 +23,9 @@ export class PaginationComponent implements OnInit, OnDestroy {
         this.totalPages = data;
         this.changeButtons(this.currentPage);
       });
+    this.changePageSub=this.emitService.changePageSubject.subscribe(data=>{
+      this.currentPage=data;
+    });
   }
 
   changeButtons(page) {
@@ -50,6 +53,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.pageSub.unsubscribe();
+    this.changePageSub.unsubscribe();
   }
 
 }

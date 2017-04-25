@@ -77,7 +77,7 @@
         </div>
         <div class="row">
           <div class="col-6 col-offset-4">
-            <span *ngIf="currentType.id>=3" style="color:red;font-weight: bold;">{{currentType.inventory}}</span>
+            <span *ngIf="currentType.id>=0" style="color:red;font-weight: bold;">{{currentType.inventory}}</span>
             <span *ngIf="currentType.id<0" style="color:red;font-weight: bold;">{{totalInventory}}</span>
             in stock
           </div>

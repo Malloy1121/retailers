@@ -8,6 +8,7 @@ export class MyEmitService {
   public cartItemAmountSubject: Subject<any> = new Subject();
   public totalPageSubject: Subject<any> = new Subject();
   public currentPageSubject: Subject<any> = new Subject();
+  public changePageSubject:Subject<any>=new Subject();
 
   constructor() {
   }

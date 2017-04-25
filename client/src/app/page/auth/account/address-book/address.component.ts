@@ -14,17 +14,17 @@ declare var alert: any;
   styleUrls: ['address.component.scss']
 })
 export class AddressComponent implements OnInit,OnDestroy {
-  private addressForm: FormGroup;
-  private addressName: FormControl;
-  private street: FormControl;
-  private city: FormControl;
-  private state: FormControl;
-  private zipcode: FormControl;
-  private suite: FormControl;
-  private states = [];
+  public addressForm: FormGroup;
+  public addressName: FormControl;
+  public street: FormControl;
+  public city: FormControl;
+  public state: FormControl;
+  public zipcode: FormControl;
+  public suite: FormControl;
+  public states = [];
   private currentAddress: Address = null;
   private routerParamsSubscription: Subscription;
-  private title: string = "Add";
+  public title: string = "Add";
   private id: number = -1;
 
   constructor(private activatedRoute: ActivatedRoute,

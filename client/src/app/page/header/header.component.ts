@@ -23,21 +23,21 @@ declare var document: any;
 export class HeaderComponent implements OnInit, OnDestroy {
 
 
-  private currentCategory: string = "All";
+  public currentCategory: string = "All";
   private currentCategoryID: any = -1;
-  private searchBarGetFocus: boolean = false;
-  private isAuthenticated: boolean;
+  public searchBarGetFocus: boolean = false;
+  public isAuthenticated: boolean;
   private currentUser: any = null;
-  private categories: Category[] = [];
+  public categories: Category[] = [];
   private isAccountShown: boolean = false;
   private isCartShown: boolean = false;
   private userSubscription: Subscription;
   private cartItemAmountSub: Subscription = new Subscription();
-  private cartItemAmount = 0;
-  private searchContent: string = "";
+  public cartItemAmount = 0;
+  public searchContent: string = "";
   private searchKeywords: string[] = [];
   private keywordListShown: boolean = false;
-  private keywordListItem: KeywordCollection[] = [];
+  public keywordListItem: KeywordCollection[] = [];
 
   @ViewChild("categoryMenu") select: ElementRef;
   @ViewChild("searchBox") searchBox: ElementRef;

@@ -17,7 +17,7 @@ declare var alert: any;
 export class OrderDetailComponent implements OnInit, OnDestroy {
   private paramsSub: Subscription;
   private id: number;
-  private orders: Order[] = [];
+  public orders: Order[] = [];
   private payment: Payment;
   private address: Address;
   private items: OrderItem[] = [];

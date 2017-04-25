@@ -14,9 +14,9 @@ declare var window: any;
   styleUrls: ['./order-list.component.scss']
 })
 export class OrderListComponent implements OnInit, OnDestroy {
-  private index: number = 1;
+  public index: number = 1;
   private paramsSub: Subscription;
-  private orders: Order[] = [];
+  public orders: Order[] = [];
   private currentPage: number = 1;
   private totalPages: number = 1;
   private currentPageSub: Subscription;

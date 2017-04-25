@@ -10,7 +10,7 @@ import {CartService} from "../../../../service/cart.service";
   styleUrls: ['./wish-list.component.scss', "../../../products/cart/cart.component.scss"]
 })
 export class WishListComponent implements OnInit {
-  private wishListItems: CartItem[] = [];
+  public wishListItems: CartItem[] = [];
   private reg: RegExp = new RegExp(/^\d+$/);
 
   constructor(private router: Router, private cartService: CartService) {

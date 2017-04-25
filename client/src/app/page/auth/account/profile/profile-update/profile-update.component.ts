@@ -13,15 +13,15 @@ declare var alert: any;
   styleUrls: ['./profile-update.component.scss']
 })
 export class ProfileUpdateComponent implements OnInit,OnDestroy {
-  private index = 1;
+  public index = 1;
   private subscription: Subscription;
-  private profileForm: FormGroup;
-  private passwordForm: FormGroup;
-  private currentPassword: FormControl;
-  private password: FormControl;
-  private confirmedPassword: FormControl;
-  private firstname: FormControl;
-  private lastname: FormControl;
+  public profileForm: FormGroup;
+  public passwordForm: FormGroup;
+  public currentPassword: FormControl;
+  public password: FormControl;
+  public confirmedPassword: FormControl;
+  public firstname: FormControl;
+  public lastname: FormControl;
 
   constructor(private activatedRoute: ActivatedRoute,
               private fb: FormBuilder,

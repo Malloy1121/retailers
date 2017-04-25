@@ -3,7 +3,6 @@ import {FormGroup, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {ShoppingService} from "../../../../service/shopping.service";
 import {ActivatedRoute, Router, RouterStateSnapshot} from "@angular/router";
 import {Subscription} from "rxjs";
-import "rxjs/Rx";
 import {ItemType} from "../../../../model/item-type";
 import {Product} from "../../../../model/product";
 import {CartItem} from "../../../../model/cart-item";
@@ -18,18 +17,18 @@ declare var alert: any;
   styleUrls: ['item-detail.component.scss']
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
-  private lowestPrice: number = 0.00;
-  private highestPrice: number = 0.00;
-  private currentType: ItemType = new ItemType();
-  private currentItem: Product = new Product();
-  private itemTypes: ItemType[] = [];
-  private amount: FormControl;
-  private totalInventory: number = 0;
-  private purchaseForm: FormGroup;
+  public lowestPrice: number = 0.00;
+  public highestPrice: number = 0.00;
+  public currentType: ItemType = new ItemType();
+  public currentItem: Product = new Product();
+  public itemTypes: ItemType[] = [];
+  public amount: FormControl;
+  public totalInventory: number = 0;
+  public purchaseForm: FormGroup;
   private paramSub: Subscription;
-  private amoutnSub: Subscription;
+  private amountSub: Subscription;
   private route: RouterStateSnapshot;
-  private currentImage:string="";
+  public currentImage:string="";
 
   constructor(private fb: FormBuilder,
               private shp: ShoppingService,
@@ -60,7 +59,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       }
     });
     this.buildForm();
-    this.amoutnSub = this.purchaseForm.valueChanges.subscribe(data => {
+    this.amountSub = this.purchaseForm.valueChanges.subscribe(data => {
       if (this.currentType.id >= 0) {
         if (this.amount.value > this.currentType.inventory) {
           this.amount.setValue(this.currentType.inventory);
@@ -99,7 +98,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.paramSub.unsubscribe();
-    this.amoutnSub.unsubscribe();
+    this.amountSub.unsubscribe();
   }
 
   amountOnBlur() {

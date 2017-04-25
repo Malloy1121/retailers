@@ -12,7 +12,7 @@ declare var alert: any;
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  private registerForm: FormGroup;
+  public registerForm: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder, private authService: AuthService) {
   }

@@ -18,11 +18,11 @@ declare var alert: any;
   styleUrls: ['./checkout.component.scss', "./checkout-edit.scss"]
 })
 export class CheckoutComponent implements OnInit {
-  private paymentSelectShown: boolean = false;
-  private addressSelectShown: boolean = false;
-  private cartItems: CartItem[] = [];
-  private currentPayment: Payment;
-  private currentAddress: Address;
+  public paymentSelectShown: boolean = false;
+  public addressSelectShown: boolean = false;
+  public cartItems: CartItem[] = [];
+  public currentPayment: Payment;
+  public currentAddress: Address;
   private checkedAddress: Address;
   private checkedPayment: Payment;
   private payments: Payment[] = [];
